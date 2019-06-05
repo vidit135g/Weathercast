@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="16dp"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/itemDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="16:00"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/itemDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="No data"
+                android:layout_marginTop="5dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/itemWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                tools:text="Wind: 0 m/s"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/itemPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Pressure: 0 hpa"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/itemHumidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Humidity: 0 %"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/itemIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            tools:text="o"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/itemTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0 °C"
+            android:textSize="18sp"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/itemIcon"
+            android:layout_alignRight="@+id/itemIcon"
+            android:layout_alignEnd="@+id/itemIcon" />
+    </RelativeLayout>
+</LinearLayout>

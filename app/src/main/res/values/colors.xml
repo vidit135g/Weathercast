@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F4B400 </color>
+    <color name="colorPrimaryDark">#f4b400</color>
+    <color name="colorAccent">#f4b400</color>
+    <color name="colorBackground">@android:color/transparent</color>
+    <color name="colorBackgroundDefault">#fafafa</color>
+    <color name="colorTintedBackground">#cdcdcd</color>
+
+    <color name="darkTheme_colorPrimary">#F4B400   </color>
+    <color name="darkTheme_colorPrimaryDark">#f4b400</color>
+    <color name="darkTheme_colorAccent">#F4B400</color>
+    <color name="darkTheme_colorBackground">#303030</color>
+    <color name="darkTheme_colorTintedBackground">#424242</color>
+
+    <color name="blackTheme_colorPrimary">#F4B400  </color>
+    <color name="blackTheme_colorPrimaryDark">#f4b400</color>
+    <color name="blackTheme_colorAccent">#F4B400   </color>
+    <color name="blackTheme_colorBackground">#000000</color>
+    <color name="blackTheme_colorTintedBackground">#303030</color>
+
+    <color name="classic_colorPrimary">#607d8b</color>
+    <color name="classic_colorPrimaryDark">#455a64</color>
+    <color name="classic_colorAccent">#455a64</color>
+    <color name="classic_colorBackground">@android:color/transparent</color>
+    <color name="classic_colorTintedBackground">#cdcdcd</color>
+
+    <color name="classic_darkTheme_colorPrimary">#37474f</color>
+    <color name="classic_darkTheme_colorPrimaryDark">#263238</color>
+    <color name="classic_darkTheme_colorAccent">#90a4ae</color>
+    <color name="classic_darkTheme_colorBackground">#303030</color>
+    <color name="classic_darkTheme_colorTintedBackground">#263238</color>
+
+    <color name="classic_blackTheme_colorPrimary">#37474f</color>
+    <color name="classic_blackTheme_colorPrimaryDark">#263238</color>
+    <color name="classic_blackTheme_colorAccent">#90a4ae</color>
+    <color name="classic_blackTheme_colorBackground">#000000</color>
+    <color name="classic_blackTheme_colorTintedBackground">#303030</color>
+
+    <color name="splashBackground">#607d8b</color>
+
+    <color name="text_light">#ffffff</color>
+    <color name="text_dark">#000000</color>
+    <color name="tab_indicator">#ffffff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="white_translucent1">#8AFFFFFF</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="white_translucent2">#64FFFFFF</color>
+    <color name="grey_800">#424242</color>
+    <color name="grey_900_translucent1">#64212121</color>
+    <color name="ripple_color">#33000000</color>
+    <color name="black_translucent1">#33000000</color>
+    <color name="grey_900_translucent">#8A212121</color>
+    <color name="grey_900">#212121</color>
+    <color name="black_translucent2">#64000000</color>
+    <color name="black_translucent3">#96000000</color>
+    <color name="black">#000000</color>
+    <color name="inactiveAddButtonColor">#B3B3B3</color>
+    <color name="infoPageBackgroundColor">#EBEBEB</color>
+    <color name="actionBarArrowColor">@color/colorAccent</color>
+    <color name="blue">#348af7</color>
+    <color name="colorMain">#4285F4</color>
+    <color name="temperature_background">@color/colorPrimary</color>
+    <color name="temperature_text">@android:color/white</color>
+    <color name="gblack">#000</color>
+    <color name="gred">#DB4437</color>
+    <color name="ggreen">#0F9D58</color>
+    <color name="gblue">#4285F4</color>
+    <color name="gyellow"> #F4B400</color>
+    <color name="gpink">#d81b60</color>
+    <color name="ggray">#424242</color>
+    <color name="gdblue">#1565c0</color>
+    <color name="gpurple">#4527a0</color>
+    <color name="glyellow">#ffeb3b</color>
+    <color name="glpurple">#9575cd</color>
+    <color name="gorange">#e64a19</color>
+
+    <color name="morning">#25022a</color>
+
+    <color name="afternoon">#25022a</color>
+
+    <color name="glpink">#f48fb1 </color>
+    <color name="material_light_primary_text">#DE000000</color>
+    <color name="material_light_hint_text">#61000000</color>
+    <color name="material_light_active_icon">#8A000000</color>
+    <color name="material_ripple_light">#1F000000</color>
+    <color name="dividerse_color">#1F000000</color>
+    <color name="divider_color">#1F000000</color>
+    <color name="active_icon_color">#8A000000</color>
+    <color name="cards_and_dialogs_color">@android:color/white</color>
+    <color name="quantum_grey_600">#757575</color>
+
+    <color name="ash">#000</color>
+    <color name="dawn">#000</color>
+    <color name="day">#fff</color>
+
+    <color name="dusk">#0e0d26</color>
+    <color name="duskcloud">#25022a</color>
+    <color name="duskday">#000</color>
+    <color name="dusknight">#585081</color>
+    <color name="evening">#1a2040</color>
+    <color name="fogday">#aebbcf</color>
+    <color name="fognight">#333449</color>
+    <color name="mistday">#aebbcf</color>
+    <color name="night">#1c172e</color>
+    <color name="overcast">#122432</color>
+    <color name="rainday">#00b78f</color>
+    <color name="rainnight">#001024</color>
+    <color name="sandday">#801610</color>
+    <color name="sandnight">#2c3949</color>
+    <color name="smokeday">#feedc2</color>
+    <color name="smokenight">#253571</color>
+    <color name="snowday">#fff</color>
+    <color name="snownight">#ece1cb</color>
+    <color name="torday">#382d4b</color>
+    <color name="beforedawn">#5f3d70</color>
+    <color name="blues">#173567</color>
+</resources>

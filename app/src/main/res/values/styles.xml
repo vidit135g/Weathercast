@@ -1,0 +1,144 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@null</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorTintedBackground">@color/colorTintedBackground</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/darkTheme_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkTheme_colorPrimaryDark</item>
+        <item name="colorAccent">@color/darkTheme_colorAccent</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorBackground">@color/darkTheme_colorBackground</item>
+        <item name="colorTintedBackground">@color/darkTheme_colorTintedBackground</item>
+    </style>
+
+    <style name="AppTheme.Black" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/blackTheme_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackTheme_colorPrimaryDark</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorAccent">@color/blackTheme_colorAccent</item>
+        <item name="android:colorBackground">@color/blackTheme_colorBackground</item>
+        <item name="colorTintedBackground">@color/blackTheme_colorTintedBackground</item>
+    </style>
+
+    <style name="AppTheme.Classic" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/classic_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/classic_colorPrimaryDark</item>
+        <item name="colorAccent">@color/classic_colorAccent</item>
+        <item name="colorBackground">@color/classic_colorBackground</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorTintedBackground">@color/classic_colorTintedBackground</item>
+    </style>
+
+    <style name="AppTheme.Classic.Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/classic_darkTheme_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/classic_darkTheme_colorPrimaryDark</item>
+        <item name="colorAccent">@color/classic_darkTheme_colorAccent</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorBackground">@color/classic_darkTheme_colorBackground</item>
+        <item name="colorTintedBackground">@color/classic_darkTheme_colorTintedBackground</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Classic.Black" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/classic_blackTheme_colorPrimary</item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorPrimaryDark">@color/classic_blackTheme_colorPrimaryDark</item>
+        <item name="colorAccent">@color/classic_blackTheme_colorAccent</item>
+        <item name="android:colorBackground">@color/classic_blackTheme_colorBackground</item>
+        <item name="colorTintedBackground">@color/classic_blackTheme_colorTintedBackground</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.NoStatusBar" parent="AppTheme.NoActionBar"></style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Classic" parent="AppTheme.Classic">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Dark" parent="AppTheme.Dark">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Classic.Dark" parent="AppTheme.Classic.Dark">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Black" parent="AppTheme.Black">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Classic.Black" parent="AppTheme.Classic.Black">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay.Dark" parent="ThemeOverlay.AppCompat" />
+
+    <style name="AppTheme.PopupOverlay.Black" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@color/blackTheme_colorBackground</item>
+    </style>
+
+
+
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+
+        <item name="android:typeface">monospace</item>
+        <item name="android:background">@drawable/cornercircle</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:typeface">monospace</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+
+
+
+
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:buttonCornerRadius">5dp</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="CustomDialogTheme" parent="Base.Theme.MaterialComponents.Dialog">
+        <!--buttons color-->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="dialogCornerRadius">3dp</item>
+        <!--title and message color-->
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">#000</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@drawable/background_dialog</item>
+    </style>
+
+</resources>

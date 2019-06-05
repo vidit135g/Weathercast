@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#fff</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">#fff</item>
+        <item name="colorPrimaryDark">#fff </item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorTintedBackground">@color/colorTintedBackground</item>
+        <item name="android:navigationBarColor">#fff</item>
+        <item name="toolbarStyle">@style/MyApp.ActionBarTheme</item>
+    </style>
+    <style name="MyApp.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#000 </item>
+        <item name="android:background">#fff</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="AppTheme.Classic" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#212121</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">#fff</item>
+        <item name="colorPrimaryDark">#fff </item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorTintedBackground">@color/colorTintedBackground</item>
+        <item name="android:navigationBarColor">#fff</item>
+    </style>
+
+    <style name="AppTheme.Black" parent="Theme.AppCompat">
+        <item name="colorPrimary">#000</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">#fff</item>
+        <item name="colorPrimaryDark">#fff </item>
+        <item name="android:typeface">monospace</item>
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorTintedBackground">@color/colorTintedBackground</item>
+        <item name="android:navigationBarColor">#000</item>
+    </style>
+</resources>

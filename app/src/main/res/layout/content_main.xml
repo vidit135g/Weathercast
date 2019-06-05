@@ -1,0 +1,336 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="175dp"
+    android:id="@+id/peeklayout"
+    android:background="#fff"
+    android:elevation="8dp"
+    android:orientation="vertical"
+    android:gravity="fill"
+    android:animateLayoutChanges="true"
+    tools:context=".activities.MainActivity"
+    app:layout_behavior="@string/view_pager_bottom_sheet_behavior"
+    tools:showIn="@layout/activity_scrolling">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp"
+        tools:targetApi="lollipop">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll"
+            android:elevation="0dp"
+            app:titleEnabled="false">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:cardCornerRadius="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                app:cardElevation="0dp"
+                android:layout_below="@id/main">
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="4.2dp"
+                    android:background="#cecece"
+                    android:layout_below="@id/main" />
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="More Info"
+                android:textStyle="normal"
+                style="@style/Theme.MaterialComponents.Light"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:layout_marginTop="80dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+
+                        <ImageView
+                            android:id="@+id/wind"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="15dp"
+                            android:background="@drawable/circleblue"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_weather_windy_white_24dp"/>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="wwqq"
+                        android:id="@+id/todayWind"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#424242"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                        <ImageView
+                            android:id="@+id/pressure"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="15dp"
+                            android:background="@drawable/circlered"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/pressure"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="wwqq"
+                        android:id="@+id/todayPressure"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#424242"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/humid"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="15dp"
+                            android:background="@drawable/circleyellow"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/humidity"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="wwqq"
+                        android:id="@+id/todayHumidity"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#424242"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/uv"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="15dp"
+                            android:background="@drawable/circlegreen"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/uv"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="wwqq"
+                        android:id="@+id/todayUvIndex"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"
+                        android:textColor="#424242"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stats"
+        android:visibility="gone"
+        android:background="#fff"
+        android:layout_marginTop="30dp"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/gblue"
+                app:cardCornerRadius="200dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="12dp"
+                    android:background="@color/gblue"
+                    android:src="@drawable/sunrise"
+                    />
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="wwqq"
+                android:id="@+id/todaySunrise"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:textColor="#424242"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="12dp"
+                    android:background="@color/gpurple"
+                    android:src="@drawable/sunset"
+                    />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="wwqq"
+                android:id="@+id/todaySunset"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:textColor="#424242"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/lastUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="5dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rain">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/tab_layout_background"
+            app:tabMode="scrollable"
+            app:tabBackground="@drawable/tab_layout_selector"
+            app:tabSelectedTextColor="@color/gblue"
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabRippleColor="@null"
+            app:tabTextAppearance="@style/TabTextAppearance" />
+</LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:elevation="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:targetApi="lollipop" />
+
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rowCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    app:cardCornerRadius="8dp"
+    android:padding="6dp"
+    android:focusable="true"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="262dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/rowIconTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:typeface="monospace"
+            android:text="C"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/rowIconTextView"
+            android:layout_marginTop="10dp"
+            android:id="@+id/main"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rowTemperatureTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/text_dark"
+                android:typeface="monospace"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/rowCityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_marginStart="16dp"
+                android:textColor="@color/text_dark"
+                android:text="TextView"
+                android:textSize="14sp"
+                android:typeface="monospace"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/rowDescriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/rowIconTextView"
+            android:textColor="@color/text_dark"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@+id/main"
+            android:layout_marginTop="4dp"
+            android:typeface="monospace"
+            android:textSize="14sp"/>
+        <WebView
+            android:id="@+id/webView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rowDescriptionTextView"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
