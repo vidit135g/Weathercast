@@ -2,7 +2,7 @@
 
 
 <!--suppress ALL -->
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
 
     android:id="@+id/viewApp"
     android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:background="@color/white">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp" />
         </LinearLayout>
-                </android.support.v7.widget.Toolbar>
+                </androidx.appcompat.widget.Toolbar>
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
@@ -155,7 +155,7 @@
     </FrameLayout>
 
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/bottomsheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -166,5 +166,5 @@
 
         <include layout="@layout/content_main" />
 
-    </android.support.design.widget.CoordinatorLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

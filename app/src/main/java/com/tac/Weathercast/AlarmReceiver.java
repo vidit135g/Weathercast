@@ -367,7 +367,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .getString("refreshInterval", "1");
         Intent refresh = new Intent(context, AlarmReceiver.class);
         PendingIntent recurringRefresh = PendingIntent.getBroadcast(context,
-                0, refresh, PendingIntent.FLAG_CANCEL_CURRENT);
+                0, refresh, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager alarms = (AlarmManager) context.getSystemService(
                 Context.ALARM_SERVICE);
         long intervalMillis = intervalMillisForRecurringAlarm(intervalPref);

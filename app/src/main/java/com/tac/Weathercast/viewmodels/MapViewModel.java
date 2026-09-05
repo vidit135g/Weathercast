@@ -1,6 +1,6 @@
 package com.tac.Weathercast.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 import android.content.SharedPreferences;
 
 import com.tac.Weathercast.Constants;

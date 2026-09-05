@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.tac.Weathercast">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,55 +16,71 @@
         android:label="Weathercast"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.tac.Weathercast.activities.LoadingActivity"
-            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.tac.Weathercast.activities.LoadingActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
         <activity
             android:name="com.tac.Weathercast.activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.tac.Weathercast.activities.FirstActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
         <activity
             android:name="com.tac.Weathercast.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:exported="false" />
+
         <activity
             android:name="com.tac.Weathercast.activities.SettingsActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:exported="false" />
 
-        <receiver android:name="com.tac.Weathercast.widgets.ExtensiveWidgetProvider">
+        <receiver
+            android:name="com.tac.Weathercast.widgets.ExtensiveWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/extensive_widget" />
         </receiver>
-        <receiver android:name="com.tac.Weathercast.widgets.TimeWidgetProvider">
+
+        <receiver
+            android:name="com.tac.Weathercast.widgets.TimeWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/time_widget" />
         </receiver>
-        <receiver android:name="com.tac.Weathercast.widgets.SimpleWidgetProvider">
+
+        <receiver
+            android:name="com.tac.Weathercast.widgets.SimpleWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/simple_widget" />
@@ -75,11 +90,11 @@
             android:name="com.tac.Weathercast.widgets.DashClockWeatherExtension"
             android:icon="@drawable/ic_cloud_white_24dp"
             android:label="@string/app_name"
-            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-
             <meta-data
                 android:name="protocolVersion"
                 android:value="2" />
@@ -91,7 +106,9 @@
                 android:value=".ExampleSettingsActivity" />
         </service>
 
-        <receiver android:name="com.tac.Weathercast.AlarmReceiver">
+        <receiver
+            android:name="com.tac.Weathercast.AlarmReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -102,13 +119,13 @@
             android:name="com.tac.Weathercast.activities.GraphActivity"
             android:label="@string/action_graphs"
             android:parentActivityName="com.tac.Weathercast.activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false" />
 
         <provider
             android:name="com.tac.Weathercast.utils.StubContentProvider"
             android:authorities="com.tac.Weathercast.authority"
-            android:exported="true"/>
+            android:exported="true" />
 
     </application>
-
 </manifest>

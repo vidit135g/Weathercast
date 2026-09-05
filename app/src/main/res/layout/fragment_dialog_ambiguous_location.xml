@@ -7,7 +7,7 @@
               android:background="#fff"
               android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/dialogToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -20,8 +20,8 @@
             android:textSize="20sp"
             android:typeface="monospace"
             android:textColor="@color/white"/>
-    </android.support.v7.widget.Toolbar>
-    <android.support.v7.widget.RecyclerView
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locationsRecyclerView"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent" android:layout_height="match_parent"/>

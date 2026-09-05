@@ -1,4 +1,4 @@
-package com.absolute.Weathercast.activities;
+package com.tac.Weathercast.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -64,22 +64,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.absolute.Weathercast.AlarmReceiver;
-import com.absolute.Weathercast.R;
-import com.absolute.Weathercast.adapters.ViewPagerAdapter;
-import com.absolute.Weathercast.adapters.WeatherRecyclerAdapter;
-import com.absolute.Weathercast.fragments.AboutDialogFragment;
-import com.absolute.Weathercast.fragments.AmbiguousLocationDialogFragment;
-import com.absolute.Weathercast.fragments.RecyclerViewFragment;
-import com.absolute.Weathercast.models.Weather;
-import com.absolute.Weathercast.tasks.GenericRequestTask;
-import com.absolute.Weathercast.tasks.ParseResult;
-import com.absolute.Weathercast.tasks.TaskOutput;
-import com.absolute.Weathercast.utils.Formatting;
-import com.absolute.Weathercast.utils.UI;
-import com.absolute.Weathercast.utils.UnitConvertor;
-import com.absolute.Weathercast.widgets.AbstractWidgetProvider;
-import com.absolute.Weathercast.widgets.DashClockWeatherExtension;
+import com.tac.Weathercast.AlarmReceiver;
+import com.tac.Weathercast.R;
+import com.tac.Weathercast.adapters.ViewPagerAdapter;
+import com.tac.Weathercast.adapters.WeatherRecyclerAdapter;
+import com.tac.Weathercast.fragments.AboutDialogFragment;
+import com.tac.Weathercast.fragments.AmbiguousLocationDialogFragment;
+import com.tac.Weathercast.fragments.RecyclerViewFragment;
+import com.tac.Weathercast.models.Weather;
+import com.tac.Weathercast.tasks.GenericRequestTask;
+import com.tac.Weathercast.tasks.ParseResult;
+import com.tac.Weathercast.tasks.TaskOutput;
+import com.tac.Weathercast.utils.Formatting;
+import com.tac.Weathercast.utils.UI;
+import com.tac.Weathercast.utils.UnitConvertor;
+import com.tac.Weathercast.widgets.AbstractWidgetProvider;
+import com.tac.Weathercast.widgets.DashClockWeatherExtension;
 
 import biz.laenger.android.vpbs.ViewPagerBottomSheetBehavior;
 

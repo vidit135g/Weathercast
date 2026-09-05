@@ -233,6 +233,6 @@ public abstract class AbstractWidgetProvider extends AppWidgetProvider {
     protected PendingIntent getTimeIntent(Context context) {
         Intent intent = new Intent(context, this.getClass());
         intent.setAction(ACTION_UPDATE_TIME);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 }
