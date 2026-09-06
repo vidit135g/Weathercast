@@ -82,6 +82,9 @@ import com.tac.Weathercast.utils.Formatting;
 import com.tac.Weathercast.utils.UI;
 import com.tac.Weathercast.utils.UnitConvertor;
 import com.tac.Weathercast.utils.WeatherSummary;
+import com.tac.Weathercast.utils.SomaTheme;
+import android.graphics.drawable.GradientDrawable;
+import androidx.core.view.WindowInsetsControllerCompat;
 import com.tac.Weathercast.widgets.AbstractWidgetProvider;
 import com.tac.Weathercast.widgets.DashClockWeatherExtension;
 
@@ -111,6 +114,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     private TextView lastUpdate;
     private TextView todayReadingHeadline;
     private TextView todayReadingAdvice;
+    private View heroCard;
     private TextView todayFeelsLike;
     private TextView todayWindPill;
     private TextView todayUvPill;
@@ -206,6 +210,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         lastUpdate = (TextView) findViewById(R.id.lastUpdate);
         todayReadingHeadline = findViewById(R.id.todayReadingHeadline);
         todayReadingAdvice = findViewById(R.id.todayReadingAdvice);
+        heroCard = findViewById(R.id.heroCard);
         todayFeelsLike = findViewById(R.id.todayFeelsLike);
         todayWindPill = findViewById(R.id.todayWindPill);
         todayUvPill = findViewById(R.id.todayUvPill);
@@ -214,6 +219,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         peekLayout=findViewById(R.id.peeklayout);
         todayIcon = findViewById(R.id.todayIcon);
         currdate=findViewById(R.id.todayDate);
+        applySomaTheme(800);
         ViewPagerBottomSheetBehavior behavior = ViewPagerBottomSheetBehavior.from(peekLayout);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -661,6 +667,51 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         });
     }
 
+
+    /** Repaints the screen with the Soma time-of-day palette, nudged by the sky. */
+    private void applySomaTheme(int owmId) {
+        try {
+            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            SomaTheme t = SomaTheme.forNow(hour, owmId);
+
+            if (appView != null) appView.setBackgroundColor(t.background);
+
+            if (peekLayout != null) {
+                GradientDrawable sheet = new GradientDrawable();
+                sheet.setColor(t.background);
+                sheet.setCornerRadii(new float[]{ dp(28), dp(28), dp(28), dp(28), 0, 0, 0, 0 });
+                peekLayout.setBackground(sheet);
+            }
+
+            if (heroCard != null) {
+                GradientDrawable hero = new GradientDrawable(
+                        GradientDrawable.Orientation.TL_BR, new int[]{ t.heroFrom, t.heroTo });
+                hero.setCornerRadius(dp(28));
+                hero.setStroke((int) dp(1), t.borderTranslucent());
+                heroCard.setBackground(hero);
+            }
+
+            int tp = t.textPrimary, ts = t.textSecondary;
+            setTextColorSafe(tp, todayTemperature, todayDescription, citytool, todayReadingHeadline,
+                    todayFeelsLike, todayWindPill, todayUvPill, todayTemperature);
+            setTextColorSafe(ts, currdate, todaydes, todayReadingAdvice);
+
+            getWindow().setStatusBarColor(0x00000000);
+            getWindow().setNavigationBarColor(t.background);
+            View decor = getWindow().getDecorView();
+            WindowInsetsControllerCompat c = new WindowInsetsControllerCompat(getWindow(), decor);
+            c.setAppearanceLightStatusBars(!t.isDark);
+            c.setAppearanceLightNavigationBars(!t.isDark);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private float dp(float v) { return v * getResources().getDisplayMetrics().density; }
+
+    private void setTextColorSafe(int color, TextView... views) {
+        for (TextView v : views) if (v != null) v.setTextColor(color);
+    }
 
     /** Fills the "At a glance" summary card + hero pills from the current conditions. */
     private void updateGlanceCard(SharedPreferences sp) {
@@ -1376,6 +1427,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         boolean isNight = hour < 6 || hour >= 20;
         todayIcon.setImageResource(Formatting.somaIllustration(owmId, isNight));
+        applySomaTheme(owmId);
 
         int group = owmId / 100;
         String note;
