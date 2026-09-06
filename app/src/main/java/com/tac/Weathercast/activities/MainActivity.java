@@ -609,7 +609,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         String city = todayWeather.getCity();
         String country = todayWeather.getCountry();
         DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
-        citytool.setText(city +" ,"+country);
+        citytool.setText(city);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 

@@ -80,13 +80,7 @@
                         tools:text="Comfortable conditions — a good window to be outside. 12h 40m of daylight today." />
                 </LinearLayout>
 
-                <TextView
-                    style="@style/Soma.Heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="More info"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginBottom="12dp" />
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More info" android:layout_marginTop="24dp" android:layout_marginBottom="12dp" />
 
                 <!-- Bento metric grid : row 1 -->
                 <LinearLayout
@@ -261,13 +255,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    style="@style/Soma.Heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Forecast"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginBottom="12dp" />
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Forecast" android:layout_marginTop="24dp" android:layout_marginBottom="12dp" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
