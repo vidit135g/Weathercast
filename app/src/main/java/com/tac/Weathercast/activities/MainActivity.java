@@ -183,10 +183,15 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 toolbarContainer.setPadding(toolbarContainer.getPaddingLeft(), bars.top,
                         toolbarContainer.getPaddingRight(), toolbarContainer.getPaddingBottom());
             }
-            if (bottomSheet != null) {
-                bottomSheet.setPadding(bottomSheet.getPaddingLeft(), bottomSheet.getPaddingTop(),
-                        bottomSheet.getPaddingRight(), bars.bottom);
+            View topInset = findViewById(R.id.topInset);
+            if (topInset != null) {
+                android.view.ViewGroup.LayoutParams lp = topInset.getLayoutParams();
+                lp.height = bars.top + (int) dp(52);
+                topInset.setLayoutParams(lp);
             }
+            View nav = findViewById(R.id.bottomNav);
+            if (nav != null) nav.setPadding(nav.getPaddingLeft(), nav.getPaddingTop(),
+                    nav.getPaddingRight(), bars.bottom);
             return insets;
         });
 

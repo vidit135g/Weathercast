@@ -96,6 +96,24 @@ public class HourlyFragment extends Fragment {
                 ((TextView) row.findViewById(R.id.hTemp)).setText("--");
             }
 
+            // precip intensity bar (0..~4mm -> full width)
+            final View fill = row.findViewById(R.id.hRainFill);
+            float rmm = 0;
+            try { rmm = (float) Double.parseDouble(w.getRain()); } catch (Exception ignored) {}
+            final float frac = Math.max(0f, Math.min(1f, rmm / 4f));
+            final int fi = i;
+            row.post(() -> {
+                android.view.ViewGroup.LayoutParams lp = fill.getLayoutParams();
+                lp.width = 0; fill.setLayoutParams(lp);
+                if (frac <= 0f) return;
+                fill.animate().setStartDelay(120 + fi * 22L).setDuration(420)
+                        .setUpdateListener(a -> {
+                            android.view.ViewGroup.LayoutParams l = fill.getLayoutParams();
+                            l.width = (int) (((View) fill.getParent()).getWidth() * frac * a.getAnimatedFraction());
+                            fill.setLayoutParams(l);
+                        }).start();
+            });
+
             row.setAlpha(0f);
             row.animate().alpha(1f).setStartDelay(i * 22L).setDuration(260).start();
             rows.addView(row);
