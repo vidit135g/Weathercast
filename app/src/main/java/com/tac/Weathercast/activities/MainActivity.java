@@ -251,8 +251,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         currdate.setText(timeStamp);// Get Date String according to date format
 
         citytool.setText("Lucknow");
-        todayIcon.setImageDrawable(getResources().getDrawable(R.drawable.sleet));
-        todaydes.setText("Haze, pollution causing low visibility over several parts.");
+        todayIcon.setImageResource(R.drawable.soma_wx_cloudy);
+        todaydes.setText("");
         Typeface weatherFont = Typeface.createFromAsset(this.getAssets(), "fonts/weather.ttf");
 
         // Initialize viewPager
@@ -1371,6 +1371,27 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         return time;
     }
     private void checkWeather(){
+        int owmId;
+        try { owmId = Integer.parseInt(todayWeather.getId()); } catch (Exception e) { owmId = 800; }
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        boolean isNight = hour < 6 || hour >= 20;
+        todayIcon.setImageResource(Formatting.somaIllustration(owmId, isNight));
+
+        int group = owmId / 100;
+        String note;
+        if (owmId == 800) note = isNight ? "Clear skies overhead tonight." : "Clear and open skies today.";
+        else if (group == 2) note = "Thunderstorms with gusty wind and lightning likely.";
+        else if (group == 3) note = "Light drizzle on and off through the day.";
+        else if (group == 5) note = "Rain expected — roads will be slick.";
+        else if (group == 6) note = "Snow expected — wrap up and mind your footing.";
+        else if (group == 7) note = "Low visibility from haze and mist in places.";
+        else if (owmId == 801 || owmId == 802) note = "A few clouds drifting through.";
+        else if (group == 8) note = "Mostly grey with an overcast sky.";
+        else note = todayWeather.getDescription();
+        todaydes.setText(note);
+    }
+
+    private void checkWeatherLegacy(){
         String cond=todayWeather.getDescription().toLowerCase();
         String time=getTimeFromAndroid();
         if(cond.contains("thunderstorm")){

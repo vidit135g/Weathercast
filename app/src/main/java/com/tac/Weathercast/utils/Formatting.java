@@ -12,6 +12,29 @@ public class Formatting {
         this.context = context;
     }
 
+    /**
+     * Soma-style illustration for a condition. Returns a drawable resource id
+     * from the {@code soma_wx_*} vector set.
+     */
+    public static int somaIllustration(int owmId, boolean isNight) {
+        int group = owmId / 100;
+        if (owmId == 800) return isNight ? R.drawable.soma_wx_clear_night : R.drawable.soma_wx_clear_day;
+        switch (group) {
+            case 2: return R.drawable.soma_wx_thunder;
+            case 3: return R.drawable.soma_wx_drizzle;
+            case 5: return R.drawable.soma_wx_rain;
+            case 6: return R.drawable.soma_wx_snow;
+            case 7:
+                if (owmId == 771 || owmId == 781) return R.drawable.soma_wx_wind; // squall / tornado
+                return R.drawable.soma_wx_mist;                                   // mist, haze, fog, dust, smoke, ash
+            case 8:
+                if (owmId == 801 || owmId == 802)
+                    return isNight ? R.drawable.soma_wx_partly_night : R.drawable.soma_wx_partly_day;
+                return R.drawable.soma_wx_cloudy;                                 // 803 / 804
+            default: return R.drawable.soma_wx_cloudy;
+        }
+    }
+
     public String setWeatherIcon(int actualId, int hourOfDay) {
         int id = actualId / 100;
         String icon = "";

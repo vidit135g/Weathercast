@@ -111,9 +111,14 @@ public class WeatherRecyclerAdapter extends RecyclerView.Adapter<WeatherViewHold
         }
         customViewHolder.itemDescription.setText(weatherItem.getDescription().substring(0, 1).toUpperCase() +
                 weatherItem.getDescription().substring(1) + rainString);
-        Typeface weatherFont = Typeface.createFromAsset(context.getAssets(), "fonts/weather.ttf");
-        customViewHolder.itemIcon.setTypeface(weatherFont);
-        customViewHolder.itemIcon.setText(weatherItem.getIcon());
+        int condId;
+        try { condId = Integer.parseInt(weatherItem.getId()); } catch (Exception e) { condId = 800; }
+        java.util.Calendar rowCal = java.util.Calendar.getInstance();
+        rowCal.setTime(weatherItem.getDate());
+        int rowHour = rowCal.get(java.util.Calendar.HOUR_OF_DAY);
+        boolean rowNight = rowHour < 6 || rowHour >= 20;
+        customViewHolder.itemIcon.setImageResource(
+                com.tac.Weathercast.utils.Formatting.somaIllustration(condId, rowNight));
         if (sp.getString("speedUnit", "m/s").equals("bft")) {
             customViewHolder.itemyWind.setText(context.getString(R.string.wind) + ": " +
                     UnitConvertor.getBeaufortName((int) wind) + " " + MainActivity.getWindDirectionString(sp, context, weatherItem));

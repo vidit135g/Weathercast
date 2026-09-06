@@ -2,6 +2,7 @@ package com.tac.Weathercast.models;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tac.Weathercast.R;
@@ -13,7 +14,7 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
     public TextView itemyWind;
     public TextView itemPressure;
     public TextView itemHumidity;
-    public TextView itemIcon;
+    public ImageView itemIcon;
     public View lineView;
 
     public WeatherViewHolder(View view) {
@@ -24,7 +25,7 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
         this.itemyWind = (TextView) view.findViewById(R.id.itemWind);
         this.itemPressure = (TextView) view.findViewById(R.id.itemPressure);
         this.itemHumidity = (TextView) view.findViewById(R.id.itemHumidity);
-        this.itemIcon = (TextView) view.findViewById(R.id.itemIcon);
+        this.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
         this.lineView = view.findViewById(R.id.lineView);
     }
 }
