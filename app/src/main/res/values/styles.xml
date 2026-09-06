@@ -137,7 +137,7 @@
 
     <style name="Soma.Tile" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">168dp</item>
+        <item name="android:layout_height">182dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@drawable/bento_tile</item>
@@ -155,7 +155,7 @@
     <style name="Soma.TileIcon" parent="">
         <item name="android:layout_width">38dp</item>
         <item name="android:layout_height">38dp</item>
-        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:padding">9dp</item>
         <item name="android:background">@drawable/soma_icon_chip</item>
     </style>

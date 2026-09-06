@@ -143,7 +143,8 @@
                     <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                     <ImageView android:id="@+id/pressure" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_activity" android:tint="@color/soma_saffron" />
                     <TextView android:id="@+id/todayPressure" style="@style/Soma.TileValue" android:layout_marginTop="10dp" tools:text="1012 hPa" />
-                    <com.tac.Weathercast.utils.SparklineView android:id="@+id/pressureSpark" android:layout_width="match_parent" android:layout_height="20dp" android:layout_marginTop="8dp" />
+                    <TextView android:id="@+id/todayAqi" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="11sp" tools:text="AQI · Good" />
+                    <com.tac.Weathercast.utils.SparklineView android:id="@+id/pressureSpark" android:layout_width="match_parent" android:layout_height="16dp" android:layout_marginTop="8dp" />
                 </LinearLayout>
             </LinearLayout>
 

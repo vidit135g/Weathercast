@@ -66,13 +66,24 @@ public class RadarFragment extends Fragment {
             }
         });
 
-        double lat = 20, lon = 0;
+        android.content.SharedPreferences sp =
+                android.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
+        double lat = sp.getFloat("latitude", 0f);
+        double lon = sp.getFloat("longitude", 0f);
         try {
             Weather w = ((MainActivity) requireActivity()).getTodayWeatherData();
-            if (w.getLat() != 0 || w.getLon() != 0) { lat = w.getLat(); lon = w.getLon(); }
+            if (lat == 0 && lon == 0 && (w.getLat() != 0 || w.getLon() != 0)) {
+                lat = w.getLat(); lon = w.getLon();
+            }
         } catch (Exception ignored) {}
 
-        web.loadUrl("https://appassets.androidplatform.net/assets/radar.html?lat=" + lat + "&lon=" + lon);
+        String key = sp.getString("apiKey", getString(R.string.apiKey)).replace("\"", "").trim();
+        int hr = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
+        int accent = com.tac.Weathercast.utils.SomaTheme.forNow(hr, 800,
+                sp.getString("appearance", "auto")).heroAccent & 0x00FFFFFF;
+
+        web.loadUrl("https://appassets.androidplatform.net/assets/radar.html?lat=" + lat + "&lon=" + lon
+                + "&key=" + key + "&accent=" + String.format("%06X", accent));
     }
 
     @Override

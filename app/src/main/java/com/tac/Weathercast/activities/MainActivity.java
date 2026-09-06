@@ -693,11 +693,16 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             View glance = findViewById(R.id.glanceCard);
             if (glance != null) {
                 GradientDrawable g = new GradientDrawable();
-                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, 0.86f));
+                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, 0.80f));
                 g.setCornerRadius(dp(24));
-                g.setStroke((int) dp(1), SomaTheme.blend(t.heroAccent, t.border, 0.6f));
+                g.setStroke((int) dp(1), SomaTheme.blend(t.heroAccent, t.border, 0.5f));
                 glance.setBackground(g);
             }
+
+            // Bottom nav picks up a faint element tint.
+            View nav = findViewById(R.id.bottomNav);
+            if (nav != null) nav.setBackgroundColor(
+                    SomaTheme.blend(t.surface, t.heroAccent, t.isDark ? 0.12f : 0.07f));
 
             int on = SomaTheme.ON_ELEMENT, onDim = SomaTheme.ON_ELEMENT_DIM;
             setTextColorSafe(on, todayTemperature, todayDescription, todayFeelsLike, todayWindPill, todayUvPill);
@@ -747,8 +752,44 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         for (TextView v : views) if (v != null) v.setTextColor(color);
     }
 
+    private long lastAqiFetch = 0;
+
+    /** Real air quality from the OpenWeatherMap Air Pollution API. */
+    private void fetchAirQuality(SharedPreferences sp) {
+        if (System.currentTimeMillis() - lastAqiFetch < 20 * 60_000L) return;
+        final double lat = sp.getFloat("latitude", 0f);
+        final double lon = sp.getFloat("longitude", 0f);
+        if (lat == 0 && lon == 0) return;
+        lastAqiFetch = System.currentTimeMillis();
+        final String key = sp.getString("apiKey", getString(R.string.apiKey)).replace("\"", "").trim();
+        new Thread(() -> {
+            try {
+                java.net.HttpURLConnection cn = (java.net.HttpURLConnection) new java.net.URL(
+                        "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + lat
+                                + "&lon=" + lon + "&appid=" + key).openConnection();
+                cn.setConnectTimeout(8000); cn.setReadTimeout(8000);
+                java.io.BufferedReader br = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(cn.getInputStream()));
+                StringBuilder s = new StringBuilder(); String ln;
+                while ((ln = br.readLine()) != null) s.append(ln);
+                br.close();
+                JSONObject main = new JSONObject(s.toString())
+                        .getJSONArray("list").getJSONObject(0).getJSONObject("main");
+                final int aqi = main.getInt("aqi");
+                final String[] labels = { "", "Good", "Fair", "Moderate", "Poor", "Very poor" };
+                runOnUiThread(() -> {
+                    TextView v = findViewById(R.id.todayAqi);
+                    if (v != null && aqi >= 1 && aqi <= 5) v.setText("AQI · " + labels[aqi]);
+                });
+            } catch (Exception e) {
+                lastAqiFetch = 0;
+            }
+        }).start();
+    }
+
     /** Fills the "At a glance" summary card + hero pills from the current conditions. */
     private void updateGlanceCard(SharedPreferences sp) {
+        fetchAirQuality(sp);
         try {
             double tempC = Double.parseDouble(todayWeather.getTemperature()) - 273.15;
             double humidity;

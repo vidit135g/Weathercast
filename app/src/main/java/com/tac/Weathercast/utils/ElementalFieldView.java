@@ -37,17 +37,20 @@ public class ElementalFieldView extends View {
         anim.addUpdateListener(a -> { phase = (float) a.getAnimatedValue(); invalidate(); });
     }
 
-    /** @param element two element stops (light→deep); a soft wash is derived. */
+    private int deep;
+
+    /** @param element two element stops (light→deep); a stronger wash is derived. */
     public void setColors(int background, int elementFrom, int elementTo, boolean isDark) {
-        this.bg = background;
         this.dark = isDark;
-        int alphaA = isDark ? 0x40 : 0x2E;
-        int alphaB = isDark ? 0x38 : 0x24;
-        int alphaC = isDark ? 0x30 : 0x1C;
+        // tint the base itself toward the element so the whole field reads coloured
+        this.bg = SomaTheme.blend(background, elementFrom, isDark ? 0.14f : 0.10f);
+        this.deep = SomaTheme.blend(background, elementTo, isDark ? 0.22f : 0.16f);
+        int alphaA = isDark ? 0x6E : 0x52;
+        int alphaB = isDark ? 0x60 : 0x44;
+        int alphaC = isDark ? 0x52 : 0x34;
         this.c1 = (elementFrom & 0x00FFFFFF) | (alphaA << 24);
         this.c2 = (elementTo & 0x00FFFFFF) | (alphaB << 24);
         this.c3 = (SomaTheme.blend(elementFrom, elementTo, 0.5f) & 0x00FFFFFF) | (alphaC << 24);
-        base.setColor(bg);
         invalidate();
     }
 
@@ -67,9 +70,11 @@ public class ElementalFieldView extends View {
     protected void onDraw(Canvas cv) {
         float w = getWidth(), h = getHeight();
         if (w == 0 || h == 0) return;
+        base.setShader(new android.graphics.LinearGradient(0, 0, 0, h,
+                new int[]{ bg, deep }, null, Shader.TileMode.CLAMP));
         cv.drawRect(0, 0, w, h, base);
 
-        float r = Math.max(w, h) * 0.95f;
+        float r = Math.max(w, h) * 1.05f;
         drawBlob(cv, w * (0.20f + 0.14f * (float) Math.sin(phase)),
                 h * (0.14f + 0.10f * (float) Math.cos(phase * 0.8f)), r, c1);
         drawBlob(cv, w * (0.86f + 0.10f * (float) Math.sin(phase * 0.7f + 1.5f)),
