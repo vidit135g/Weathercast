@@ -35,7 +35,8 @@
             android:orientation="vertical"
             android:layout_marginTop="?attr/actionBarSize"
             android:paddingHorizontal="20dp"
-            android:paddingBottom="12dp">
+            android:paddingBottom="12dp"
+            android:layoutAnimation="@anim/soma_stagger">
 
             <TextView
                 android:id="@+id/todayDate"
@@ -59,10 +60,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bento_tile_hero"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/soma_hero_fallback"
                 android:paddingHorizontal="22dp"
-                android:paddingTop="20dp"
+                android:paddingTop="22dp"
                 android:paddingBottom="22dp">
 
                 <RelativeLayout
@@ -81,7 +82,8 @@
                             style="@style/Soma.Display"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="68sp"
+                            android:textColor="@color/soma_on_fill"
+                            android:textSize="70sp"
                             tools:text="27°" />
 
                         <TextView
@@ -90,6 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
+                            android:textColor="@color/soma_on_fill"
                             android:textSize="18sp"
                             tools:text="Haze" />
                     </LinearLayout>
@@ -104,33 +107,36 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/pillRow"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:baselineAligned="false"
+                    android:weightSum="3"
+                    android:layout_marginTop="18dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:background="@drawable/soma_pill"
-                        android:paddingHorizontal="14dp" android:paddingVertical="9dp" android:layout_marginEnd="8dp">
-                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" android:textSize="9sp" />
-                        <TextView android:id="@+id/todayFeelsLike" android:fontFamily="@font/poppins" android:textColor="@color/soma_ink" android:textSize="13sp" android:layout_marginTop="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="29°" />
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
+                        android:paddingVertical="10dp" android:layout_marginEnd="8dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelFeels" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayFeelsLike" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="29°" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:background="@drawable/soma_pill"
-                        android:paddingHorizontal="14dp" android:paddingVertical="9dp" android:layout_marginEnd="8dp">
-                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind" android:textSize="9sp" />
-                        <TextView android:id="@+id/todayWindPill" android:fontFamily="@font/poppins" android:textColor="@color/soma_ink" android:textSize="13sp" android:layout_marginTop="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="3 m/s" />
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
+                        android:paddingVertical="10dp" android:layout_marginEnd="8dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelWind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayWindPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="3" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:orientation="vertical" android:background="@drawable/soma_pill"
-                        android:paddingHorizontal="14dp" android:paddingVertical="9dp">
-                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV" android:textSize="9sp" />
-                        <TextView android:id="@+id/todayUvPill" android:fontFamily="@font/poppins" android:textColor="@color/soma_ink" android:textSize="13sp" android:layout_marginTop="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="5" />
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
+                        android:paddingVertical="10dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelUv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayUvPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="5" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -139,7 +145,8 @@
                     style="@style/Soma.Body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="18dp"
+                    android:textColor="@color/soma_on_fill"
                     tools:text="Haze, pollution causing low visibility over several parts." />
             </LinearLayout>
         </LinearLayout>

@@ -683,25 +683,39 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 peekLayout.setBackground(sheet);
             }
 
+            // Hero: full elemental gradient block, darkened just enough for white text.
             if (heroCard != null) {
+                int from = SomaTheme.blend(t.heroFrom, 0xFF101613, 0.20f);
+                int to = SomaTheme.blend(t.heroTo, 0xFF101613, 0.42f);
                 GradientDrawable hero = new GradientDrawable(
-                        GradientDrawable.Orientation.TL_BR, new int[]{ t.heroFrom, t.heroTo });
+                        GradientDrawable.Orientation.TL_BR, new int[]{ from, to });
                 hero.setCornerRadius(dp(28));
-                hero.setStroke((int) dp(1), t.borderTranslucent());
                 heroCard.setBackground(hero);
             }
 
-            int tp = t.textPrimary, ts = t.textSecondary;
-            setTextColorSafe(tp, todayTemperature, todayDescription, citytool, todayReadingHeadline,
-                    todayFeelsLike, todayWindPill, todayUvPill, todayTemperature);
-            setTextColorSafe(ts, currdate, todaydes, todayReadingAdvice);
+            // Glance card: a soft wash of the hero accent so it isn't a plain white box.
+            View glance = findViewById(R.id.glanceCard);
+            if (glance != null) {
+                GradientDrawable g = new GradientDrawable();
+                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, 0.86f));
+                g.setCornerRadius(dp(24));
+                g.setStroke((int) dp(1), SomaTheme.blend(t.heroAccent, t.border, 0.6f));
+                glance.setBackground(g);
+            }
+
+            int on = SomaTheme.ON_ELEMENT, onDim = SomaTheme.ON_ELEMENT_DIM;
+            setTextColorSafe(on, todayTemperature, todayDescription, todayFeelsLike, todayWindPill, todayUvPill);
+            setTextColorSafe(onDim, todaydes);
+            setTextColorSafe(t.textPrimary, citytool, todayReadingHeadline);
+            setTextColorSafe(t.textMuted, currdate);
+            setTextColorSafe(t.textSecondary, todayReadingAdvice);
 
             getWindow().setStatusBarColor(0x00000000);
             getWindow().setNavigationBarColor(t.background);
             View decor = getWindow().getDecorView();
             WindowInsetsControllerCompat c = new WindowInsetsControllerCompat(getWindow(), decor);
-            c.setAppearanceLightStatusBars(!t.isDark);
-            c.setAppearanceLightNavigationBars(!t.isDark);
+            c.setAppearanceLightStatusBars(true);
+            c.setAppearanceLightNavigationBars(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -746,6 +760,20 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 todayWindPill.setText(new DecimalFormat("0.#").format(UnitConvertor.convertWind(windMs, sp)) + " " + localize(sp, "speedUnit", "m/s"));
             if (todayUvPill != null)
                 todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uv));
+
+            // Daylight / sun arc
+            if (daylight > 0) {
+                TextView dl = findViewById(R.id.daylightLength);
+                if (dl != null) dl.setText((daylight / 60) + "h " + (daylight % 60) + "m");
+                com.tac.Weathercast.utils.SunArcView arc = findViewById(R.id.sunArc);
+                if (arc != null) {
+                    long rise = todayWeather.getSunrise().getTime();
+                    long set = todayWeather.getSunset().getTime();
+                    float frac = (float) ((System.currentTimeMillis() - rise) / (double) (set - rise));
+                    int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                    arc.setDaylightFraction(frac, SomaTheme.forNow(hour, owmId).heroAccent);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1322,7 +1350,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             // No time
             lastUpdate.setText("");
         } else {
-            lastUpdate.setText(getString(R.string.last_update, formatTimeWithDayIfNotToday(this, timeInMillis)));
+            lastUpdate.setText(formatTimeWithDayIfNotToday(this, timeInMillis));
         }
     }
 

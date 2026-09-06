@@ -141,7 +141,8 @@
     <color name="soma_mint">#8BC6AF</color>
     <color name="soma_plum">#6E6AB8</color>
     <color name="soma_indigo">#5A54A6</color>
-    <color name="soma_on_fill">#FFFDF6</color>
+    <color name="soma_on_fill">#F8F3E9</color>
+    <color name="soma_on_fill_dim">#C7F8F3E9</color>
     <color name="soma_glow_vata">#33827DE0</color>
     <color name="soma_glow_pitta">#33D8663D</color>
     <color name="soma_glow_kapha">#333F6349</color>

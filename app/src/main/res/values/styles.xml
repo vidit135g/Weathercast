@@ -24,6 +24,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowAnimationStyle">@style/Soma.WindowAnimation</item>
         <!-- legacy aliases still read by old layouts -->
         <item name="colorBackground">@color/soma_bg</item>
         <item name="colorTintedBackground">@color/soma_surface_muted</item>
@@ -86,6 +87,60 @@
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">0.14</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Soma.WindowAnimation" parent="">
+        <item name="android:activityOpenEnterAnimation">@anim/soma_activity_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/soma_activity_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/soma_activity_pop_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/soma_activity_pop_exit</item>
+    </style>
+
+    <style name="Soma.GridRow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:weightSum">2</item>
+    </style>
+
+    <style name="Soma.Tile" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">150dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/bento_tile</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
+    <style name="Soma.TileSmall" parent="Soma.Tile">
+        <item name="android:layout_height">116dp</item>
+        <item name="android:padding">14dp</item>
+    </style>
+
+    <style name="Soma.TileIcon" parent="">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:padding">9dp</item>
+        <item name="android:background">@drawable/soma_icon_chip</item>
+    </style>
+
+    <style name="Soma.TileIconSmall" parent="">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:padding">7dp</item>
+        <item name="android:background">@drawable/soma_icon_chip</item>
+    </style>
+
+    <style name="Soma.TileValue" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/fraunces</item>
+        <item name="android:textColor">@color/soma_ink</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Soma.MenuRow" parent="">
