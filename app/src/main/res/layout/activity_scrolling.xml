@@ -114,6 +114,26 @@
                 <TextView android:id="@+id/todayReadingAdvice" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" tools:text="Comfortable conditions — a good window to be outside." />
             </LinearLayout>
 
+            <!-- Plan your day -->
+            <LinearLayout android:id="@+id/planCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="12dp" android:background="@drawable/bento_tile" android:padding="18dp" android:visibility="gone">
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Plan your day" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="12dp">
+                    <ImageView android:layout_width="34dp" android:layout_height="34dp" android:padding="7dp" android:background="@drawable/soma_chip_forest" android:src="@drawable/ic_feather_sun" android:tint="@color/soma_forest" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                        <TextView android:id="@+id/planWindow" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" tools:text="Best window · 14:00 – 17:00" />
+                        <TextView android:id="@+id/planWindowWhy" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="1dp" android:textSize="12sp" tools:text="mild, dry, light breeze · around 21°" />
+                    </LinearLayout>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="@color/soma_border" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                    <ImageView android:layout_width="34dp" android:layout_height="34dp" android:padding="7dp" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_sunrise" android:tint="@color/soma_saffron" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                        <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" android:text="Golden hour" />
+                        <TextView android:id="@+id/planGolden" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="1dp" android:textSize="12sp" tools:text="06:04 – 06:54  ·  17:32 – 18:22" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More info" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
 
             <LinearLayout style="@style/Soma.GridRow">

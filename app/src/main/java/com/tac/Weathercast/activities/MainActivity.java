@@ -825,6 +825,38 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             com.tac.Weathercast.utils.UvBarView uvBar = findViewById(R.id.uvBar);
             if (uvBar != null && uv >= 0) uvBar.setLevel(uv);
 
+            // Plan your day — best outdoor window + golden hour
+            try {
+                java.util.List<Weather> src = (longTermTodayWeather != null && !longTermTodayWeather.isEmpty())
+                        ? longTermTodayWeather : longTermWeather;
+                com.tac.Weathercast.utils.DayPlanner.Plan p = com.tac.Weathercast.utils.DayPlanner.build(
+                        src, todayWeather.getSunrise(), todayWeather.getSunset());
+                View planCard = findViewById(R.id.planCard);
+                TextView pw = findViewById(R.id.planWindow);
+                TextView pwy = findViewById(R.id.planWindowWhy);
+                TextView pg = findViewById(R.id.planGolden);
+                boolean any = false;
+                if (pw != null) {
+                    if (p.windowRange != null) {
+                        pw.setText("Best window · " + p.windowRange);
+                        pwy.setText(p.windowWhy);
+                        pw.setVisibility(View.VISIBLE); pwy.setVisibility(View.VISIBLE);
+                        ((View) pw.getParent().getParent()).setVisibility(View.VISIBLE);
+                        any = true;
+                    } else {
+                        ((View) pw.getParent().getParent()).setVisibility(View.GONE);
+                    }
+                }
+                if (pg != null && (p.goldenAm != null || p.goldenPm != null)) {
+                    String gh = "";
+                    if (p.goldenAm != null) gh += p.goldenAm;
+                    if (p.goldenPm != null) gh += (gh.isEmpty() ? "" : "   ·   ") + p.goldenPm;
+                    pg.setText(gh);
+                    any = true;
+                }
+                if (planCard != null) planCard.setVisibility(any ? View.VISIBLE : View.GONE);
+            } catch (Exception ignored) {}
+
             // Wind compass
             com.tac.Weathercast.utils.CompassView compass = findViewById(R.id.windCompass);
             if (compass != null) {

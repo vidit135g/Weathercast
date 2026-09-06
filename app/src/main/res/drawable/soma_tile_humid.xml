@@ -1,5 +1,15 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#145A54A6" />
-    <corners android:radius="24dp" />
-    <stroke android:width="1dp" android:color="#405A54A6" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/soma_surface" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#2A5A54A6" />
+            <corners android:radius="24dp" />
+            <stroke android:width="1.5dp" android:color="#705A54A6" />
+        </shape>
+    </item>
+</layer-list>

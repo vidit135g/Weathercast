@@ -87,8 +87,8 @@ public final class SomaTheme {
         if (dark) {
             int[] de = locked != null ? locked : elementFor(owmId, true);
             return new SomaTheme(
-                    0xFF12161B, 0xFF1C232B, 0xFF28313A, 0xFFEEF1F3, 0xFFB4BDC5, 0xFF828C95,
-                    0xFF333E48, de[2], de[0], de[1], de[2], true);
+                    0xFF10141A, 0xFF272E3A, 0xFF333C4A, 0xFFF6F8FA, 0xFFCDD5DD, 0xFFA6B0BC,
+                    0xFF4A586A, de[2], de[0], de[1], de[2], true);
         }
 
         int bg, surfMuted, accent;
