@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     private ImageView todayIcon;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private RelativeLayout mainLay;
+    private View mainLay;
     private TextView currdate;
 
     private MaterialSearchView searchView;

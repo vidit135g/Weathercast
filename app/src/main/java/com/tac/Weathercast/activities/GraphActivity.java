@@ -49,8 +49,8 @@ public class GraphActivity extends BaseActivity {
     float minWindSpeed = 100000;
     float maxWindSpeed = 0;
 
-    private String labelColor = "#000000";
-    private String lineColor = "#333333";
+    private String labelColor = "#7D756D";
+    private String lineColor = "#EADFC9";
 
     private boolean darkTheme = false;
 
@@ -119,7 +119,7 @@ public class GraphActivity extends BaseActivity {
             dataset.addPoint(getDateLabel(weatherList.get(i), i), temperature);
         }
         dataset.setSmooth(false);
-        dataset.setColor(Color.parseColor("#FF5722"));
+        dataset.setColor(Color.parseColor("#D8663D"));
         dataset.setThickness(4);
 
         lineChartView.addData(dataset);
@@ -161,7 +161,7 @@ public class GraphActivity extends BaseActivity {
             dataset.addPoint(getDateLabel(weatherList.get(i), i), rain);
         }
         dataset.setSmooth(false);
-        dataset.setColor(Color.parseColor("#2196F3"));
+        dataset.setColor(Color.parseColor("#5A54A6"));
         dataset.setThickness(4);
 
         lineChartView.addData(dataset);
@@ -203,7 +203,7 @@ public class GraphActivity extends BaseActivity {
             dataset.addPoint(getDateLabel(weatherList.get(i), i), pressure);
         }
         dataset.setSmooth(true);
-        dataset.setColor(Color.parseColor("#4CAF50"));
+        dataset.setColor(Color.parseColor("#3F6349"));
         dataset.setThickness(4);
 
         lineChartView.addData(dataset);
@@ -228,7 +228,7 @@ public class GraphActivity extends BaseActivity {
 
     private void windSpeedGraph() {
         LineChartView lineChartView = (LineChartView) findViewById(R.id.graph_windspeed);
-        String graphLineColor = "#efd214";
+        String graphLineColor = "#D8A24E";
 
         if (darkTheme) {
             graphLineColor = "#FFF600";

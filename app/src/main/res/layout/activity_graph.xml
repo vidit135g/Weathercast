@@ -6,149 +6,95 @@
     android:id="@+id/graph_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
+    android:background="@color/soma_bg"
+    android:fitsSystemWindows="true"
     tools:context="com.tac.Weathercast.activities.GraphActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
         <androidx.appcompat.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/graph_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
+            android:background="@color/soma_bg"
+            android:paddingTop="6dp"
+            app:contentInsetStartWithNavigation="0dp"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
-            android:background="?attr/colorPrimary"
-            app:titleTextColor="@color/white"
-            app:navigationIcon="@drawable/ic_action_navigation_arrow_back"
-            >
+            app:navigationIcon="@drawable/ic_soma_back">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Graph"
-                android:textColor="@color/black"
-                android:textSize="20sp"/>
+                android:fontFamily="@font/fraunces"
+                android:letterSpacing="-0.02"
+                android:text="Trends"
+                android:textColor="@color/soma_ink"
+                android:textSize="24sp" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical"
+            android:background="@drawable/bento_tile"
+            android:padding="18dp">
+            <TextView android:id="@+id/graphTemperatureTextView" style="@style/Soma.Label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/temperature" />
+            <com.db.chart.view.LineChartView android:id="@+id/graph_temperature"
+                android:layout_width="match_parent" android:layout_height="190dp"
+                android:layout_marginTop="10dp" chart:chart_axisBorderSpacing="8dp" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/graphTemperatureTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/temperature"
-                    android:textAlignment="center"
-                    android:textColor="@color/text_dark"
-                    android:textSize="18sp" />
-
-                <com.db.chart.view.LineChartView
-                    android:id="@+id/graph_temperature"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    chart:chart_axisBorderSpacing="8dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/bento_tile"
+            android:padding="18dp">
+            <TextView android:id="@+id/graphRainTextView" style="@style/Soma.Label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/rain" />
+            <com.db.chart.view.LineChartView android:id="@+id/graph_rain"
+                android:layout_width="match_parent" android:layout_height="190dp"
+                android:layout_marginTop="10dp" chart:chart_axisBorderSpacing="8dp" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/graphRainTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/rain"
-                    android:textAlignment="center"
-                    android:textColor="@color/text_dark"
-                    android:textSize="18sp" />
-
-                <com.db.chart.view.LineChartView
-                    android:id="@+id/graph_rain"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    chart:chart_axisBorderSpacing="8dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/bento_tile"
+            android:padding="18dp">
+            <TextView android:id="@+id/graphPressureTextView" style="@style/Soma.Label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pressure" />
+            <com.db.chart.view.LineChartView android:id="@+id/graph_pressure"
+                android:layout_width="match_parent" android:layout_height="190dp"
+                android:layout_marginTop="10dp" chart:chart_axisBorderSpacing="8dp" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/graphPressureTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/pressure"
-                    android:textAlignment="center"
-                    android:textColor="@color/text_dark"
-                    android:textSize="18sp" />
-
-                <com.db.chart.view.LineChartView
-                    android:id="@+id/graph_pressure"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    chart:chart_axisBorderSpacing="8dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/graphWindSpeedTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/wind_speed"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <com.db.chart.view.LineChartView
-                    android:id="@+id/graph_windspeed"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    chart:chart_axisBorderSpacing="8dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/bento_tile"
+            android:padding="18dp">
+            <TextView android:id="@+id/graphWindSpeedTextView" style="@style/Soma.Label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/wind_speed" />
+            <com.db.chart.view.LineChartView android:id="@+id/graph_windspeed"
+                android:layout_width="match_parent" android:layout_height="190dp"
+                android:layout_marginTop="10dp" chart:chart_axisBorderSpacing="8dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

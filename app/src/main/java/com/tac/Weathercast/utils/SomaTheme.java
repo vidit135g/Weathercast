@@ -43,26 +43,31 @@ public final class SomaTheme {
         return Period.NIGHT;
     }
 
+    /**
+     * All periods stay in the warm cream family — Soma's light direction — and
+     * only shift accent, warmth and the hero wash so the app quietly tracks the
+     * day without ever going dark-and-muddy.
+     */
     private static SomaTheme base(Period p) {
         switch (p) {
             case DAWN: return new SomaTheme(
-                    0xFF15172A, 0xFF20233F, 0xFFF3F2FB, 0xFFCFCDEC, 0xFF3B3F6B, 0xFFB0A6F5,
-                    0xFF2A2E52, 0xFF15172A, true);
+                    0xFFF3EFF4, 0xFFFCFAFC, 0xFF262233, 0xFF6C6577, 0xFFE6DEE8, 0xFF6E6AB8,
+                    0xFFFBF6F0, 0xFFEDE4EE, false);
             case MORNING: return new SomaTheme(
-                    0xFFF6F3E6, 0xFFFFFFFA, 0xFF1F2E24, 0xFF4B5A4C, 0xFFDFDFC5, 0xFF2A8259,
-                    0xFFFDFCF3, 0xFFEDF0DC, false);
+                    0xFFF7F4E7, 0xFFFFFEF8, 0xFF20301F, 0xFF5E6B58, 0xFFE4E2CC, 0xFF3F6349,
+                    0xFFFEFDF4, 0xFFEEEFD9, false);
             case DAY: return new SomaTheme(
-                    0xFFFFF6E8, 0xFFFFFCF3, 0xFF33220F, 0xFF6A5138, 0xFFF1E1C4, 0xFFE85E2C,
-                    0xFFFFFDF6, 0xFFFBE9CE, false);
+                    0xFFFDF4E4, 0xFFFFFCF4, 0xFF2A2113, 0xFF7A6650, 0xFFEFE0C6, 0xFFD8663D,
+                    0xFFFFFDF6, 0xFFFBE7CD, false);
             case AFTERNOON: return new SomaTheme(
-                    0xFFF5F1FA, 0xFFFBF9FE, 0xFF241F34, 0xFF544C74, 0xFFE4DCF1, 0xFF6E6AB8,
-                    0xFFFDFBFF, 0xFFEDE6F6, false);
+                    0xFFF6F2F0, 0xFFFFFCFA, 0xFF2C231D, 0xFF7B6A5C, 0xFFEBE0D6, 0xFFCC6A46,
+                    0xFFFFFBF6, 0xFFF3E3D6, false);
             case DUSK: return new SomaTheme(
-                    0xFFF7ECDD, 0xFFFFF7EE, 0xFF3A2417, 0xFF6E4A33, 0xFFEAD6BE, 0xFFD8663D,
-                    0xFFFDEFDD, 0xFFF3CFA6, false);
+                    0xFFF7EDDF, 0xFFFFF6EC, 0xFF3A2417, 0xFF7A5237, 0xFFEBD6BE, 0xFFD8663D,
+                    0xFFFDEEDB, 0xFFF6D3AC, false);
             case NIGHT: default: return new SomaTheme(
-                    0xFF111F1E, 0xFF1B2C2A, 0xFFF1F5F2, 0xFFB9C9C4, 0xFF2F423E, 0xFFE0A43A,
-                    0xFF1A2E2B, 0xFF111F1E, true);
+                    0xFFF1EEE6, 0xFFFAF8F2, 0xFF232620, 0xFF6A6C63, 0xFFDEDCCE, 0xFFC98A3C,
+                    0xFFF7F4EC, 0xFFECE7DA, false);
         }
     }
 

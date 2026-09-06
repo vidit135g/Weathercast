@@ -4,24 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:background="@color/soma_bg"
+    app:elevation="0dp">
+
     <androidx.appcompat.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
+        android:background="@color/soma_bg"
+        android:paddingTop="6dp"
+        app:navigationIcon="@drawable/ic_soma_back"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_action_navigation_arrow_back"
-        >
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Settings"
-        android:textColor="@color/black"
-    android:textSize="20sp"/>
+        app:contentInsetStartWithNavigation="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fraunces"
+            android:text="Settings"
+            android:textColor="@color/soma_ink"
+            android:letterSpacing="-0.02"
+            android:textSize="24sp" />
     </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

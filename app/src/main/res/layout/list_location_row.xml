@@ -1,81 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rowCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="?android:attr/selectableItemBackground"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="5dp"
+    android:background="@drawable/bento_tile"
     android:clickable="true"
-    app:cardCornerRadius="8dp"
-    android:padding="6dp"
     android:focusable="true"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="262dp">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:padding="10dp"
-        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/rowIconTextView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="C"
+        android:textColor="@color/soma_ember"
+        android:textSize="26sp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="14dp"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/rowIconTextView"
+            android:id="@+id/rowCityTextView"
+            style="@style/Soma.Display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:typeface="monospace"
-            android:text="C"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            />
+            android:textSize="17sp"
+            tools:text="London, GB" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/rowIconTextView"
-            android:layout_marginTop="10dp"
-            android:id="@+id/main"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/rowTemperatureTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/text_dark"
-                android:typeface="monospace"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/rowCityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_marginStart="16dp"
-                android:textColor="@color/text_dark"
-                android:text="TextView"
-                android:textSize="14sp"
-                android:typeface="monospace"/>
-
-        </LinearLayout>
         <TextView
             android:id="@+id/rowDescriptionTextView"
+            style="@style/Soma.Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/rowIconTextView"
-            android:textColor="@color/text_dark"
-            android:layout_marginLeft="16dp"
-            android:layout_below="@+id/main"
-            android:layout_marginTop="4dp"
-            android:typeface="monospace"
-            android:textSize="14sp"/>
-        <WebView
-            android:id="@+id/webView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rowDescriptionTextView"/>
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+            android:layout_marginTop="3dp"
+            tools:text="Clear sky" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rowTemperatureTextView"
+        style="@style/Soma.Display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        tools:text="18°" />
+
+    <WebView
+        android:id="@+id/webView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+</LinearLayout>

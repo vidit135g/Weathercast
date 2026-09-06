@@ -3,22 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fafafa"
+    android:background="@color/soma_bg"
+    android:fitsSystemWindows="true"
     tools:context=".activities.SplashActivity">
-    <ImageView
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:src="@drawable/sunset"
-        android:layout_centerInParent="true"
-        android:paddingBottom="50dp"/>
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Weathercast"
-        android:textSize="28dp"
-        android:typeface="monospace"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:textColor="#cecece" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:src="@drawable/soma_wx_clear_day" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/fraunces"
+            android:text="Weathercast"
+            android:textColor="@color/soma_ink"
+            android:textSize="32sp"
+            android:letterSpacing="-0.02" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins"
+            android:text="THE LIVE SKY"
+            android:textColor="@color/soma_text_muted"
+            android:textSize="11sp"
+            android:letterSpacing="0.28" />
+    </LinearLayout>
 </RelativeLayout>

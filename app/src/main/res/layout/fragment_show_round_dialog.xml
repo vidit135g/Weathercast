@@ -1,174 +1,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_8"
-    android:layout_marginTop="@dimen/dp_8"
-    android:orientation="vertical">
+    android:background="@color/soma_bg"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp">
 
+    <View
+        android:layout_width="40dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/bento_grabber" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:padding="14dp"
-        android:paddingStart="18dp"
-        android:clickable="true"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="22dp"
+        android:paddingVertical="10dp">
 
-
-            <ImageView
-                android:layout_height="52dp"
-                android:layout_width="52dp"
-                android:id="@+id/accountpic"
-                android:clickable="true"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/sunset"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:id="@+id/accountpic"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/soma_wx_clear_day" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:clickable="true"
+            android:layout_marginStart="14dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/username"
-                android:paddingLeft="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:layout_marginStart="@dimen/dp_16"
-                android:clickable="true"
-                android:gravity="top|center_vertical"
+                android:fontFamily="@font/fraunces"
                 android:text="@string/app_sign_name"
-                android:textColor="@color/black"
+                android:textColor="@color/soma_ink"
                 android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/userid"
-                android:layout_marginTop="4dp"
-                android:paddingLeft="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:layout_marginStart="@dimen/dp_16"
-                android:clickable="true"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins"
                 android:text="thecompanyabsolute@gmail.com"
-                android:textColor="@color/grey_800"
-                android:textSize="13sp" />
+                android:textColor="@color/soma_text_muted"
+                android:textSize="12sp" />
         </LinearLayout>
-
     </LinearLayout>
+
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.4dp"
-        android:layout_marginBottom="10dp"
-        android:background="#c1c1c1"/>
-
-    <TextView
-        android:id="@+id/refresh"
-        android:paddingLeft="22dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:background="@drawable/ripple_text"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/ic_refresh_black_24dp"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="Refresh"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginVertical="8dp"
+        android:background="@color/soma_border" />
 
-
-
-    <TextView
-        android:id="@+id/graph"
-        android:paddingLeft="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:clickable="true"
-        android:background="@drawable/ripple_text"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/graphs"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="Graphs"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-
-    <TextView
-        android:id="@+id/locationup"
-        android:paddingLeft="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:background="@drawable/ripple_text"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/locationup"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="Update Location"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-
-    <TextView
-        android:id="@+id/settings"
-        android:paddingLeft="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:background="@drawable/ripple_text"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/settings"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="Settings"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/share"
-        android:paddingLeft="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:background="@drawable/ripple_text"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/share"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="Share"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/about"
-        android:paddingLeft="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:background="@drawable/ripple_text"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dp_32"
-        android:drawableStart="@drawable/info"
-        android:drawableTint="#505050"
-        android:gravity="start|center_vertical"
-        android:text="About"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
- </LinearLayout>
+    <TextView android:id="@+id/refresh" style="@style/Soma.MenuRow" android:text="Refresh"
+        android:drawableStart="@drawable/ic_refresh_black_24dp" />
+    <TextView android:id="@+id/graph" style="@style/Soma.MenuRow" android:text="Trends"
+        android:drawableStart="@drawable/graphs" />
+    <TextView android:id="@+id/locationup" style="@style/Soma.MenuRow" android:text="Update location"
+        android:drawableStart="@drawable/locationup" />
+    <TextView android:id="@+id/settings" style="@style/Soma.MenuRow" android:text="Settings"
+        android:drawableStart="@drawable/settings" />
+    <TextView android:id="@+id/share" style="@style/Soma.MenuRow" android:text="Share"
+        android:drawableStart="@drawable/share" />
+    <TextView android:id="@+id/about" style="@style/Soma.MenuRow" android:text="About"
+        android:drawableStart="@drawable/info" />
+</LinearLayout>

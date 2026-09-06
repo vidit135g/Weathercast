@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/locationsLinearLayout"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:layout_marginTop="25dp"
-              android:background="#fff"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/locationsLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soma_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/dialogToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/gyellow" android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
+        android:background="@color/soma_bg"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_soma_back">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Locations"
-            android:textSize="20sp"
-            android:typeface="monospace"
-            android:textColor="@color/white"/>
+            android:fontFamily="@font/fraunces"
+            android:letterSpacing="-0.02"
+            android:text="Pick a location"
+            android:textColor="@color/soma_ink"
+            android:textSize="22sp" />
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locationsRecyclerView"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="match_parent" android:layout_height="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:clipToPadding="false" />
 </LinearLayout>
