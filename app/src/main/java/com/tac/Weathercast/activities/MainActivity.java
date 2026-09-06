@@ -81,7 +81,7 @@ import com.tac.Weathercast.tasks.TaskOutput;
 import com.tac.Weathercast.utils.Formatting;
 import com.tac.Weathercast.utils.UI;
 import com.tac.Weathercast.utils.UnitConvertor;
-import com.tac.Weathercast.utils.WeatherDosha;
+import com.tac.Weathercast.utils.WeatherSummary;
 import com.tac.Weathercast.widgets.AbstractWidgetProvider;
 import com.tac.Weathercast.widgets.DashClockWeatherExtension;
 
@@ -111,7 +111,6 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     private TextView lastUpdate;
     private TextView todayReadingHeadline;
     private TextView todayReadingAdvice;
-    private TextView todayDoshaChip;
     private TextView todayFeelsLike;
     private TextView todayWindPill;
     private TextView todayUvPill;
@@ -207,7 +206,6 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         lastUpdate = (TextView) findViewById(R.id.lastUpdate);
         todayReadingHeadline = findViewById(R.id.todayReadingHeadline);
         todayReadingAdvice = findViewById(R.id.todayReadingAdvice);
-        todayDoshaChip = findViewById(R.id.todayDoshaChip);
         todayFeelsLike = findViewById(R.id.todayFeelsLike);
         todayWindPill = findViewById(R.id.todayWindPill);
         todayUvPill = findViewById(R.id.todayUvPill);
@@ -652,7 +650,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         todaySunset.setText(timeFormat.format(todayWeather.getSunset()));
         citytool=findViewById(R.id.citytool);
         citytool.setText(city);
-        updateAyurvedicReading(sp);
+        updateGlanceCard(sp);
         checkWeather();
         todayIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -664,8 +662,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     }
 
 
-    /** Reads the live weather through Ayurveda (ported from the Soma app) and fills the reading card + hero pills. */
-    private void updateAyurvedicReading(SharedPreferences sp) {
+    /** Fills the "At a glance" summary card + hero pills from the current conditions. */
+    private void updateGlanceCard(SharedPreferences sp) {
         try {
             double tempC = Double.parseDouble(todayWeather.getTemperature()) - 273.15;
             double humidity;
@@ -675,25 +673,22 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             double uv = todayWeather.getUvIndex();
             int owmId;
             try { owmId = Integer.parseInt(todayWeather.getId()); } catch (Exception e) { owmId = 800; }
-            // OWM (no units param) gives no apparent temperature; approximate it.
+
+            long daylight = 0;
+            try {
+                daylight = (todayWeather.getSunset().getTime() - todayWeather.getSunrise().getTime()) / 60000L;
+                if (daylight < 0 || daylight > 24 * 60) daylight = 0;
+            } catch (Exception ignored) {}
+
+            WeatherSummary.Glance g = WeatherSummary.of(tempC, humidity, windMs, uv, owmId, daylight);
+            if (todayReadingHeadline != null) todayReadingHeadline.setText(g.headline);
+            if (todayReadingAdvice != null) todayReadingAdvice.setText(g.tip);
+
+            // Apparent temperature (OWM call carries no units param, so approximate it).
             double feelsLikeC = tempC;
-            if (windMs > 1.3 && tempC < 12) feelsLikeC = tempC - Math.min(6, windMs);      // wind chill
-            else if (humidity > 65 && tempC > 26) feelsLikeC = tempC + (humidity - 65) / 12.0; // humidity heat
+            if (windMs > 1.3 && tempC < 12) feelsLikeC = tempC - Math.min(6, windMs);
+            else if (humidity > 65 && tempC > 26) feelsLikeC = tempC + (humidity - 65) / 12.0;
 
-            WeatherDosha.Reading r = WeatherDosha.read(tempC, feelsLikeC, humidity, windMs, uv, owmId);
-
-            if (todayReadingHeadline != null) todayReadingHeadline.setText(r.headline);
-            if (todayReadingAdvice != null) todayReadingAdvice.setText(r.advice);
-            if (todayDoshaChip != null) {
-                if (r.dosha == null) {
-                    todayDoshaChip.setText("Balanced");
-                    todayDoshaChip.getBackground().setColorFilter(0xFF5E8C6A, android.graphics.PorterDuff.Mode.SRC_IN);
-                } else {
-                    todayDoshaChip.setText(r.dosha);
-                    int c = r.dosha.equals("vata") ? 0xFF6E6AB8 : r.dosha.equals("pitta") ? 0xFFD8663D : 0xFF3F6349;
-                    todayDoshaChip.getBackground().setColorFilter(c, android.graphics.PorterDuff.Mode.SRC_IN);
-                }
-            }
             if (todayFeelsLike != null)
                 todayFeelsLike.setText(Math.round(UnitConvertor.convertTemperature((float) (feelsLikeC + 273.15), sp)) + "°");
             if (todayWindPill != null)
@@ -718,7 +713,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         // UV Index
         double uvIndex = todayWeather.getUvIndex();
         todayUvIndex.setText(UnitConvertor.convertUvIndexToRiskLevel(uvIndex));
-        updateAyurvedicReading(PreferenceManager.getDefaultSharedPreferences(MainActivity.this));
+        updateGlanceCard(PreferenceManager.getDefaultSharedPreferences(MainActivity.this));
     }
 
     public ParseResult parseLongTermJson(String result) {
