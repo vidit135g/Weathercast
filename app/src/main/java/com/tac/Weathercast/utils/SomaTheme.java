@@ -3,37 +3,29 @@ package com.tac.Weathercast.utils;
 import android.graphics.Color;
 
 /**
- * Soma palette. The page stays in the warm cream family; the hero is a full
- * elemental gradient block (Soma's {@code components/visuals/elements}) chosen
- * from the sky and the time of day.
+ * Soma palette. The page stays in the warm cream family (or a midnight dark
+ * palette when chosen); the hero is a full elemental gradient block chosen from
+ * the sky and the time of day, or locked by the user's Appearance setting.
  */
 public final class SomaTheme {
 
-    /** Near-white text that reads on any element gradient (Soma ON_ELEMENT). */
     public static final int ON_ELEMENT = 0xFFF8F3E9;
     public static final int ON_ELEMENT_DIM = 0xC7F8F3E9;
 
-    // ---- page palette ----
-    public final int background;
-    public final int surface;
-    public final int surfaceMuted;
-    public final int textPrimary;
-    public final int textSecondary;
-    public final int textMuted;
-    public final int border;
-    public final int accent;
-
-    // ---- hero element gradient ----
-    public final int heroFrom;
-    public final int heroTo;
-    public final int heroAccent;
+    public final int background, surface, surfaceMuted;
+    public final int textPrimary, textSecondary, textMuted;
+    public final int border, accent;
+    public final int heroFrom, heroTo, heroAccent;
+    public final boolean isDark;
 
     private SomaTheme(int bg, int surface, int surfaceMuted, int tp, int ts, int tm,
-                      int border, int accent, int heroFrom, int heroTo, int heroAccent) {
+                      int border, int accent, int heroFrom, int heroTo, int heroAccent,
+                      boolean isDark) {
         this.background = bg; this.surface = surface; this.surfaceMuted = surfaceMuted;
         this.textPrimary = tp; this.textSecondary = ts; this.textMuted = tm;
         this.border = border; this.accent = accent;
         this.heroFrom = heroFrom; this.heroTo = heroTo; this.heroAccent = heroAccent;
+        this.isDark = isDark;
     }
 
     // Soma jewel elements: from -> to (light -> deep), accent.
@@ -54,24 +46,49 @@ public final class SomaTheme {
         return Period.NIGHT;
     }
 
-    /** Pick the elemental gradient for the hero from the sky + clock. */
     private static int[] elementFor(int owmId, boolean isNight) {
         int g = owmId / 100;
-        if (g == 2) return ETHER;                    // thunderstorm
-        if (g == 3 || g == 5) return WATER;          // drizzle / rain
-        if (g == 6) return AIR;                      // snow
-        if (g == 7) return isNight ? ETHER : AIR;    // mist / haze / fog
-        if (isNight) return ETHER;                   // clear / clouds at night
-        if (owmId == 800 || owmId == 801) return FIRE;   // clear-ish day
-        return EARTH;                                // clouds / overcast day
+        if (g == 2) return ETHER;
+        if (g == 3 || g == 5) return WATER;
+        if (g == 6) return AIR;
+        if (g == 7) return isNight ? ETHER : AIR;
+        if (isNight) return ETHER;
+        if (owmId == 800 || owmId == 801) return FIRE;
+        return EARTH;
+    }
+
+    private static int[] lockedElement(String appearance) {
+        if (appearance == null) return null;
+        switch (appearance) {
+            case "fire":  return FIRE;
+            case "earth": return EARTH;
+            case "air":   return AIR;
+            case "water": return WATER;
+            case "ether": return ETHER;
+            default:      return null;
+        }
     }
 
     public static SomaTheme forNow(int hour, int owmId) {
+        return forNow(hour, owmId, "auto");
+    }
+
+    /**
+     * @param appearance "auto" | "fire" | "earth" | "air" | "water" | "ether" | "dark"
+     */
+    public static SomaTheme forNow(int hour, int owmId, String appearance) {
         Period p = periodFor(hour);
         boolean isNight = p == Period.NIGHT || p == Period.DAWN;
+        int[] locked = lockedElement(appearance);
+        int[] el = locked != null ? locked : elementFor(owmId, isNight);
 
-        // Warm cream page, shifts subtly by period.
-        int bg, surf, surfMuted, tp, ts, tm, border, accent;
+        if ("dark".equals(appearance)) {
+            return new SomaTheme(
+                    0xFF14181C, 0xFF1E242A, 0xFF283039, 0xFFEFF1F3, 0xFFAEB6BE, 0xFF7E868F,
+                    0xFF333C45, 0xFFE0A43A, el[0], el[1], el[2], true);
+        }
+
+        int bg, surfMuted, accent;
         switch (p) {
             case DAWN:      bg = 0xFFF3EFF4; surfMuted = 0xFFE9E3F0; accent = 0xFF6E6AB8; break;
             case MORNING:   bg = 0xFFF7F5E9; surfMuted = 0xFFECEAD6; accent = 0xFF3F6349; break;
@@ -80,18 +97,15 @@ public final class SomaTheme {
             case DUSK:      bg = 0xFFF8EBDA; surfMuted = 0xFFF1DCC0; accent = 0xFFD8663D; break;
             case NIGHT: default: bg = 0xFFF1EEE5; surfMuted = 0xFFE4E1D2; accent = 0xFFC98A3C; break;
         }
-        surf = 0xFFFFFDF6; tp = 0xFF241E17; ts = 0xFF6B5E4E; tm = 0xFF938573; border = 0xFFE9DCC4;
-
-        int[] el = elementFor(owmId, isNight);
-        return new SomaTheme(bg, surf, surfMuted, tp, ts, tm, border, accent,
-                el[0], el[1], el[2]);
+        return new SomaTheme(bg, 0xFFFFFDF6, surfMuted,
+                0xFF241E17, 0xFF6B5E4E, 0xFF938573, 0xFFE9DCC4, accent,
+                el[0], el[1], el[2], false);
     }
 
     public int borderTranslucent() {
         return (border & 0x00FFFFFF) | 0x55000000;
     }
 
-    /** blend a over b */
     public static int blend(int a, int b, float t) {
         float inv = 1f - t;
         return Color.argb(255,

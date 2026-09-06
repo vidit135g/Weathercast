@@ -378,6 +378,12 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     @Override
     public void onResume() {
         super.onResume();
+        try {
+            int id = Integer.parseInt(todayWeather.getId());
+            applySomaTheme(id);
+        } catch (Exception ignored) {
+            applySomaTheme(800);
+        }
         if (UI.getTheme(PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "fresh")) != theme ||
                 PreferenceManager.getDefaultSharedPreferences(this).getBoolean("transparentWidget", false) != widgetTransparent) {
             // Restart activity to apply theme
@@ -682,7 +688,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     private void applySomaTheme(int owmId) {
         try {
             int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            SomaTheme t = SomaTheme.forNow(hour, owmId);
+            String appearance = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getString("appearance", "auto");
+            SomaTheme t = SomaTheme.forNow(hour, owmId, appearance);
 
             if (appView != null) {
                 // Faint elemental wash down the page — Soma's ambient field.

@@ -78,7 +78,7 @@ public class SettingsActivity extends PreferenceActivity
         setListPreferenceSummary("pressureUnit");
         setListPreferenceSummary("refreshInterval");
         setListPreferenceSummary("windDirectionFormat");
-        setListPreferenceSummary("theme");
+        setListPreferenceSummary("appearance");
     }
 
     @Override

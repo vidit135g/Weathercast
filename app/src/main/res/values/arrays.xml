@@ -123,6 +123,23 @@
         <item name="dark">dark</item>
         <item name="black">black</item>
     </string-array>
+
+    <string-array name="somaAppearance">
+        <item>Auto — follows the sky</item>
+        <item>Ember</item>
+        <item>Forest</item>
+        <item>Indigo</item>
+        <item>Teal</item>
+        <item>Violet</item>
+    </string-array>
+    <string-array name="somaAppearanceValues">
+        <item>auto</item>
+        <item>fire</item>
+        <item>earth</item>
+        <item>air</item>
+        <item>water</item>
+        <item>ether</item>
+    </string-array>
     <string-array name="query_suggestions">
         <!--<item>Agartala</item>-->
         <!--<item>Agra</item>-->
