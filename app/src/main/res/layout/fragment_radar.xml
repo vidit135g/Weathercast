@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soma_bg">
+    <WebView
+        android:id="@+id/radarWeb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="20dp"
+        android:paddingTop="16dp"
+        android:fontFamily="@font/fraunces"
+        android:letterSpacing="-0.02"
+        android:text="Radar"
+        android:textColor="@color/soma_on_fill"
+        android:textSize="26sp"
+        android:shadowColor="#80000000" android:shadowRadius="12" android:shadowDx="0" android:shadowDy="2" />
+</FrameLayout>

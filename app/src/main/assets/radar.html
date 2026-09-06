@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="leaflet.css" />
+  <script src="leaflet.js"></script>
+  <style>
+    html,body,#map{margin:0;height:100%;width:100%;background:#12161b}
+    .bar{position:fixed;left:12px;right:12px;bottom:16px;z-index:1200;
+      background:rgba(18,22,27,.92);border:1px solid rgba(255,255,255,.08);border-radius:16px;
+      padding:10px 14px;display:flex;align-items:center;gap:12px;color:#EEF1F3;
+      font-family:-apple-system,Roboto,sans-serif}
+    .darkbase{filter:invert(1) hue-rotate(188deg) brightness(.95) contrast(.9) saturate(.5)}
+    .bar button{all:unset;width:34px;height:34px;border-radius:12px;background:#E9855C;
+      color:#12161b;display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+    .bar .t{font-size:12px;letter-spacing:.04em;opacity:.85;flex:1}
+    .track{flex:2;height:4px;border-radius:2px;background:#333e48;position:relative}
+    .track .fill{position:absolute;left:0;top:0;bottom:0;background:#E9855C;border-radius:2px;width:0}
+    .leaflet-control-attribution{display:none}
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="bar">
+  <button id="pp">&#10073;&#10073;</button>
+  <span class="t" id="ts">loading radar…</span>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+<script>
+  function q(p){var m=new RegExp('[?&]'+p+'=([^&]*)').exec(location.search);return m?decodeURIComponent(m[1]):null;}
+  var lat=parseFloat(q('lat'))||20, lon=parseFloat(q('lon'))||0;
+  var map=L.map('map',{zoomControl:false,attributionControl:false}).setView([lat,lon],7);
+  map.createPane('base'); map.getPane('base').style.zIndex=190; map.getPane('base').classList.add('darkbase');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:12,minZoom:3,pane:'base'}).addTo(map);
+  L.circleMarker([lat,lon],{radius:6,color:'#E9855C',weight:2,fillColor:'#E9855C',fillOpacity:.5}).addTo(map);
+
+  var frames=[], layers=[], idx=0, playing=true, timer=null;
+  function tileUrl(f){return f.path? ('https://tilecache.rainviewer.com'+f.path+'/256/{z}/{x}/{y}/4/1_1.png')
+                                   : ('https://tilecache.rainviewer.com/v2/radar/'+f+'/256/{z}/{x}/{y}/4/1_1.png');}
+  function show(i){
+    layers.forEach(function(l,j){ if(l) l.setOpacity(j===i?0.75:0); });
+    var f=frames[i]; var t=new Date((f.time||f)*1000);
+    document.getElementById('ts').textContent=t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');
+    document.getElementById('fill').style.width=((i+1)/frames.length*100)+'%';
+  }
+  function step(){ idx=(idx+1)%frames.length; show(idx); }
+  function play(){ playing=true; document.getElementById('pp').innerHTML='&#10073;&#10073;'; clearInterval(timer); timer=setInterval(step,700); }
+  function pause(){ playing=false; document.getElementById('pp').textContent='▶'; clearInterval(timer); }
+  document.getElementById('pp').onclick=function(){ playing?pause():play(); };
+
+  fetch('https://api.rainviewer.com/public/weather-maps.json').then(function(r){return r.json();}).then(function(d){
+    var past=(d.radar&&d.radar.past)||[], nowc=(d.radar&&d.radar.nowcast)||[];
+    frames=past.concat(nowc);
+    if(!frames.length){ document.getElementById('ts').textContent='radar unavailable'; return; }
+    frames.forEach(function(f){
+      var l=L.tileLayer(tileUrl(f),{opacity:0,maxZoom:12,minZoom:3});
+      l.addTo(map); layers.push(l);
+    });
+    idx=Math.max(0,past.length-1); show(idx); play();
+  }).catch(function(){ document.getElementById('ts').textContent='radar unavailable (offline)'; });
+</script>
+</body>
+</html>

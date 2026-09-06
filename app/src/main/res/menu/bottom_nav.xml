@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_today" android:icon="@drawable/ic_feather_sun" android:title="Today" />
     <item android:id="@+id/nav_hourly" android:icon="@drawable/ic_feather_clock" android:title="Hourly" />
+    <item android:id="@+id/nav_radar" android:icon="@drawable/ic_feather_radar" android:title="Radar" />
     <item android:id="@+id/nav_trends" android:icon="@drawable/ic_feather_activity" android:title="Trends" />
     <item android:id="@+id/nav_more" android:icon="@drawable/ic_feather_sliders" android:title="More" />
 </menu>

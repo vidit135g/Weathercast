@@ -1000,7 +1000,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     public java.util.List<Weather> getLongTermWeatherData() { return longTermWeather; }
 
     private void showTab(int itemId) {
-        View scroll = findViewById(R.id.scrollHost);
+        View scroll = findViewById(R.id.swipeRefresh);
         View bar = findViewById(R.id.toolbar_container);
         View host = findViewById(R.id.navHost);
         boolean today = itemId == R.id.nav_today;
@@ -1014,6 +1014,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         }
         androidx.fragment.app.Fragment frag;
         if (itemId == R.id.nav_hourly) frag = new com.tac.Weathercast.fragments.HourlyFragment();
+        else if (itemId == R.id.nav_radar) frag = new com.tac.Weathercast.fragments.RadarFragment();
         else if (itemId == R.id.nav_trends) frag = new com.tac.Weathercast.fragments.TrendsFragment();
         else frag = new com.tac.Weathercast.fragments.MoreFragment();
         getSupportFragmentManager().beginTransaction()
@@ -1025,6 +1026,18 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     private void setupBottomNav() {
         com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
         final androidx.core.widget.NestedScrollView scroll = findViewById(R.id.scrollHost);
+
+        androidx.swiperefreshlayout.widget.SwipeRefreshLayout srl = findViewById(R.id.swipeRefresh);
+        if (srl != null) {
+            srl.setColorSchemeColors(0xFFD8663D);
+            srl.setProgressBackgroundColorSchemeColor(
+                    androidx.core.content.ContextCompat.getColor(this, R.color.soma_surface));
+            srl.setOnRefreshListener(() -> {
+                refreshWeather();
+                srl.postDelayed(() -> srl.setRefreshing(false), 1400);
+            });
+        }
+
         if (nav == null) return;
         nav.setSelectedItemId(R.id.nav_today);
         nav.setOnItemSelectedListener(item -> {
