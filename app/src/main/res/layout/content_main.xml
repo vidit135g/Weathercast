@@ -148,7 +148,18 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Forecast" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hourly" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hourlyStrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/hourly_capsule" />
+
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"

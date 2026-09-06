@@ -920,6 +920,30 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             currentPage = 1;
         }
         viewPager.setCurrentItem(currentPage, false);
+
+        updateHourlyStrip();
+    }
+
+    private void updateHourlyStrip() {
+        try {
+            androidx.recyclerview.widget.RecyclerView strip = findViewById(R.id.hourlyStrip);
+            if (strip == null) return;
+            java.util.List<com.tac.Weathercast.models.Weather> hourly = new ArrayList<>();
+            long now = System.currentTimeMillis() - 3 * 3600_000L;
+            for (com.tac.Weathercast.models.Weather w : longTermTodayWeather)
+                if (w.getDate().getTime() >= now) hourly.add(w);
+            for (com.tac.Weathercast.models.Weather w : longTermTomorrowWeather) {
+                if (hourly.size() >= 12) break;
+                hourly.add(w);
+            }
+            if (hourly.isEmpty()) { strip.setVisibility(View.GONE); return; }
+            strip.setVisibility(View.VISIBLE);
+            strip.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(
+                    this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
+            strip.setAdapter(new com.tac.Weathercast.adapters.HourlyAdapter(this, hourly));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isNetworkAvailable() {
