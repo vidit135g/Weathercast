@@ -43,5 +43,16 @@
             android:text="theabsolutecorporation@gmail.com"
             android:textColor="@color/soma_text_muted"
             android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:letterSpacing="0.03"
+            android:text="Crafted with care · Made in India 🇮🇳"
+            android:textColor="@color/soma_text_muted"
+            android:textSize="12sp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

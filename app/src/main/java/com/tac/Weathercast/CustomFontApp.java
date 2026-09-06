@@ -24,11 +24,12 @@ public class CustomFontApp extends Application {
      *  auto = dark between 20:00 and 06:00. */
     public static void applyNightMode(android.content.Context ctx) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        String a = sp.getString("appearance", "auto");
+        String base = sp.getString("themeBase", "system");
+        if ("dark".equals(sp.getString("appearance", "auto"))) base = "dark";  // legacy
         int mode;
-        if ("dark".equals(a)) {
+        if ("dark".equals(base)) {
             mode = AppCompatDelegate.MODE_NIGHT_YES;
-        } else if (!"auto".equals(a)) {
+        } else if ("light".equals(base)) {
             mode = AppCompatDelegate.MODE_NIGHT_NO;
         } else {
             int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);

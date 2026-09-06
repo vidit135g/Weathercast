@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:layout="@layout/soma_pref_category" android:title="@string/settings_title_units">
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="°C"
             android:entries="@array/temperatureUnits"
             android:entryValues="@array/temperatureUnitsValues"
@@ -9,11 +10,13 @@
             android:title="@string/setting_tempUnits" />
 
         <CheckBoxPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="true"
             android:key="temperatureInteger"
             android:title="@string/setting_showTempAsInteger" />
 
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="mm"
             android:entries="@array/lengthUnits"
             android:entryValues="@array/lengthUnitsValues"
@@ -21,6 +24,7 @@
             android:title="@string/setting_lengthUnits" />
 
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="m/s"
             android:entries="@array/speedUnits"
             android:entryValues="@array/speedUnitsValues"
@@ -28,6 +32,7 @@
             android:title="@string/setting_speedUnits" />
 
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="hPa"
             android:entries="@array/pressureUnits"
             android:entryValues="@array/pressureUnitsValues"
@@ -37,11 +42,13 @@
         <!-- dateFormat's (ListPreference) android:defaultValue and android:entries
              are derived from entryValues dynamically in code in SettingsActivity -->
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:entryValues="@array/dateFormatsValues"
             android:key="dateFormat"
             android:title="@string/setting_dateFormat" />
 
         <EditTextPreference
+            android:layout="@layout/soma_pref"
             android:key="dateFormatCustom"
             android:summary="@string/setting_dateFormatCustom_summary"
             android:title="@string/setting_dateFormatCustom" />
@@ -51,17 +58,28 @@
     <PreferenceCategory android:layout="@layout/soma_pref_category" android:title="@string/settings_title_display">
 
         <ListPreference
+            android:layout="@layout/soma_pref"
+            android:defaultValue="system"
+            android:entries="@array/somaThemeBase"
+            android:entryValues="@array/somaThemeBaseValues"
+            android:key="themeBase"
+            android:title="Theme" />
+
+        <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="auto"
             android:entries="@array/somaAppearance"
             android:entryValues="@array/somaAppearanceValues"
             android:key="appearance"
-            android:title="Appearance" />
+            android:title="Accent colour" />
 
         <CheckBoxPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="false"
             android:key="transparentWidget"
             android:title="@string/setting_transparent_widget" />
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="arrow"
             android:entries="@array/windDirectionFormats"
             android:entryValues="@array/windDirectionFormatValues"
@@ -69,11 +87,13 @@
             android:title="@string/setting_wind_direction_format" />
 
         <CheckBoxPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="false"
             android:key="displayDecimalZeroes"
             android:title="@string/setting_displayDecimalZeroes" />
 
         <CheckBoxPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="false"
             android:key="differentiateDaysByTint"
             android:title="@string/setting_differentiateDaysByTint" />
@@ -82,6 +102,7 @@
     <PreferenceCategory android:layout="@layout/soma_pref_category" android:title="@string/settings_title_data">
 
         <ListPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="1"
             android:entries="@array/refreshIntervals"
             android:entryValues="@array/refreshIntervalsValues"
@@ -89,6 +110,7 @@
             android:title="@string/setting_refreshInterval" />
 
         <EditTextPreference
+            android:layout="@layout/soma_pref"
             android:key="apiKey"
             android:summary="@string/setting_apiKey_summary"
             android:title="@string/setting_apiKey" />
@@ -98,6 +120,7 @@
     <PreferenceCategory android:layout="@layout/soma_pref_category" android:title="@string/settings_title_location">
 
         <CheckBoxPreference
+            android:layout="@layout/soma_pref"
             android:defaultValue="false"
             android:key="updateLocationAutomatically"
             android:title="@string/setting_update_location_automatically" />

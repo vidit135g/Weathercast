@@ -79,6 +79,7 @@ public class SettingsActivity extends PreferenceActivity
         setListPreferenceSummary("refreshInterval");
         setListPreferenceSummary("windDirectionFormat");
         setListPreferenceSummary("appearance");
+        setListPreferenceSummary("themeBase");
     }
 
     @Override
@@ -123,6 +124,15 @@ public class SettingsActivity extends PreferenceActivity
                 break;
             case "apiKey":
                 checkKey(key);
+                break;
+            case "themeBase":
+            case "appearance":
+                setListPreferenceSummary(key);
+                com.tac.Weathercast.CustomFontApp.applyNightMode(this);
+                overridePendingTransition(0, 0);
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
                 break;
         }
     }

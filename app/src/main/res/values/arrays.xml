@@ -124,6 +124,16 @@
         <item name="black">black</item>
     </string-array>
 
+    <string-array name="somaThemeBase">
+        <item>System — light by day, dark at night</item>
+        <item>Light</item>
+        <item>Dark (AMOLED black)</item>
+    </string-array>
+    <string-array name="somaThemeBaseValues">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
     <string-array name="somaAppearance">
         <item>Auto — follows the sky</item>
         <item>Ember</item>

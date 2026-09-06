@@ -2,11 +2,11 @@
 <resources>
     <!-- Soma midnight palette — brighter surfaces + text so cards and copy
          stay legible over the strong animated elemental field. -->
-    <color name="soma_bg">#10141A</color>
-    <color name="soma_bg_warm">#141A20</color>
-    <color name="soma_surface">#272E3A</color>
-    <color name="soma_surface_muted">#333C4A</color>
-    <color name="soma_border">#4A586A</color>
+    <color name="soma_bg">#060608</color>
+    <color name="soma_bg_warm">#0C0C10</color>
+    <color name="soma_surface">#17171E</color>
+    <color name="soma_surface_muted">#23232C</color>
+    <color name="soma_border">#3A3A46</color>
     <color name="soma_ink">#F6F8FA</color>
     <color name="soma_text_secondary">#CDD5DD</color>
     <color name="soma_text_muted">#A6B0BC</color>

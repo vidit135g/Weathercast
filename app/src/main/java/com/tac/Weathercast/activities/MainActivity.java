@@ -264,21 +264,29 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do some magic
+                // A suggestion tap fills "City, State, CC" — reduce it to the
+                // "City,CC" form the OWM lookup understands; plain text passes through.
+                String q = query;
+                if (q != null && q.contains(",")) {
+                    String[] parts = q.split("\\s*,\\s*");
+                    if (parts.length >= 2)
+                        q = parts[0] + "," + parts[parts.length - 1];
+                }
                 new FindCitiesByNameTask(getApplicationContext(),
-                        MainActivity.this, progressDialog).execute("city", query);
+                        MainActivity.this, progressDialog).execute("city", q);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Do some magic
+                scheduleCitySuggestions(newText);
                 return false;
             }
         });
 
 
         searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        searchView.setSubmitOnClick(true);
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
@@ -666,7 +674,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             String appearance = PreferenceManager.getDefaultSharedPreferences(this)
                     .getString("appearance", "auto");
-            SomaTheme t = SomaTheme.forNow(hour, owmId, appearance);
+            String base = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getString("themeBase", "system");
+            SomaTheme t = SomaTheme.forNow(hour, owmId, appearance, base);
 
             com.tac.Weathercast.utils.ElementalFieldView field = findViewById(R.id.fieldBg);
             if (field != null) field.setColors(t.background, t.heroFrom, t.heroTo, t.isDark);
@@ -753,6 +763,67 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     }
 
     private long lastAqiFetch = 0;
+
+    private final Handler citySuggestHandler = new Handler();
+    private Runnable citySuggestTask;
+    private volatile long citySuggestToken;
+    private boolean suppressSuggestFetch = false;
+    private String lastSuggestQuery = "";
+
+    /** Live city-name autocomplete via the OWM Geocoding API, debounced ~350ms. */
+    private void scheduleCitySuggestions(final String text) {
+        if (suppressSuggestFetch) { suppressSuggestFetch = false; return; }
+        if (citySuggestTask != null) citySuggestHandler.removeCallbacks(citySuggestTask);
+        if (text == null || text.trim().length() < 3) return;
+        if (text.trim().equalsIgnoreCase(lastSuggestQuery)) return;
+        lastSuggestQuery = text.trim();
+        final String q = text.trim();
+        final long token = ++citySuggestToken;
+        citySuggestTask = () -> {
+            final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            final String key = sp.getString("apiKey", getString(R.string.apiKey)).replace("\"", "").trim();
+            new Thread(() -> {
+                try {
+                    java.net.HttpURLConnection cn = (java.net.HttpURLConnection) new java.net.URL(
+                            "https://api.openweathermap.org/geo/1.0/direct?q="
+                                    + java.net.URLEncoder.encode(q, "UTF-8")
+                                    + "&limit=5&appid=" + key).openConnection();
+                    cn.setConnectTimeout(6000); cn.setReadTimeout(6000);
+                    java.io.BufferedReader br = new java.io.BufferedReader(
+                            new java.io.InputStreamReader(cn.getInputStream()));
+                    StringBuilder s = new StringBuilder(); String ln;
+                    while ((ln = br.readLine()) != null) s.append(ln);
+                    br.close();
+                    org.json.JSONArray arr = new org.json.JSONArray(s.toString());
+                    final java.util.ArrayList<String> out = new java.util.ArrayList<>();
+                    final String qLower = q.toLowerCase();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject o = arr.getJSONObject(i);
+                        String name = o.getString("name");
+                        // MaterialSearchView filters suggestions by prefix against the
+                        // current query, so keep only server hits the query prefixes.
+                        if (!name.toLowerCase().startsWith(qLower)) continue;
+                        StringBuilder label = new StringBuilder(name);
+                        if (o.has("state") && !o.getString("state").isEmpty())
+                            label.append(", ").append(o.getString("state"));
+                        if (o.has("country")) label.append(", ").append(o.getString("country"));
+                        String v = label.toString();
+                        if (!out.contains(v)) out.add(v);
+                    }
+                    if (token != citySuggestToken || out.isEmpty()) return;
+                    runOnUiThread(() -> {
+                        if (token != citySuggestToken) return;
+                        searchView.setSuggestions(out.toArray(new String[0]));
+                        // Nudge MaterialSearchView to re-filter and reveal the list
+                        // now that the adapter is populated.
+                        suppressSuggestFetch = true;
+                        searchView.setQuery(q, false);
+                    });
+                } catch (Exception ignored) { }
+            }).start();
+        };
+        citySuggestHandler.postDelayed(citySuggestTask, 350);
+    }
 
     /** Real air quality from the OpenWeatherMap Air Pollution API. */
     private void fetchAirQuality(SharedPreferences sp) {
@@ -1706,6 +1777,12 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         boolean isNight = hour < 6 || hour >= 20;
         todayIcon.setImageResource(Formatting.somaIllustration(owmId, isNight));
+        com.tac.Weathercast.utils.WeatherFxView fx = findViewById(R.id.weatherFx);
+        if (fx != null) {
+            int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            fx.setWeather(owmId, isNight, SomaTheme.forNow(hr, owmId,
+                    PreferenceManager.getDefaultSharedPreferences(this).getString("appearance", "auto")).heroAccent);
+        }
         todayIcon.setScaleX(0.82f); todayIcon.setScaleY(0.82f); todayIcon.setAlpha(0f);
         todayIcon.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(420)
                 .setInterpolator(new android.view.animation.OvershootInterpolator(1.4f)).start();

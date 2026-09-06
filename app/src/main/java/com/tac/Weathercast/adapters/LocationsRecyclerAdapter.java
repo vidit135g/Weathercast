@@ -51,23 +51,7 @@ public class LocationsRecyclerAdapter extends RecyclerView.Adapter<LocationsRecy
         holder.iconTextView.setText(weather.getIcon());
         holder.iconTextView.setTypeface(weatherFont);
 
-        holder.webView.getSettings().setJavaScriptEnabled(true);
-        holder.webView.loadUrl("file:///android_asset/map.html?lat=" + weather.getLat()+ "&lon=" + weather.getLon() + "&appid=" + "notneeded&displayPin=true");
-
-        if (darkTheme || blackTheme) {
-            holder.cityTextView.setTextColor(Color.WHITE);
-            holder.temperatureTextView.setTextColor(Color.WHITE);
-            holder.descriptionTextView.setTextColor(Color.WHITE);
-            holder.iconTextView.setTextColor(Color.WHITE);
-        }
-
-        if (darkTheme) {
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#2e3c43"));
-        }
-
-        if (blackTheme) {
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#2f2f2f"));
-        }
+        // Map preview kept out of the redesigned bento row.
     }
 
     @Override
@@ -80,8 +64,6 @@ public class LocationsRecyclerAdapter extends RecyclerView.Adapter<LocationsRecy
         private TextView temperatureTextView;
         private TextView descriptionTextView;
         private TextView iconTextView;
-        private WebView webView;
-        private CardView cardView;
 
         LocationsViewHolder(View itemView) {
             super(itemView);
@@ -90,8 +72,6 @@ public class LocationsRecyclerAdapter extends RecyclerView.Adapter<LocationsRecy
             temperatureTextView = itemView.findViewById(R.id.rowTemperatureTextView);
             descriptionTextView = itemView.findViewById(R.id.rowDescriptionTextView);
             iconTextView = itemView.findViewById(R.id.rowIconTextView);
-            webView = itemView.findViewById(R.id.webView2);
-            cardView = itemView.findViewById(R.id.rowCardView);
 
             itemView.setOnClickListener(this);
         }
