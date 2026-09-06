@@ -247,7 +247,17 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
+                // Parallax + fade the hero as the sheet rises.
+                float o = Math.max(0f, Math.min(1f, slideOffset));
+                if (mainLay != null) {
+                    mainLay.setTranslationY(-o * dp(36));
+                    mainLay.setAlpha(1f - o * 0.55f);
+                }
+                if (todayIcon != null) {
+                    todayIcon.setTranslationY(o * dp(18));
+                    todayIcon.setTranslationX(o * dp(10));
+                    todayIcon.setRotation(o * 6f);
+                }
             }
         });
 
@@ -760,6 +770,15 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 todayWindPill.setText(new DecimalFormat("0.#").format(UnitConvertor.convertWind(windMs, sp)) + " " + localize(sp, "speedUnit", "m/s"));
             if (todayUvPill != null)
                 todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uv));
+
+            // Wind compass
+            com.tac.Weathercast.utils.CompassView compass = findViewById(R.id.windCompass);
+            if (compass != null) {
+                Double deg = todayWeather.getWindDirectionDegree();
+                int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                compass.setBearing(deg == null ? null : deg.floatValue(),
+                        SomaTheme.forNow(hr, owmId).heroAccent);
+            }
 
             // Daylight / sun arc
             if (daylight > 0) {
@@ -1479,6 +1498,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         boolean isNight = hour < 6 || hour >= 20;
         todayIcon.setImageResource(Formatting.somaIllustration(owmId, isNight));
+        todayIcon.setScaleX(0.82f); todayIcon.setScaleY(0.82f); todayIcon.setAlpha(0f);
+        todayIcon.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(420)
+                .setInterpolator(new android.view.animation.OvershootInterpolator(1.4f)).start();
         applySomaTheme(owmId);
 
         int group = owmId / 100;

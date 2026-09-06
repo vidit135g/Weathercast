@@ -88,7 +88,12 @@
                 <LinearLayout style="@style/Soma.GridRow">
                     <LinearLayout style="@style/Soma.Tile" android:layout_marginEnd="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
-                        <ImageView android:id="@+id/wind" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_forest" android:src="@drawable/ic_feather_wind" android:tint="@color/soma_forest" />
+                        <com.tac.Weathercast.utils.CompassView
+                            android:id="@+id/windCompass"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="14dp" />
+                        <ImageView android:id="@+id/wind" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
                         <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
                         <TextView android:id="@+id/todayWind" style="@style/Soma.TileValue" tools:text="3.4 m/s NE" />
                     </LinearLayout>
