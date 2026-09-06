@@ -187,8 +187,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:textSize="22sp"
-                                tools:text="5" />
+                                android:maxLines="1"
+                                android:textSize="17sp"
+                                tools:text="Moderate" />
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
