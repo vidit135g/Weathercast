@@ -6,63 +6,172 @@
   <link rel="stylesheet" href="leaflet.css" />
   <script src="leaflet.js"></script>
   <style>
-    html,body{margin:0;padding:0;height:100%;width:100%;background:#12161b;overflow:hidden}
-    #map{position:absolute;inset:0;background:#12161b}
-    .chips{position:absolute;left:10px;right:10px;top:64px;z-index:1200;display:flex;gap:8px;
-      overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0}
-    .chips::-webkit-scrollbar{display:none}
-    .chip{flex:0 0 auto;padding:8px 14px;border-radius:999px;font:600 12px -apple-system,Roboto,sans-serif;
-      letter-spacing:.02em;background:rgba(18,22,27,.86);color:#B4BDC5;border:1px solid rgba(255,255,255,.10);white-space:nowrap}
-    .chip.on{background:var(--accent,#E9855C);color:#12161b;border-color:transparent}
-    .bar{position:absolute;left:12px;right:12px;bottom:118px;z-index:1200;
-      background:rgba(18,22,27,.92);border:1px solid rgba(255,255,255,.10);border-radius:16px;
-      padding:10px 14px;display:flex;align-items:center;gap:12px;color:#EEF1F3;font:12px -apple-system,Roboto,sans-serif}
-    .bar .t{flex:1;letter-spacing:.04em;opacity:.9}
+    :root{ --accent:#E9855C; }
+    html,body{margin:0;padding:0;height:100%;width:100%;background:#0d1014;overflow:hidden;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+    #map{position:absolute;inset:0;background:#0d1014}
     .leaflet-control-attribution,.leaflet-control-zoom{display:none}
+
+    /* deepen the base canvas toward black so precipitation pops */
+    .base-pane{filter:brightness(.55) contrast(1.18) saturate(.75)}
+    .rain-pane{mix-blend-mode:screen}
+    #map{background:#0a0c10}
+
+    /* ---- legend (top-left) ---- */
+    .legend{position:absolute;left:14px;top:70px;z-index:1200;
+      background:rgba(14,16,20,.66);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 16px 14px 14px;
+      color:#E7EBEE}
+    .legend h4{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.01em}
+    .legend .row{display:flex;gap:10px}
+    .legend .scale{width:6px;border-radius:3px;
+      background:linear-gradient(#F7E14B,#F58E3C,#B15CD0,#6C63E0,#3E8BE0);}
+    .legend ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;
+      justify-content:space-between;font-size:12px;color:#AEB6BE}
+
+    /* ---- top-right stacked controls ---- */
+    .side{position:absolute;right:14px;top:66px;z-index:1200;display:flex;flex-direction:column;gap:10px;align-items:center}
+    .side .grp{background:rgba(14,16,20,.66);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+    .side button{width:44px;height:44px;border:0;background:transparent;color:#E7EBEE;font-size:17px;
+      display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .side button+button{border-top:1px solid rgba(255,255,255,.08)}
+    .side button.on{color:var(--accent)}
+
+    /* ---- location pin ---- */
+    .pin{position:relative;display:flex;flex-direction:column;align-items:center}
+    .pin .bubble{background:#15181d;border:1px solid rgba(255,255,255,.14);border-radius:18px;
+      padding:6px 12px 8px;text-align:center;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+    .pin .bubble .tmp{font-size:20px;font-weight:600;line-height:1.05}
+    .pin .bubble .gl{font-size:12px;margin-top:1px}
+    .pin .stem{width:2px;height:14px;background:#15181d}
+    .pin .dot{width:9px;height:9px;border-radius:50%;background:#15181d;border:1px solid rgba(255,255,255,.35);margin-top:-1px}
+
+    /* ---- bottom forecast bar ---- */
+    .fc{position:absolute;left:12px;right:12px;bottom:104px;z-index:1200;
+      background:rgba(14,16,20,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:12px 14px;color:#EEF1F3}
+    .fc .head{display:flex;align-items:center;gap:12px}
+    .fc .play{width:34px;height:34px;flex:0 0 auto;border-radius:50%;border:1px solid rgba(255,255,255,.16);
+      background:transparent;color:#EEF1F3;font-size:13px;cursor:pointer}
+    .fc .title{flex:1;min-width:0}
+    .fc .title b{font-size:15px;font-weight:600}
+    .fc .title span{display:block;font-size:12px;color:#AEB6BE;margin-top:1px}
+    .fc .seg{display:flex;background:rgba(255,255,255,.10);border-radius:999px;padding:2px}
+    .fc .seg button{border:0;background:transparent;color:#AEB6BE;font-size:12px;font-weight:600;
+      padding:5px 12px;border-radius:999px;cursor:pointer}
+    .fc .seg button.on{background:#EFEFF1;color:#15181d}
+    .fc .track{position:relative;height:26px;margin-top:8px}
+    .fc .track .line{position:absolute;left:0;right:0;top:11px;height:3px;border-radius:3px;background:rgba(255,255,255,.16)}
+    .fc .track .fill{position:absolute;left:0;top:11px;height:3px;border-radius:3px;background:#fff;width:26%}
+    .fc .ticks{display:flex;justify-content:space-between;font-size:10px;color:#939BA3;margin-top:2px}
   </style>
 </head>
 <body>
 <div id="map"></div>
-<div class="chips" id="chips"></div>
-<div class="bar"><span class="t" id="ts">Loading map…</span></div>
+
+<div class="legend">
+  <h4 id="legendTitle">Precipitation</h4>
+  <div class="row">
+    <div class="scale"></div>
+    <ul><li>Extreme</li><li>Heavy</li><li>Moderate</li><li>Light</li></ul>
+  </div>
+</div>
+
+<div class="side">
+  <div class="grp"><button id="btnLayers" title="Layers">&#9776;</button></div>
+  <div class="grp"><button id="btnLocate" title="My location">&#10148;</button></div>
+</div>
+
+<div class="fc">
+  <div class="head">
+    <button class="play" id="play">&#10073;&#10073;</button>
+    <div class="title"><b>Forecast</b><span id="fcDate">—</span></div>
+    <div class="seg"><button data-z="8" class="on" id="s1h">1h</button><button data-z="5" id="s12h">12h</button></div>
+  </div>
+  <div class="track"><div class="line"></div><div class="fill" id="fill"></div></div>
+  <div class="ticks" id="ticks"></div>
+</div>
+
 <script>
   function q(p){var m=new RegExp('[?&]'+p+'=([^&#]*)').exec(location.search);return m?decodeURIComponent(m[1]):null;}
   var lat=parseFloat(q('lat')), lon=parseFloat(q('lon'));
   if(isNaN(lat)) lat=20; if(isNaN(lon)) lon=0;
   var key=(q('key')||'').replace(/"/g,'');
   var accent=q('accent'); if(accent){ document.documentElement.style.setProperty('--accent','#'+accent); }
+  var temp=q('temp'); var glyph=q('glyph')||'☁';
 
-  var map=L.map('map',{zoomControl:false,attributionControl:false}).setView([lat,lon],7);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:14,minZoom:2,crossOrigin:true}).addTo(map);
-  L.circleMarker([lat,lon],{radius:6,color:'#E9855C',weight:2,fillColor:'#E9855C',fillOpacity:.55}).addTo(map);
-  setTimeout(function(){ map.invalidateSize(); }, 200);
+  var map=L.map('map',{zoomControl:false,attributionControl:false}).setView([lat,lon],8);
+
+  map.createPane('base'); map.getPane('base').classList.add('base-pane');
+  map.getPane('base').style.zIndex=200;
+  map.createPane('rain'); map.getPane('rain').classList.add('rain-pane');
+  map.getPane('rain').style.zIndex=350;
+
+  // Esri dark-grey canvas — genuinely dark and needs no API key
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    {maxZoom:16,minZoom:2,crossOrigin:true,pane:'base'}).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+    {maxZoom:16,minZoom:2,crossOrigin:true,pane:'base',opacity:.55}).addTo(map);
 
   var LAYERS=[
-    {id:'precipitation_new', label:'Rain'},
-    {id:'clouds_new',        label:'Clouds'},
+    {id:'precipitation_new', label:'Precipitation'},
+    {id:'clouds_new',        label:'Cloud cover'},
     {id:'wind_new',          label:'Wind'},
-    {id:'temp_new',          label:'Temp'},
-    {id:'pressure_new',      label:'Pressure'}
+    {id:'temp_new',          label:'Temperature'}
   ];
-  var current=null;
-  function setLayer(l){
+  var li=0, current=null;
+  function setLayer(i){
+    li=(i+LAYERS.length)%LAYERS.length;
+    var l=LAYERS[li];
     if(current){ map.removeLayer(current); current=null; }
-    if(!key){ document.getElementById('ts').textContent='No API key — map only'; return; }
+    document.getElementById('legendTitle').textContent=l.label;
+    if(!key) return;
     current=L.tileLayer('https://tile.openweathermap.org/map/'+l.id+'/{z}/{x}/{y}.png?appid='+key,
-      {opacity:0.8,maxZoom:14,minZoom:2,crossOrigin:true});
+      {opacity:1,maxZoom:16,minZoom:2,crossOrigin:true,pane:'rain'});
     current.addTo(map);
-    document.getElementById('ts').textContent=l.label+' · live from OpenWeatherMap';
   }
-  var chips=document.getElementById('chips');
-  LAYERS.forEach(function(l,i){
-    var c=document.createElement('div'); c.className='chip'+(i===0?' on':''); c.textContent=l.label;
-    c.onclick=function(){
-      [].forEach.call(chips.children,function(x){x.classList.remove('on');});
-      c.classList.add('on'); setLayer(l);
+
+  // location pin
+  var pinHtml='<div class="pin"><div class="bubble"><div class="tmp">'+
+    (temp!=null?temp+'°':'')+'</div><div class="gl">'+glyph+'</div></div>'+
+    '<div class="stem"></div><div class="dot"></div></div>';
+  L.marker([lat,lon],{icon:L.divIcon({className:'',html:pinHtml,iconSize:[64,72],iconAnchor:[32,72]}),
+    interactive:false}).addTo(map);
+
+  setTimeout(function(){ map.invalidateSize(); }, 180);
+
+  // forecast bar chrome
+  var now=new Date();
+  document.getElementById('fcDate').textContent=now.toLocaleDateString(undefined,
+    {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  var ticks=document.getElementById('ticks'); var start=now.getHours();
+  for(var k=0;k<7;k++){ var s=document.createElement('span');
+    var hh=(start+k*2)%24; s.textContent=(hh<10?'0':'')+hh; ticks.appendChild(s); }
+
+  var playing=true, pf=0.26, dir=1;
+  var fill=document.getElementById('fill'), pb=document.getElementById('play');
+  setInterval(function(){
+    if(!playing) return;
+    pf+=0.015*dir; if(pf>=0.98){pf=0.98;dir=-1;} if(pf<=0.04){pf=0.04;dir=1;}
+    fill.style.width=(pf*100).toFixed(1)+'%';
+    if(current) current.setOpacity(0.82+0.18*Math.sin(pf*Math.PI));
+  },90);
+  pb.onclick=function(){ playing=!playing; pb.innerHTML=playing?'&#10073;&#10073;':'&#9654;'; };
+
+  document.getElementById('btnLayers').onclick=function(){ setLayer(li+1); };
+  document.getElementById('btnLocate').onclick=function(){ map.setView([lat,lon], map.getZoom()); };
+  function seg(id){
+    var b=document.getElementById(id);
+    b.onclick=function(){
+      document.getElementById('s1h').classList.remove('on');
+      document.getElementById('s12h').classList.remove('on');
+      b.classList.add('on'); map.setView([lat,lon], parseInt(b.dataset.z,10));
     };
-    chips.appendChild(c);
-  });
-  setLayer(LAYERS[0]);
+  }
+  seg('s1h'); seg('s12h');
+
+  setLayer(0);
 </script>
 </body>
 </html>

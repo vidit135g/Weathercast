@@ -82,8 +82,21 @@ public class RadarFragment extends Fragment {
         int accent = com.tac.Weathercast.utils.SomaTheme.forNow(hr, 800,
                 sp.getString("appearance", "auto")).heroAccent & 0x00FFFFFF;
 
+        String temp = "", glyph = "☁";
+        try {
+            Weather w = ((MainActivity) requireActivity()).getTodayWeatherData();
+            temp = String.valueOf(Math.round(
+                    com.tac.Weathercast.utils.UnitConvertor.convertTemperature(
+                            Float.parseFloat(w.getTemperature()), sp)));
+            int id = Integer.parseInt(w.getId()); int gp = id / 100;
+            glyph = gp == 2 ? "⛈" : gp == 3 ? "🌀" : gp == 5 ? "🌧"
+                    : gp == 6 ? "❄" : gp == 7 ? "🌫" : id == 800 ? "☀"
+                    : "☁";
+        } catch (Exception ignored) {}
+
         web.loadUrl("https://appassets.androidplatform.net/assets/radar.html?lat=" + lat + "&lon=" + lon
-                + "&key=" + key + "&accent=" + String.format("%06X", accent));
+                + "&key=" + key + "&accent=" + String.format("%06X", accent)
+                + "&temp=" + Uri.encode(temp) + "&glyph=" + Uri.encode(glyph));
     }
 
     @Override

@@ -877,7 +877,15 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 if (daylight < 0 || daylight > 24 * 60) daylight = 0;
             } catch (Exception ignored) {}
 
-            WeatherSummary.Glance g = WeatherSummary.of(tempC, humidity, windMs, uv, owmId, daylight);
+            boolean isNight;
+            try {
+                long now = System.currentTimeMillis();
+                isNight = now < todayWeather.getSunrise().getTime() || now > todayWeather.getSunset().getTime();
+            } catch (Exception e) {
+                int hh = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                isNight = hh >= 20 || hh < 6;
+            }
+            WeatherSummary.Glance g = WeatherSummary.of(tempC, humidity, windMs, uv, owmId, daylight, isNight);
             if (todayReadingHeadline != null) todayReadingHeadline.setText(g.headline);
             if (todayReadingAdvice != null) todayReadingAdvice.setText(g.tip);
 
@@ -890,11 +898,14 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 todayFeelsLike.setText(Math.round(UnitConvertor.convertTemperature((float) (feelsLikeC + 273.15), sp)) + "°");
             if (todayWindPill != null)
                 todayWindPill.setText(new DecimalFormat("0.#").format(UnitConvertor.convertWind(windMs, sp)) + " " + localize(sp, "speedUnit", "m/s"));
+            double uvNow = isNight ? 0 : uv;   // the sun is down — UV is 0 at night
             if (todayUvPill != null)
-                todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uv));
+                todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uvNow));
 
             com.tac.Weathercast.utils.UvBarView uvBar = findViewById(R.id.uvBar);
-            if (uvBar != null && uv >= 0) uvBar.setLevel(uv);
+            if (uvBar != null && uv >= 0) uvBar.setLevel(uvNow);
+            if (todayUvIndex != null && uv >= 0)
+                todayUvIndex.setText(UnitConvertor.convertUvIndexToRiskLevel(uvNow));
 
             // Plan your day — best outdoor window + golden hour
             try {
