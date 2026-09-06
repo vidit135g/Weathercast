@@ -176,6 +176,13 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navHost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/soma_bg"
+        android:visibility="gone" />
+
     <FrameLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"

@@ -96,6 +96,37 @@
         <item name="android:activityCloseExitAnimation">@anim/soma_activity_pop_exit</item>
     </style>
 
+    <style name="Soma.MoreRow" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">58dp</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:drawablePadding">18dp</item>
+        <item name="android:drawableTint">@color/soma_text_secondary</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/soma_ink</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="Soma.MoreDivider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:background">@color/soma_border</item>
+    </style>
+
+    <style name="Soma.TrendCard" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/bento_tile</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
     <style name="Soma.GridRow" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

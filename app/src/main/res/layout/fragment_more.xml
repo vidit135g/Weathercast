@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/soma_bg"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="110dp">
+
+        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Weathercast" />
+        <TextView style="@style/Soma.Title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More" android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bento_tile"
+            android:clipToOutline="true">
+
+            <TextView android:id="@+id/moreUpdate" style="@style/Soma.MoreRow" android:text="Update location" android:drawableStart="@drawable/locationup" />
+            <View style="@style/Soma.MoreDivider" />
+            <TextView android:id="@+id/moreSettings" style="@style/Soma.MoreRow" android:text="Units &amp; settings" android:drawableStart="@drawable/settings" />
+            <View style="@style/Soma.MoreDivider" />
+            <TextView android:id="@+id/moreShare" style="@style/Soma.MoreRow" android:text="Share" android:drawableStart="@drawable/share" />
+            <View style="@style/Soma.MoreDivider" />
+            <TextView android:id="@+id/moreAbout" style="@style/Soma.MoreRow" android:text="About" android:drawableStart="@drawable/info" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="theabsolutecorporation@gmail.com"
+            android:textColor="@color/soma_text_muted"
+            android:textSize="12sp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@drawable/bento_tile"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp"
+    android:layout_marginBottom="7dp">
+
+    <TextView android:id="@+id/hTime" style="@style/Soma.Display" android:layout_width="58dp" android:layout_height="wrap_content" android:textSize="14sp" tools:text="15:00" />
+    <ImageView android:id="@+id/hIcon" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginStart="6dp" android:src="@drawable/soma_wx_cloudy" />
+    <TextView android:id="@+id/hPrecip" style="@style/Soma.Body" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:textSize="12sp" tools:text="Wind 3 m/s" />
+    <TextView android:id="@+id/hTemp" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" tools:text="22°" />
+</LinearLayout>

@@ -290,14 +290,18 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
-
-        new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
-        if (searchView.isSearchOpen()) {
+        if (searchView != null && searchView.isSearchOpen()) {
             searchView.closeSearch();
-        } else {
-            super.onBackPressed();
+            return;
         }
+        View host = findViewById(R.id.navHost);
+        com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
+        if (host != null && host.getVisibility() == View.VISIBLE) {
+            if (nav != null) nav.setSelectedItemId(R.id.nav_today); else showTab(R.id.nav_today);
+            return;
+        }
+        moveTaskToBack(true);
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
 
@@ -992,6 +996,32 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         }
     }
 
+    public Weather getTodayWeatherData() { return todayWeather; }
+    public java.util.List<Weather> getLongTermWeatherData() { return longTermWeather; }
+
+    private void showTab(int itemId) {
+        View scroll = findViewById(R.id.scrollHost);
+        View bar = findViewById(R.id.toolbar_container);
+        View host = findViewById(R.id.navHost);
+        boolean today = itemId == R.id.nav_today;
+        if (scroll != null) scroll.setVisibility(today ? View.VISIBLE : View.GONE);
+        if (bar != null) bar.setVisibility(today ? View.VISIBLE : View.GONE);
+        if (host != null) host.setVisibility(today ? View.GONE : View.VISIBLE);
+        if (today) {
+            androidx.fragment.app.Fragment f = getSupportFragmentManager().findFragmentById(R.id.navHost);
+            if (f != null) getSupportFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
+            return;
+        }
+        androidx.fragment.app.Fragment frag;
+        if (itemId == R.id.nav_hourly) frag = new com.tac.Weathercast.fragments.HourlyFragment();
+        else if (itemId == R.id.nav_trends) frag = new com.tac.Weathercast.fragments.TrendsFragment();
+        else frag = new com.tac.Weathercast.fragments.MoreFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.soma_item_in, android.R.anim.fade_out)
+                .replace(R.id.navHost, frag)
+                .commitAllowingStateLoss();
+    }
+
     private void setupBottomNav() {
         com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
         final androidx.core.widget.NestedScrollView scroll = findViewById(R.id.scrollHost);
@@ -999,21 +1029,11 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         nav.setSelectedItemId(R.id.nav_today);
         nav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_today) {
-                if (scroll != null) scroll.smoothScrollTo(0, 0);
-                return true;
-            } else if (id == R.id.nav_hourly) {
-                View h = findViewById(R.id.hourlyLabel);
-                if (scroll != null && h != null) scroll.smoothScrollTo(0, h.getTop() - (int) dp(80));
-                return true;
-            } else if (id == R.id.nav_trends) {
-                startActivity(new Intent(this, GraphActivity.class));
-                return true;
-            } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
+            if (id == R.id.nav_today && scroll != null && scroll.getVisibility() == View.VISIBLE) {
+                scroll.smoothScrollTo(0, 0);
             }
-            return false;
+            showTab(id);
+            return true;
         });
 
         // Hero parallax on scroll (replaces the old bottom-sheet parallax).
