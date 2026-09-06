@@ -2,16 +2,16 @@
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/soma_surface" />
-            <corners android:radius="28dp" />
+            <corners android:radius="24dp" />
             <stroke android:width="1dp" android:color="@color/soma_border" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="28dp" />
-            <gradient android:type="radial" android:gradientRadius="360dp"
-                android:centerX="0.92" android:centerY="0.08"
-                android:startColor="#33D8A24E" android:endColor="#00D8A24E" />
+            <corners android:radius="24dp" />
+            <gradient android:type="radial" android:gradientRadius="320dp"
+                android:centerX="0.08" android:centerY="0.95"
+                android:startColor="#2E3F6349" android:endColor="#003F6349" />
         </shape>
     </item>
 </layer-list>

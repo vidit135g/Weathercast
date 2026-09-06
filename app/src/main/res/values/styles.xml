@@ -3,7 +3,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@null</item>
-        <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorBackground">@color/colorBackground</item>
         <item name="colorTintedBackground">@color/colorTintedBackground</item>
@@ -130,6 +131,31 @@
         <item name="android:typeface">monospace</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+    <!-- Soma type ramp -->
+    <style name="Soma.Display" parent="">
+        <item name="android:fontFamily">@font/fraunces</item>
+        <item name="android:textColor">@color/soma_ink</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="Soma.Heading" parent="Soma.Display">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+    <style name="Soma.Body" parent="">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/soma_text_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+    <style name="Soma.Label" parent="">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:textColor">@color/soma_text_muted</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="CustomDialogTheme" parent="Base.Theme.MaterialComponents.Dialog">
         <!--buttons color-->
         <item name="colorAccent">@color/colorPrimary</item>

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/bento_sheet_bg"
-    android:elevation="8dp"
+    android:elevation="10dp"
     android:animateLayoutChanges="true"
     app:behavior_hideable="false"
     app:behavior_peekHeight="175dp"
@@ -35,10 +35,10 @@
                 android:paddingTop="10dp">
 
                 <View
-                    android:layout_width="36dp"
+                    android:layout_width="40dp"
                     android:layout_height="5dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="18dp"
                     android:background="@drawable/bento_grabber" />
 
                 <androidx.appcompat.widget.Toolbar
@@ -47,13 +47,68 @@
                     android:layout_height="0dp"
                     android:visibility="gone" />
 
+                <!-- Ayurvedic weather reading (ported from ayurveda-app WeatherWidget) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/soma_reading_card"
+                    android:padding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            style="@style/Soma.Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today's reading" />
+
+                        <TextView
+                            android:id="@+id/todayDoshaChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/soma_dosha_chip"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="3dp"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:textSize="9sp"
+                            android:letterSpacing="0.1"
+                            android:textColor="@color/soma_on_fill"
+                            tools:text="Vata" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/todayReadingHeadline"
+                        style="@style/Soma.Display"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="18sp"
+                        android:lineSpacingExtra="2sp"
+                        tools:text="Haze, 27° — a Vata day outside" />
+
+                    <TextView
+                        android:id="@+id/todayReadingAdvice"
+                        style="@style/Soma.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        tools:text="Warm, oily, grounding food; a slower pace; oil on the skin before you shower." />
+                </LinearLayout>
+
                 <TextView
+                    style="@style/Soma.Heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="More info"
-                    android:textColor="@color/bento_text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="22dp"
                     android:layout_marginBottom="12dp" />
 
                 <!-- Bento metric grid : row 1 -->
@@ -66,77 +121,57 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="132dp"
+                        android:layout_height="140dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:orientation="vertical"
                         android:background="@drawable/bento_tile"
                         android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="WIND &amp; COMPASS"
-                            android:textColor="@color/bento_text_secondary"
-                            android:textSize="10sp"
-                            android:letterSpacing="0.06"
-                            android:textStyle="bold" />
-
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
                         <ImageView
                             android:id="@+id/wind"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="12dp"
+                            android:padding="9dp"
                             android:background="@drawable/circleblue"
                             android:src="@drawable/ic_weather_windy_white_24dp" />
-
                         <TextView
                             android:id="@+id/todayWind"
+                            style="@style/Soma.Display"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textColor="@color/bento_text_primary"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
+                            android:textSize="17sp"
                             tools:text="3.4 m/s NE" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="132dp"
+                        android:layout_height="140dp"
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:orientation="vertical"
                         android:background="@drawable/bento_tile"
                         android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="HUMIDITY &amp; DEW POINT"
-                            android:textColor="@color/bento_text_secondary"
-                            android:textSize="10sp"
-                            android:letterSpacing="0.06"
-                            android:textStyle="bold" />
-
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity &amp; dew point" />
                         <ImageView
                             android:id="@+id/humid"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="12dp"
+                            android:padding="9dp"
                             android:background="@drawable/circleyellow"
                             android:src="@drawable/humidity" />
-
                         <TextView
                             android:id="@+id/todayHumidity"
+                            style="@style/Soma.Display"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textColor="@color/bento_text_primary"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
+                            android:textSize="17sp"
                             tools:text="64 %" />
                     </LinearLayout>
                 </LinearLayout>
@@ -152,117 +187,88 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="132dp"
+                        android:layout_height="140dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:orientation="vertical"
                         android:background="@drawable/bento_tile"
                         android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="UV INDEX"
-                            android:textColor="@color/bento_text_secondary"
-                            android:textSize="10sp"
-                            android:letterSpacing="0.06"
-                            android:textStyle="bold" />
-
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
                         <TextView
                             android:id="@+id/todayUvIndex"
+                            style="@style/Soma.Display"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:textColor="@color/bento_text_primary"
-                            android:textStyle="bold"
-                            android:textSize="22sp"
+                            android:layout_marginTop="6dp"
+                            android:textSize="26sp"
                             tools:text="5" />
-
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
                             android:layout_marginTop="14dp"
                             android:background="@drawable/bento_uv_track" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Low            Moderate            High"
-                            android:textColor="@color/bento_text_secondary"
-                            android:textSize="8sp" />
+                        <TextView style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="9sp" android:text="Low   ·   Moderate   ·   High" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="132dp"
+                        android:layout_height="140dp"
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:orientation="vertical"
                         android:background="@drawable/bento_tile"
                         android:padding="16dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PRESSURE &amp; AIR QUALITY"
-                            android:textColor="@color/bento_text_secondary"
-                            android:textSize="10sp"
-                            android:letterSpacing="0.06"
-                            android:textStyle="bold" />
-
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                         <ImageView
                             android:id="@+id/pressure"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
-                            android:padding="10dp"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="12dp"
+                            android:padding="9dp"
                             android:background="@drawable/circlered"
                             android:src="@drawable/pressure" />
-
                         <TextView
                             android:id="@+id/todayPressure"
+                            style="@style/Soma.Display"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textColor="@color/bento_text_primary"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
+                            android:textSize="17sp"
                             tools:text="1012 hPa" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Hidden stats retained for ViewModel/observer compatibility -->
+                <!-- Sunrise / sunset / last update -->
                 <LinearLayout
                     android:id="@+id/stats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/todaySunrise"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/todaySunset"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/lastUpdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sunrise" />
+                        <TextView android:id="@+id/todaySunrise" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="14sp" tools:text="06:04" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sunset" />
+                        <TextView android:id="@+id/todaySunset" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="14sp" tools:text="18:22" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Updated" />
+                        <TextView android:id="@+id/lastUpdate" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="11sp" tools:text="2m ago" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <TextView
+                    style="@style/Soma.Heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Forecast"
-                    android:textColor="@color/bento_text_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:layout_marginTop="22dp"
                     android:layout_marginBottom="12dp" />
 
@@ -273,8 +279,8 @@
                     android:background="@drawable/tab_layout_background"
                     app:tabMode="scrollable"
                     app:tabBackground="@drawable/tab_layout_selector"
-                    app:tabSelectedTextColor="@color/bento_accent"
-                    app:tabTextColor="@color/bento_text_secondary"
+                    app:tabSelectedTextColor="@color/soma_forest"
+                    app:tabTextColor="@color/soma_text_muted"
                     app:tabPaddingStart="16dp"
                     app:tabPaddingEnd="16dp"
                     app:tabIndicatorHeight="0dp"

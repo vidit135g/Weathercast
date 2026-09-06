@@ -123,4 +123,26 @@
     <color name="bento_text_primary">#0B0B0F</color>
     <color name="bento_text_secondary">#6B6B76</color>
     <color name="bento_accent">#2E6BE6</color>
+
+    <!-- Soma design system (ported from ayurveda-app / jewel theme) -->
+    <color name="soma_bg">#FBF5EA</color>
+    <color name="soma_bg_warm">#FFF6E8</color>
+    <color name="soma_surface">#FFFDF6</color>
+    <color name="soma_surface_muted">#F3E9D6</color>
+    <color name="soma_border">#EADFC9</color>
+    <color name="soma_ink">#22201E</color>
+    <color name="soma_text_secondary">#4B4443</color>
+    <color name="soma_text_muted">#7D756D</color>
+    <color name="soma_forest">#3F6349</color>
+    <color name="soma_forest_soft">#5E8C6A</color>
+    <color name="soma_ember">#D8663D</color>
+    <color name="soma_ember_soft">#E08A6B</color>
+    <color name="soma_saffron">#D8A24E</color>
+    <color name="soma_mint">#8BC6AF</color>
+    <color name="soma_plum">#6E6AB8</color>
+    <color name="soma_indigo">#5A54A6</color>
+    <color name="soma_on_fill">#FFFDF6</color>
+    <color name="soma_glow_vata">#33827DE0</color>
+    <color name="soma_glow_pitta">#33D8663D</color>
+    <color name="soma_glow_kapha">#333F6349</color>
 </resources>

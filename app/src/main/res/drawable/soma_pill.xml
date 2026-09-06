@@ -1,5 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="@color/soma_border" />
+    <solid android:color="@color/soma_surface_muted" />
     <corners android:radius="999dp" />
-    <size android:width="40dp" android:height="5dp" />
 </shape>
