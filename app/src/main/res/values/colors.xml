@@ -119,4 +119,8 @@
     <color name="blues">#173567</color>
     <color name="bento_background">#F2F2F7</color>
     <color name="bento_card_background">#FFFFFF</color>
+    <color name="bento_stroke">#E3E3EA</color>
+    <color name="bento_text_primary">#0B0B0F</color>
+    <color name="bento_text_secondary">#6B6B76</color>
+    <color name="bento_accent">#2E6BE6</color>
 </resources>

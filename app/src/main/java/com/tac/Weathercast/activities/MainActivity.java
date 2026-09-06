@@ -28,6 +28,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -156,6 +159,25 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
         appView = findViewById(R.id.viewApp);
         progressDialog = new ProgressDialog(MainActivity.this);
+
+        // Edge-to-edge: keep headers clear of the status bar / navigation bar
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        final View toolbarContainer = findViewById(R.id.toolbar_container);
+        final View bottomSheet = findViewById(R.id.peeklayout);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.viewApp), (v, insets) -> {
+            androidx.core.graphics.Insets bars = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            if (toolbarContainer != null) {
+                toolbarContainer.setPadding(toolbarContainer.getPaddingLeft(), bars.top,
+                        toolbarContainer.getPaddingRight(), toolbarContainer.getPaddingBottom());
+            }
+            if (bottomSheet != null) {
+                bottomSheet.setPadding(bottomSheet.getPaddingLeft(), bottomSheet.getPaddingTop(),
+                        bottomSheet.getPaddingRight(), bars.bottom);
+            }
+            return insets;
+        });
+
         // Load toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

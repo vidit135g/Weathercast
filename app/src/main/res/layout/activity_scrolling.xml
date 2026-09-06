@@ -1,24 +1,13 @@
-
-
-
 <!--suppress ALL -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-
     android:id="@+id/viewApp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:background="@color/bento_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-
-
-
-
-
 
     <FrameLayout
         android:id="@+id/toolbar_container"
@@ -26,145 +15,117 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent">
 
-
-    <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:titleTextColor="@color/black">
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/citytool"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#424242"
-                        android:text="LUCKNOW"
-                        android:paddingLeft="90dp"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
-        </LinearLayout>
-                </androidx.appcompat.widget.Toolbar>
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/bento_text_primary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/citytool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bento_text_primary"
+                    android:text="LUCKNOW"
+                    android:letterSpacing="0.08"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:background="@drawable/bento_tile_hero"
+                android:paddingHorizontal="22dp"
+                android:paddingTop="22dp"
+                android:paddingBottom="24dp">
+
+                <TextView
+                    android:id="@+id/todayDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bento_text_secondary"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.06"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    tools:text="Friday 06 September 2026" />
 
                 <RelativeLayout
-                    android:id="@+id/main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="25dp">
+                    android:layout_marginTop="10dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:layout_marginTop="60dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/bento_card_background">
-
-                    <RelativeLayout
-                        android:id="@+id/mainlay"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="24dp"
-                        android:paddingBottom="24dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/todayDate"
+                            android:id="@+id/todayTemperature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#99b2bc"
-                            android:textSize="13.5sp"
-                            android:textAllCaps="true"
-                            android:textStyle="bold"
-                            android:layout_centerHorizontal="true"
-                            tools:text="" />
+                            android:textColor="@color/bento_text_primary"
+                            android:textSize="64sp"
+                            android:includeFontPadding="false"
+                            tools:text="27 °" />
 
-                        <ImageView
-                            android:id="@+id/todayIcon"
-                            android:layout_width="170dp"
-                            android:layout_height="170dp"
-                            android:src="@drawable/tornado"
-                            android:layout_marginTop="50dp"
-                            android:layout_centerHorizontal="true"
-                            />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="40dp"
-                            android:layout_marginBottom="20dp"
-                            android:weightSum="1"
-                            android:layout_below="@id/todayIcon">
-                            <TextView
-                                android:id="@+id/todayTemperature"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#424242"
-                                android:textSize="58sp"
-                                android:layout_weight="0"
-                                android:layout_marginLeft="13dp"
-                                tools:text="0 °" />
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/todayDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:paddingTop="10dp"
+                            android:layout_marginTop="4dp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="20dp"
-                            android:textColor="#424242"
+                            android:textColor="@color/bento_text_primary"
                             android:textSize="16sp"
-                            tools:text="No data" />
-                                </LinearLayout>
-                                <TextView
-                                    android:id="@+id/todayDes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="start"
-                                    android:layout_marginTop="1dp"
-                                    android:layout_marginLeft="20dp"
-                                    android:textColor="#99b2bc"
-                                    android:textSize="12sp"
-                                    android:paddingRight="30dp"
-                                    android:textStyle="bold"
-                                    tools:text="No data" />
+                            tools:text="Haze" />
+                    </LinearLayout>
 
-                            </LinearLayout>
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
-
+                    <ImageView
+                        android:id="@+id/todayIcon"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/sleet" />
                 </RelativeLayout>
-    </FrameLayout>
 
+                <TextView
+                    android:id="@+id/todayDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:textColor="@color/bento_text_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="2dp"
+                    tools:text="Haze, pollution causing low visibility over several parts." />
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/bottomsheet"
@@ -174,8 +135,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="5dp">
 
-
         <include layout="@layout/content_main" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

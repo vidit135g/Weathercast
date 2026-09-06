@@ -126,7 +126,7 @@
     </style>
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">@color/bento_text_secondary</item>
         <item name="android:typeface">monospace</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
