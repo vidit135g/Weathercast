@@ -136,7 +136,7 @@ public class SettingsActivity extends PreferenceActivity
 
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         MainActivity.MY_PERMISSIONS_ACCESS_FINE_LOCATION);
             }
         } else {

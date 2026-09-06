@@ -888,7 +888,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_ACCESS_FINE_LOCATION);
             }
 
