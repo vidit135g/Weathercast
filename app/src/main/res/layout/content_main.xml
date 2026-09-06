@@ -108,12 +108,13 @@
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
                         <ImageView
                             android:id="@+id/wind"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="12dp"
                             android:padding="9dp"
-                            android:background="@drawable/circleblue"
-                            android:src="@drawable/ic_weather_windy_white_24dp" />
+                            android:background="@drawable/soma_icon_chip"
+                            android:src="@drawable/ic_feather_wind"
+                            android:tint="@color/soma_forest" />
                         <TextView
                             android:id="@+id/todayWind"
                             style="@style/Soma.Display"
@@ -136,12 +137,13 @@
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity &amp; dew point" />
                         <ImageView
                             android:id="@+id/humid"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="12dp"
                             android:padding="9dp"
-                            android:background="@drawable/circleyellow"
-                            android:src="@drawable/humidity" />
+                            android:background="@drawable/soma_icon_chip"
+                            android:src="@drawable/ic_feather_droplet"
+                            android:tint="@color/soma_indigo" />
                         <TextView
                             android:id="@+id/todayHumidity"
                             style="@style/Soma.Display"
@@ -172,14 +174,28 @@
                         android:padding="16dp">
 
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
-                        <TextView
-                            android:id="@+id/todayUvIndex"
-                            style="@style/Soma.Display"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:textSize="26sp"
-                            tools:text="5" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="10dp">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="9dp"
+                                android:background="@drawable/soma_icon_chip"
+                                android:src="@drawable/ic_feather_sun"
+                                android:tint="@color/soma_ember" />
+                            <TextView
+                                android:id="@+id/todayUvIndex"
+                                style="@style/Soma.Display"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:textSize="22sp"
+                                tools:text="5" />
+                        </LinearLayout>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="8dp"
@@ -200,12 +216,13 @@
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                         <ImageView
                             android:id="@+id/pressure"
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_marginTop="12dp"
                             android:padding="9dp"
-                            android:background="@drawable/circlered"
-                            android:src="@drawable/pressure" />
+                            android:background="@drawable/soma_icon_chip"
+                            android:src="@drawable/ic_feather_activity"
+                            android:tint="@color/soma_saffron" />
                         <TextView
                             android:id="@+id/todayPressure"
                             style="@style/Soma.Display"
@@ -228,14 +245,17 @@
                     android:weightSum="3">
 
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_marginBottom="8dp" android:src="@drawable/ic_feather_sunrise" android:tint="@color/soma_saffron" />
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sunrise" />
                         <TextView android:id="@+id/todaySunrise" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="14sp" tools:text="06:04" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginHorizontal="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_marginBottom="8dp" android:src="@drawable/ic_feather_sunset" android:tint="@color/soma_ember" />
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sunset" />
                         <TextView android:id="@+id/todaySunset" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="14sp" tools:text="18:22" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="5dp" android:orientation="vertical" android:background="@drawable/bento_tile" android:padding="14dp">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_marginBottom="8dp" android:src="@drawable/ic_feather_clock" android:tint="@color/soma_text_muted" />
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Updated" />
                         <TextView android:id="@+id/lastUpdate" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textSize="11sp" tools:text="2m ago" />
                     </LinearLayout>
