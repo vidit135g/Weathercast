@@ -1,42 +1,30 @@
 <!--suppress ALL -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewApp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/soma_bg"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/soma_bg">
 
-    <FrameLayout
-        android:id="@+id/toolbar_container"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollHost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:contentInsetStart="16dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="?attr/actionBarSize"
             android:paddingHorizontal="20dp"
-            android:paddingBottom="12dp"
             android:layoutAnimation="@anim/soma_stagger">
+
+            <Space android:id="@+id/topInset" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" />
 
             <TextView
                 android:id="@+id/todayDate"
@@ -63,8 +51,7 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/soma_hero_fallback"
                 android:paddingHorizontal="22dp"
-                android:paddingTop="22dp"
-                android:paddingBottom="22dp">
+                android:paddingVertical="22dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -77,33 +64,11 @@
                         android:layout_centerVertical="true"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/todayTemperature"
-                            style="@style/Soma.Display"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/soma_on_fill"
-                            android:textSize="70sp"
-                            tools:text="27°" />
-
-                        <TextView
-                            android:id="@+id/todayDescription"
-                            style="@style/Soma.Display"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:textColor="@color/soma_on_fill"
-                            android:textSize="18sp"
-                            tools:text="Haze" />
+                        <TextView android:id="@+id/todayTemperature" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/soma_on_fill" android:textSize="70sp" tools:text="27°" />
+                        <TextView android:id="@+id/todayDescription" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textColor="@color/soma_on_fill" android:textSize="18sp" tools:text="Haze" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/todayIcon"
-                        android:layout_width="112dp"
-                        android:layout_height="112dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/soma_wx_cloudy" />
+                    <ImageView android:id="@+id/todayIcon" android:layout_width="112dp" android:layout_height="112dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/soma_wx_cloudy" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -115,52 +80,130 @@
                     android:weightSum="3"
                     android:layout_marginTop="18dp">
 
-                    <LinearLayout
-                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
-                        android:paddingVertical="10dp" android:layout_marginEnd="8dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp" android:layout_marginEnd="8dp">
                         <TextView style="@style/Soma.Label" android:id="@+id/pillLabelFeels" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
                         <TextView android:id="@+id/todayFeelsLike" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="29°" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
-                        android:paddingVertical="10dp" android:layout_marginEnd="8dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp" android:layout_marginEnd="8dp">
                         <TextView style="@style/Soma.Label" android:id="@+id/pillLabelWind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
                         <TextView android:id="@+id/todayWindPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="3" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                        android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero"
-                        android:paddingVertical="10dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp">
                         <TextView style="@style/Soma.Label" android:id="@+id/pillLabelUv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
                         <TextView android:id="@+id/todayUvPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="5" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/todayDes"
-                    style="@style/Soma.Body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/soma_on_fill"
-                    tools:text="Haze, pollution causing low visibility over several parts." />
+                <TextView android:id="@+id/todayDes" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:textColor="@color/soma_on_fill" tools:text="Haze, pollution causing low visibility over several parts." />
             </LinearLayout>
+
+            <!-- At a glance -->
+            <LinearLayout android:id="@+id/glanceCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="14dp" android:background="@drawable/soma_reading_card" android:padding="20dp">
+                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="At a glance" />
+                <TextView android:id="@+id/todayReadingHeadline" style="@style/Soma.Display" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="18sp" android:lineSpacingExtra="2sp" tools:text="Haze and mild, with a steady breeze." />
+                <TextView android:id="@+id/todayReadingAdvice" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" tools:text="Comfortable conditions — a good window to be outside." />
+            </LinearLayout>
+
+            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More info" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
+
+            <LinearLayout style="@style/Soma.GridRow">
+                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_wind" android:layout_marginEnd="6dp">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
+                    <com.tac.Weathercast.utils.CompassView android:id="@+id/windCompass" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginTop="14dp" />
+                    <ImageView android:id="@+id/wind" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+                    <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+                    <TextView android:id="@+id/todayWind" style="@style/Soma.TileValue" tools:text="3.4 m/s NE" />
+                </LinearLayout>
+                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_humid" android:layout_marginStart="6dp">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity &amp; dew point" />
+                    <ImageView android:id="@+id/humid" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_indigo" android:src="@drawable/ic_feather_droplet" android:tint="@color/soma_indigo" />
+                    <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+                    <TextView android:id="@+id/todayHumidity" style="@style/Soma.TileValue" tools:text="64 %" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/Soma.GridRow" android:layout_marginTop="12dp">
+                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_uv" android:layout_marginEnd="6dp">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
+                    <ImageView style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_ember" android:src="@drawable/ic_feather_sun" android:tint="@color/soma_ember" />
+                    <TextView android:id="@+id/todayUvIndex" style="@style/Soma.TileValue" android:maxLines="1" android:textSize="16sp" android:layout_marginTop="10dp" tools:text="Moderate" />
+                    <com.tac.Weathercast.utils.UvBarView android:id="@+id/uvBar" android:layout_width="match_parent" android:layout_height="14dp" android:layout_marginTop="10dp" />
+                </LinearLayout>
+                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_pressure" android:layout_marginStart="6dp">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
+                    <ImageView android:id="@+id/pressure" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_activity" android:tint="@color/soma_saffron" />
+                    <TextView android:id="@+id/todayPressure" style="@style/Soma.TileValue" android:layout_marginTop="10dp" tools:text="1012 hPa" />
+                    <com.tac.Weathercast.utils.SparklineView android:id="@+id/pressureSpark" android:layout_width="match_parent" android:layout_height="20dp" android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Daylight -->
+            <LinearLayout android:id="@+id/stats" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="12dp" android:background="@drawable/soma_tile_daylight" android:padding="18dp">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Daylight" android:layout_alignParentStart="true" />
+                    <TextView android:id="@+id/lastUpdate" style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:textColor="@color/soma_text_muted" tools:text="9:33 PM" />
+                </RelativeLayout>
+                <com.tac.Weathercast.utils.SunArcView android:id="@+id/sunArc" android:layout_width="match_parent" android:layout_height="76dp" android:layout_marginTop="12dp" />
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                    <TextView android:id="@+id/todaySunrise" style="@style/Soma.TileValue" android:layout_marginTop="0dp" android:textSize="16sp" android:layout_alignParentStart="true" tools:text="06:04" />
+                    <TextView android:id="@+id/todaySunset" style="@style/Soma.TileValue" android:layout_marginTop="0dp" android:textSize="16sp" android:layout_alignParentEnd="true" tools:text="18:22" />
+                    <TextView android:id="@+id/daylightLength" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:textSize="12sp" tools:text="13h 16m" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView android:id="@+id/hourlyLabel" style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hourly" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hourlyStrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/hourly_capsule" />
+
+            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day forecast" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
+            <LinearLayout
+                android:id="@+id/dailyList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- legacy ids kept so old code paths don't NPE -->
+            <androidx.viewpager.widget.ViewPager android:id="@+id/viewPager" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+            <com.google.android.material.tabs.TabLayout android:id="@+id/tabs" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
+
+            <Space android:layout_width="match_parent" android:layout_height="96dp" />
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:contentInsetStart="16dp" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/bottomsheet"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginTop="5dp">
+        android:background="@color/soma_surface"
+        app:elevation="8dp"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@color/soma_nav_item"
+        app:itemTextColor="@color/soma_nav_item"
+        app:menu="@menu/bottom_nav" />
 
-        <include layout="@layout/content_main" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

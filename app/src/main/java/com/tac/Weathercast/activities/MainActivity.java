@@ -41,6 +41,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -217,66 +218,10 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         todayUvPill = findViewById(R.id.todayUvPill);
         mainLay=findViewById(R.id.main);
         citytool=findViewById(R.id.citytool);
-        peekLayout=findViewById(R.id.peeklayout);
         todayIcon = findViewById(R.id.todayIcon);
         currdate=findViewById(R.id.todayDate);
         applySomaTheme(800);
-        ViewPagerBottomSheetBehavior behavior = ViewPagerBottomSheetBehavior.from(peekLayout);
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        int orientation = getResources().getConfiguration().orientation;
-
-
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            behavior.setPeekHeight((height / 6));
-        } else {
-            behavior.setPeekHeight((int) (height * 0.52));
-            // Once the hero has measured, snap the peek so the sheet meets it exactly
-            // (grabber just below the hero card) — no overlap, no dead gap.
-            final int screenH = height;
-            final View heroArea = findViewById(R.id.toolbar_container);
-            if (heroArea != null) {
-                heroArea.getViewTreeObserver().addOnGlobalLayoutListener(
-                        new android.view.ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                int h = heroArea.getHeight();
-                                if (h <= 0) return;
-                                heroArea.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                                int peek = Math.max((int) dp(220),
-                                        Math.min((int) (screenH * 0.62), screenH - h - (int) dp(6)));
-                                behavior.setPeekHeight(peek);
-                            }
-                        });
-            }
-        }
-        int defheight=behavior.getPeekHeight();
-
-        behavior.setBottomSheetCallback(new ViewPagerBottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if(newState==BottomSheetBehavior.STATE_EXPANDED){
-                    behavior.setPeekHeight(defheight);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // Parallax + fade the hero as the sheet rises.
-                float o = Math.max(0f, Math.min(1f, slideOffset));
-                if (mainLay != null) {
-                    mainLay.setTranslationY(-o * dp(36));
-                    mainLay.setAlpha(1f - o * 0.55f);
-                }
-                if (todayIcon != null) {
-                    todayIcon.setTranslationY(o * dp(18));
-                    todayIcon.setTranslationX(o * dp(10));
-                    todayIcon.setRotation(o * 6f);
-                }
-            }
-        });
+        setupBottomNav();
 
         searchView=findViewById(R.id.search_view);
 
@@ -396,6 +341,10 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     public void onResume() {
         super.onResume();
         com.tac.Weathercast.CustomFontApp.applyNightMode(this);
+        try {
+            com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
+            if (nav != null) nav.getMenu().findItem(R.id.nav_today).setChecked(true);
+        } catch (Exception ignored) {}
         try {
             int id = Integer.parseInt(todayWeather.getId());
             applySomaTheme(id);
@@ -965,41 +914,120 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
     @SuppressLint("ClickableViewAccessibility")
     private void updateLongTermWeatherUI() {
-        if (destroyed) {
-            return;
-        }
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        Bundle bundleToday = new Bundle();
-        bundleToday.putInt("day", 0);
-        RecyclerViewFragment recyclerViewFragmentToday = new RecyclerViewFragment();
-        recyclerViewFragmentToday.setArguments(bundleToday);
-        viewPagerAdapter.addFragment(recyclerViewFragmentToday, getString(R.string.today));
-
-        Bundle bundleTomorrow = new Bundle();
-        bundleTomorrow.putInt("day", 1);
-        RecyclerViewFragment recyclerViewFragmentTomorrow = new RecyclerViewFragment();
-        recyclerViewFragmentTomorrow.setArguments(bundleTomorrow);
-        viewPagerAdapter.addFragment(recyclerViewFragmentTomorrow, getString(R.string.tomorrow));
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("day", 2);
-        RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
-        recyclerViewFragment.setArguments(bundle);
-        viewPagerAdapter.addFragment(recyclerViewFragment, getString(R.string.later));
-
-        int currentPage = viewPager.getCurrentItem();
-
-        viewPagerAdapter.notifyDataSetChanged();
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-
-        if (currentPage == 0 && longTermTodayWeather.isEmpty()) {
-            currentPage = 1;
-        }
-        viewPager.setCurrentItem(currentPage, false);
-
+        if (destroyed) return;
         updateHourlyStrip();
+        updateDailyList();
+    }
+
+    /** Aggregate the 3-hourly forecast into 7 daily rows and render them inline. */
+    private void updateDailyList() {
+        try {
+            android.widget.LinearLayout list = findViewById(R.id.dailyList);
+            if (list == null || longTermWeather == null || longTermWeather.isEmpty()) return;
+            list.removeAllViews();
+
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            java.util.LinkedHashMap<Integer, java.util.List<Weather>> byDay = new java.util.LinkedHashMap<>();
+            for (Weather w : longTermWeather) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(w.getDate());
+                int key = c.get(Calendar.YEAR) * 1000 + c.get(Calendar.DAY_OF_YEAR);
+                java.util.List<Weather> l = byDay.get(key);
+                if (l == null) { l = new ArrayList<>(); byDay.put(key, l); }
+                l.add(w);
+            }
+
+            float gLo = Float.MAX_VALUE, gHi = -Float.MAX_VALUE;
+            java.util.List<float[]> ranges = new ArrayList<>();
+            java.util.List<Weather> reps = new ArrayList<>();
+            java.util.List<java.util.Date> dates = new ArrayList<>();
+            int count = 0;
+            for (java.util.List<Weather> day : byDay.values()) {
+                if (count++ >= 7) break;
+                float lo = Float.MAX_VALUE, hi = -Float.MAX_VALUE;
+                Weather rep = day.get(day.size() / 2);
+                for (Weather w : day) {
+                    try {
+                        float t = UnitConvertor.convertTemperature(Float.parseFloat(w.getTemperature()), sp);
+                        lo = Math.min(lo, t); hi = Math.max(hi, t);
+                    } catch (Exception ignored) {}
+                    Calendar c = Calendar.getInstance(); c.setTime(w.getDate());
+                    if (c.get(Calendar.HOUR_OF_DAY) >= 12 && c.get(Calendar.HOUR_OF_DAY) <= 15) rep = w;
+                }
+                gLo = Math.min(gLo, lo); gHi = Math.max(gHi, hi);
+                ranges.add(new float[]{ lo, hi });
+                reps.add(rep);
+                dates.add(day.get(0).getDate());
+            }
+            if (gHi - gLo < 1f) gHi = gLo + 1f;
+
+            java.text.SimpleDateFormat dayFmt = new java.text.SimpleDateFormat("EEE", java.util.Locale.getDefault());
+            for (int i = 0; i < reps.size(); i++) {
+                View row = LayoutInflater.from(this).inflate(R.layout.daily_row, list, false);
+                Weather rep = reps.get(i);
+                float[] r = ranges.get(i);
+                ((TextView) row.findViewById(R.id.dayName)).setText(
+                        i == 0 ? "Today" : dayFmt.format(dates.get(i)));
+                int owmId;
+                try { owmId = Integer.parseInt(rep.getId()); } catch (Exception e) { owmId = 800; }
+                ((ImageView) row.findViewById(R.id.dayIcon)).setImageResource(
+                        Formatting.somaIllustration(owmId, false));
+                String d = rep.getDescription();
+                ((TextView) row.findViewById(R.id.dayDesc)).setText(
+                        d.isEmpty() ? "" : Character.toUpperCase(d.charAt(0)) + d.substring(1));
+                ((TextView) row.findViewById(R.id.dayLo)).setText(Math.round(r[0]) + "°");
+                ((TextView) row.findViewById(R.id.dayHi)).setText(Math.round(r[1]) + "°");
+                // range bar inset within the global span
+                View bar = row.findViewById(R.id.dayRange);
+                android.widget.LinearLayout.LayoutParams lp =
+                        (android.widget.LinearLayout.LayoutParams) bar.getLayoutParams();
+                float span = gHi - gLo;
+                lp.leftMargin = (int) dp(10 + 42 * (r[0] - gLo) / span);
+                lp.rightMargin = (int) dp(10 + 42 * (gHi - r[1]) / span);
+                bar.setLayoutParams(lp);
+                list.addView(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupBottomNav() {
+        com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
+        final androidx.core.widget.NestedScrollView scroll = findViewById(R.id.scrollHost);
+        if (nav == null) return;
+        nav.setSelectedItemId(R.id.nav_today);
+        nav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_today) {
+                if (scroll != null) scroll.smoothScrollTo(0, 0);
+                return true;
+            } else if (id == R.id.nav_hourly) {
+                View h = findViewById(R.id.hourlyLabel);
+                if (scroll != null && h != null) scroll.smoothScrollTo(0, h.getTop() - (int) dp(80));
+                return true;
+            } else if (id == R.id.nav_trends) {
+                startActivity(new Intent(this, GraphActivity.class));
+                return true;
+            } else if (id == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            }
+            return false;
+        });
+
+        // Hero parallax on scroll (replaces the old bottom-sheet parallax).
+        if (scroll != null) {
+            scroll.setOnScrollChangeListener((androidx.core.widget.NestedScrollView.OnScrollChangeListener)
+                    (v, x, y, ox, oy) -> {
+                        View hero = findViewById(R.id.heroCard);
+                        if (hero != null) {
+                            hero.setTranslationY(y * 0.28f);
+                            hero.setAlpha(Math.max(0.3f, 1f - y / 900f));
+                        }
+                        if (todayIcon != null) todayIcon.setTranslationY(y * 0.12f);
+                    });
+        }
     }
 
     private void updateHourlyStrip() {

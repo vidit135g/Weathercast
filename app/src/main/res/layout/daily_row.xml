@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@drawable/bento_tile"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="14dp"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/dayName"
+        style="@style/Soma.Display"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        tools:text="Mon" />
+
+    <ImageView
+        android:id="@+id/dayIcon"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/soma_wx_cloudy" />
+
+    <TextView
+        android:id="@+id/dayDesc"
+        style="@style/Soma.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="Broken clouds" />
+
+    <TextView
+        android:id="@+id/dayLo"
+        style="@style/Soma.Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="14°" />
+
+    <View
+        android:id="@+id/dayRange"
+        android:layout_width="52dp"
+        android:layout_height="4dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/bento_uv_track" />
+
+    <TextView
+        android:id="@+id/dayHi"
+        style="@style/Soma.Display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        tools:text="22°" />
+</LinearLayout>
