@@ -684,7 +684,13 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             SomaTheme t = SomaTheme.forNow(hour, owmId);
 
-            if (appView != null) appView.setBackgroundColor(t.background);
+            if (appView != null) {
+                // Faint elemental wash down the page — Soma's ambient field.
+                int washTop = SomaTheme.blend(t.heroFrom, t.background, 0.88f);
+                GradientDrawable page = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM, new int[]{ washTop, t.background, t.background });
+                appView.setBackground(page);
+            }
 
             if (peekLayout != null) {
                 GradientDrawable sheet = new GradientDrawable();

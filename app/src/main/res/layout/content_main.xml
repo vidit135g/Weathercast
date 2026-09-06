@@ -86,7 +86,7 @@
 
                 <!-- 2x2 metric grid — every tile the same size -->
                 <LinearLayout style="@style/Soma.GridRow">
-                    <LinearLayout style="@style/Soma.Tile" android:layout_marginEnd="6dp">
+                    <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_wind" android:layout_marginEnd="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
                         <com.tac.Weathercast.utils.CompassView
                             android:id="@+id/windCompass"
@@ -97,7 +97,7 @@
                         <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
                         <TextView android:id="@+id/todayWind" style="@style/Soma.TileValue" tools:text="3.4 m/s NE" />
                     </LinearLayout>
-                    <LinearLayout style="@style/Soma.Tile" android:layout_marginStart="6dp">
+                    <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_humid" android:layout_marginStart="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity &amp; dew point" />
                         <ImageView android:id="@+id/humid" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_indigo" android:src="@drawable/ic_feather_droplet" android:tint="@color/soma_indigo" />
                         <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
@@ -106,13 +106,13 @@
                 </LinearLayout>
 
                 <LinearLayout style="@style/Soma.GridRow" android:layout_marginTop="12dp">
-                    <LinearLayout style="@style/Soma.Tile" android:layout_marginEnd="6dp">
+                    <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_uv" android:layout_marginEnd="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
                         <ImageView style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_ember" android:src="@drawable/ic_feather_sun" android:tint="@color/soma_ember" />
                         <TextView android:id="@+id/todayUvIndex" style="@style/Soma.TileValue" android:maxLines="1" android:textSize="16sp" tools:text="Moderate" />
                         <View android:layout_width="match_parent" android:layout_height="7dp" android:layout_marginTop="10dp" android:background="@drawable/bento_uv_track" />
                     </LinearLayout>
-                    <LinearLayout style="@style/Soma.Tile" android:layout_marginStart="6dp">
+                    <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_pressure" android:layout_marginStart="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                         <ImageView android:id="@+id/pressure" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_activity" android:tint="@color/soma_saffron" />
                         <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bento_tile"
+                    android:background="@drawable/soma_tile_daylight"
                     android:padding="18dp">
 
                     <RelativeLayout
