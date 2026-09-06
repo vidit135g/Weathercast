@@ -117,4 +117,6 @@
     <color name="torday">#382d4b</color>
     <color name="beforedawn">#5f3d70</color>
     <color name="blues">#173567</color>
+    <color name="bento_background">#F2F2F7</color>
+    <color name="bento_card_background">#FFFFFF</color>
 </resources>

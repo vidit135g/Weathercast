@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="16dp"
-    android:orientation="vertical">
-
-    <View
-        android:id="@+id/lineView"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/bento_card_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <View
+            android:id="@+id/lineView"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 tools:text="16:00"
                 android:textColor="?android:textColorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -70,21 +72,19 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
             tools:text="o"
-            android:textSize="28sp" />
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/itemTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="0 °C"
-            android:textSize="18sp"
-            android:layout_marginTop="18dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
             android:layout_below="@+id/itemIcon"
             android:layout_alignRight="@+id/itemIcon"
             android:layout_alignEnd="@+id/itemIcon" />
     </RelativeLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="#fff"
+    android:background="@color/bento_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -24,7 +24,7 @@
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@android:color/transparent">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -62,11 +62,21 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="25dp">
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_marginTop="60dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/bento_card_background">
+
                     <RelativeLayout
                         android:id="@+id/mainlay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="24dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -141,6 +151,7 @@
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
 
 
