@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-    <alpha
-        android:fromAlpha="0"
-        android:toAlpha="1.0"
-        android:interpolator="@android:anim/accelerate_interpolator"
-        android:duration="2500"
-        android:startOffset="5000" />
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true" android:interpolator="@android:interpolator/decelerate_quint">
+    <alpha android:fromAlpha="0" android:toAlpha="1" android:duration="460" android:startOffset="380" />
+    <translate android:fromYDelta="16dp" android:toYDelta="0" android:duration="460" android:startOffset="380" />
 </set>
