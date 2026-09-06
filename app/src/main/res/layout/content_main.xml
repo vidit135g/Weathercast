@@ -264,7 +264,7 @@
                     android:background="@drawable/tab_layout_background"
                     app:tabMode="scrollable"
                     app:tabBackground="@drawable/tab_layout_selector"
-                    app:tabSelectedTextColor="@color/soma_forest"
+                    app:tabSelectedTextColor="@color/soma_ember"
                     app:tabTextColor="@color/soma_text_muted"
                     app:tabPaddingStart="16dp"
                     app:tabPaddingEnd="16dp"

@@ -233,7 +233,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             behavior.setPeekHeight((height/6));
         } else {
             // In portrait
-            behavior.setPeekHeight((height/2)-220);
+            behavior.setPeekHeight((int) (height * 0.54));
         }
         int defheight=behavior.getPeekHeight();
 
