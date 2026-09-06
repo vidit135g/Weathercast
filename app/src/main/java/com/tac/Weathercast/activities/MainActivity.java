@@ -155,6 +155,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     protected void onCreate(Bundle savedInstanceState) {
         // Initialize the associated SharedPreferences file with default values
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
+        com.tac.Weathercast.CustomFontApp.applyNightMode(this);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -229,11 +230,27 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // In landscape
-            behavior.setPeekHeight((height/6));
+            behavior.setPeekHeight((height / 6));
         } else {
-            // In portrait
-            behavior.setPeekHeight((int) (height * 0.54));
+            behavior.setPeekHeight((int) (height * 0.52));
+            // Once the hero has measured, snap the peek so the sheet meets it exactly
+            // (grabber just below the hero card) — no overlap, no dead gap.
+            final int screenH = height;
+            final View heroArea = findViewById(R.id.toolbar_container);
+            if (heroArea != null) {
+                heroArea.getViewTreeObserver().addOnGlobalLayoutListener(
+                        new android.view.ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                int h = heroArea.getHeight();
+                                if (h <= 0) return;
+                                heroArea.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                int peek = Math.max((int) dp(220),
+                                        Math.min((int) (screenH * 0.62), screenH - h - (int) dp(6)));
+                                behavior.setPeekHeight(peek);
+                            }
+                        });
+            }
         }
         int defheight=behavior.getPeekHeight();
 
@@ -378,6 +395,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     @Override
     public void onResume() {
         super.onResume();
+        com.tac.Weathercast.CustomFontApp.applyNightMode(this);
         try {
             int id = Integer.parseInt(todayWeather.getId());
             applySomaTheme(id);

@@ -5,7 +5,7 @@
          Fraunces for display, Poppins for everything else.
          ============================================================ -->
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/soma_ember</item>
         <item name="colorPrimaryDark">@color/soma_bg</item>
         <item name="colorAccent">@color/soma_ember</item>

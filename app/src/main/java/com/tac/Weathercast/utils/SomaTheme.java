@@ -82,10 +82,13 @@ public final class SomaTheme {
         int[] locked = lockedElement(appearance);
         int[] el = locked != null ? locked : elementFor(owmId, isNight);
 
-        if ("dark".equals(appearance)) {
+        boolean dark = "dark".equals(appearance)
+                || ("auto".equals(appearance) && (hour >= 20 || hour < 6));
+        if (dark) {
+            int[] de = locked != null ? locked : elementFor(owmId, true);
             return new SomaTheme(
-                    0xFF14181C, 0xFF1E242A, 0xFF283039, 0xFFEFF1F3, 0xFFAEB6BE, 0xFF7E868F,
-                    0xFF333C45, 0xFFE0A43A, el[0], el[1], el[2], true);
+                    0xFF12161B, 0xFF1C232B, 0xFF28313A, 0xFFEEF1F3, 0xFFB4BDC5, 0xFF828C95,
+                    0xFF333E48, de[2], de[0], de[1], de[2], true);
         }
 
         int bg, surfMuted, accent;

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soma midnight palette — the whole app goes dark at night / when chosen. -->
+    <color name="soma_bg">#12161B</color>
+    <color name="soma_bg_warm">#141A20</color>
+    <color name="soma_surface">#1C232B</color>
+    <color name="soma_surface_muted">#28313A</color>
+    <color name="soma_border">#333E48</color>
+    <color name="soma_ink">#EEF1F3</color>
+    <color name="soma_text_secondary">#B4BDC5</color>
+    <color name="soma_text_muted">#828C95</color>
+    <color name="soma_forest">#6FAF86</color>
+    <color name="soma_forest_soft">#8CC6A2</color>
+    <color name="soma_ember">#E9855C</color>
+    <color name="soma_ember_soft">#F0A585</color>
+    <color name="soma_saffron">#E4B968</color>
+    <color name="soma_mint">#8BC6AF</color>
+    <color name="soma_plum">#9C97E0</color>
+    <color name="soma_indigo">#9088E4</color>
+    <color name="soma_on_fill">#F8F3E9</color>
+    <color name="soma_on_fill_dim">#C7F8F3E9</color>
+</resources>

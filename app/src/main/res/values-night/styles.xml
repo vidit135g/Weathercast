@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/soma_ember</item>
+        <item name="colorPrimaryDark">@color/soma_bg</item>
+        <item name="colorAccent">@color/soma_ember</item>
+        <item name="android:colorBackground">@color/soma_bg</item>
+        <item name="android:windowBackground">@color/soma_bg</item>
+        <item name="android:textColor">@color/soma_ink</item>
+        <item name="android:textColorPrimary">@color/soma_ink</item>
+        <item name="android:textColorSecondary">@color/soma_text_muted</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="colorControlActivated">@color/soma_ember</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/soma_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowAnimationStyle">@style/Soma.WindowAnimation</item>
+        <item name="colorBackground">@color/soma_bg</item>
+        <item name="colorTintedBackground">@color/soma_surface_muted</item>
+    </style>
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/soma_bg</item>
+        <item name="android:navigationBarColor">@color/soma_bg</item>
+    </style>
+</resources>
