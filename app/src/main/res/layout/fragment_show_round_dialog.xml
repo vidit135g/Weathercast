@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins"
-                android:text="thecompanyabsolute@gmail.com"
+                android:text="theabsolutecorporation@gmail.com"
                 android:textColor="@color/soma_text_muted"
                 android:textSize="12sp" />
         </LinearLayout>

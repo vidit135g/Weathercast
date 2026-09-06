@@ -109,14 +109,22 @@
                     <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_uv" android:layout_marginEnd="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
                         <ImageView style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_ember" android:src="@drawable/ic_feather_sun" android:tint="@color/soma_ember" />
-                        <TextView android:id="@+id/todayUvIndex" style="@style/Soma.TileValue" android:maxLines="1" android:textSize="16sp" tools:text="Moderate" />
-                        <View android:layout_width="match_parent" android:layout_height="7dp" android:layout_marginTop="10dp" android:background="@drawable/bento_uv_track" />
+                        <TextView android:id="@+id/todayUvIndex" style="@style/Soma.TileValue" android:maxLines="1" android:textSize="16sp" android:layout_marginTop="10dp" tools:text="Moderate" />
+                        <com.tac.Weathercast.utils.UvBarView
+                            android:id="@+id/uvBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="14dp"
+                            android:layout_marginTop="10dp" />
                     </LinearLayout>
                     <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_pressure" android:layout_marginStart="6dp">
                         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                         <ImageView android:id="@+id/pressure" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_activity" android:tint="@color/soma_saffron" />
-                        <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
-                        <TextView android:id="@+id/todayPressure" style="@style/Soma.TileValue" tools:text="1012 hPa" />
+                        <TextView android:id="@+id/todayPressure" style="@style/Soma.TileValue" android:layout_marginTop="10dp" tools:text="1012 hPa" />
+                        <com.tac.Weathercast.utils.SparklineView
+                            android:id="@+id/pressureSpark"
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="8dp" />
                     </LinearLayout>
                 </LinearLayout>
 

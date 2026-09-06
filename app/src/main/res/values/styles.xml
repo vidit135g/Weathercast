@@ -106,10 +106,13 @@
 
     <style name="Soma.Tile" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">150dp</item>
+        <item name="android:layout_height">168dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@drawable/bento_tile</item>
+        <item name="android:foreground" tools:targetApi="m">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
         <item name="android:padding">18dp</item>
     </style>
 

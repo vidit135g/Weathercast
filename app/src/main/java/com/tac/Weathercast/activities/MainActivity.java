@@ -652,7 +652,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         // Pressure
         double pressure = UnitConvertor.convertPressure((float) Double.parseDouble(todayWeather.getPressure()), sp);
 
-        todayTemperature.setText(new DecimalFormat("0.#").format(temperature) + "\u00b0");
+        animateTemperature(temperature);
         todayDescription.setText(todayWeather.getDescription().substring(0, 1).toUpperCase() +
                 todayWeather.getDescription().substring(1) + rainString);
 
@@ -747,6 +747,30 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
     private float dp(float v) { return v * getResources().getDisplayMetrics().density; }
 
+    private android.animation.ValueAnimator tempAnimator;
+
+    /** Count the hero temperature up (or down) to its new value. */
+    private void animateTemperature(final float target) {
+        if (todayTemperature == null) return;
+        float from = 0f;
+        try {
+            String cur = todayTemperature.getText().toString().replace("°", "").trim();
+            if (!cur.isEmpty()) from = Float.parseFloat(cur);
+        } catch (Exception ignored) {}
+        if (Math.abs(from - target) < 0.1f || Math.abs(from - target) > 60f) {
+            todayTemperature.setText(new DecimalFormat("0.#").format(target) + "°");
+            return;
+        }
+        if (tempAnimator != null) tempAnimator.cancel();
+        final DecimalFormat fmt = new DecimalFormat("0.#");
+        tempAnimator = android.animation.ValueAnimator.ofFloat(from, target);
+        tempAnimator.setDuration(620);
+        tempAnimator.setInterpolator(new android.view.animation.DecelerateInterpolator(1.8f));
+        tempAnimator.addUpdateListener(a ->
+                todayTemperature.setText(fmt.format((float) a.getAnimatedValue()) + "°"));
+        tempAnimator.start();
+    }
+
     private void setTextColorSafe(int color, TextView... views) {
         for (TextView v : views) if (v != null) v.setTextColor(color);
     }
@@ -784,6 +808,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 todayWindPill.setText(new DecimalFormat("0.#").format(UnitConvertor.convertWind(windMs, sp)) + " " + localize(sp, "speedUnit", "m/s"));
             if (todayUvPill != null)
                 todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uv));
+
+            com.tac.Weathercast.utils.UvBarView uvBar = findViewById(R.id.uvBar);
+            if (uvBar != null && uv >= 0) uvBar.setLevel(uv);
 
             // Wind compass
             com.tac.Weathercast.utils.CompassView compass = findViewById(R.id.windCompass);
@@ -974,6 +1001,20 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             strip.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(
                     this, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false));
             strip.setAdapter(new com.tac.Weathercast.adapters.HourlyAdapter(this, hourly));
+
+            // Pressure trend sparkline
+            com.tac.Weathercast.utils.SparklineView spark = findViewById(R.id.pressureSpark);
+            if (spark != null && longTermWeather != null && longTermWeather.size() >= 3) {
+                int m = Math.min(14, longTermWeather.size());
+                float[] p = new float[m];
+                for (int i = 0; i < m; i++) {
+                    try { p[i] = Float.parseFloat(longTermWeather.get(i).getPressure()); }
+                    catch (Exception e) { p[i] = i > 0 ? p[i - 1] : 1013f; }
+                }
+                int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                spark.setData(p, SomaTheme.forNow(hr, 800,
+                        PreferenceManager.getDefaultSharedPreferences(this).getString("appearance", "auto")).heroAccent);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
