@@ -663,13 +663,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                     .getString("appearance", "auto");
             SomaTheme t = SomaTheme.forNow(hour, owmId, appearance);
 
-            if (appView != null) {
-                // Faint elemental wash down the page — Soma's ambient field.
-                int washTop = SomaTheme.blend(t.heroFrom, t.background, 0.88f);
-                GradientDrawable page = new GradientDrawable(
-                        GradientDrawable.Orientation.TOP_BOTTOM, new int[]{ washTop, t.background, t.background });
-                appView.setBackground(page);
-            }
+            com.tac.Weathercast.utils.ElementalFieldView field = findViewById(R.id.fieldBg);
+            if (field != null) field.setColors(t.background, t.heroFrom, t.heroTo, t.isDark);
+            getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(t.background));
 
             if (peekLayout != null) {
                 GradientDrawable sheet = new GradientDrawable();
