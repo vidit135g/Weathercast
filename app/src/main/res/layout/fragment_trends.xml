@@ -11,35 +11,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:paddingHorizontal="20dp"
         android:paddingTop="44dp"
-        android:paddingBottom="110dp" android:clipChildren="false" android:clipToPadding="false">
+        android:paddingBottom="120dp">
 
         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Next 5 days" />
         <TextView style="@style/Soma.Title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trends" android:layout_marginTop="4dp" />
+        <TextView android:id="@+id/trendsHeadline" style="@style/Soma.Display" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="18sp" android:lineSpacingExtra="3sp" android:layout_marginTop="12dp" tools:text="Warming through midweek, wettest on Monday." />
 
-        <LinearLayout android:id="@+id/cardTemp" style="@style/Soma.TrendCard" android:layout_marginTop="20dp" android:background="@drawable/soma_tile_uv">
-            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Temperature" />
-            <TextView android:id="@+id/rangeTemp" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="12° – 24°" />
-            <com.tac.Weathercast.utils.TempCurveView android:id="@+id/curveTemp" android:layout_width="match_parent" android:layout_height="140dp" android:layout_marginTop="10dp" />
+        <LinearLayout android:id="@+id/cardTemp" style="@style/Soma.TrendCard" android:layout_marginTop="20dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView android:id="@+id/tTempTitle" style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Temperature" />
+                    <TextView android:id="@+id/tTempSub" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="19° – 28°  ·  rising" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+            <com.tac.Weathercast.utils.TempCurveView android:id="@+id/curveTemp" android:layout_width="match_parent" android:layout_height="128dp" android:layout_marginTop="12dp" />
         </LinearLayout>
 
-        <LinearLayout style="@style/Soma.TrendCard" android:layout_marginTop="12dp" android:background="@drawable/soma_tile_humid">
-            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rainfall" />
-            <TextView android:id="@+id/rangeRain" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="up to 3 mm" />
-            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkRain" android:layout_width="match_parent" android:layout_height="90dp" android:layout_marginTop="10dp" />
+        <LinearLayout android:id="@+id/cardRain" style="@style/Soma.TrendCard" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rainfall" />
+                    <TextView android:id="@+id/tRainSub" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="4 mm over 5 days" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkRain" android:layout_width="match_parent" android:layout_height="84dp" android:layout_marginTop="12dp" />
         </LinearLayout>
 
-        <LinearLayout style="@style/Soma.TrendCard" android:layout_marginTop="12dp" android:background="@drawable/soma_tile_pressure">
-            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure" />
-            <TextView android:id="@+id/rangePressure" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="1004 – 1021 hPa" />
-            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkPressure" android:layout_width="match_parent" android:layout_height="90dp" android:layout_marginTop="10dp" />
+        <LinearLayout android:id="@+id/cardPressure" style="@style/Soma.TrendCard" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure" />
+                    <TextView android:id="@+id/tPressureSub" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="1004 – 1021 hPa  ·  rising" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkPressure" android:layout_width="match_parent" android:layout_height="84dp" android:layout_marginTop="12dp" />
         </LinearLayout>
 
-        <LinearLayout style="@style/Soma.TrendCard" android:layout_marginTop="12dp" android:background="@drawable/soma_tile_wind">
-            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind speed" />
-            <TextView android:id="@+id/rangeWind" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="2 – 9 m/s" />
-            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkWind" android:layout_width="match_parent" android:layout_height="90dp" android:layout_marginTop="10dp" />
+        <LinearLayout android:id="@+id/cardWind" style="@style/Soma.TrendCard" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind speed" />
+                    <TextView android:id="@+id/tWindSub" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="2 – 9 m/s" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkWind" android:layout_width="match_parent" android:layout_height="84dp" android:layout_marginTop="12dp" />
         </LinearLayout>
+
+        <LinearLayout android:id="@+id/cardHumidity" style="@style/Soma.TrendCard" android:layout_marginTop="12dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity" />
+                    <TextView android:id="@+id/tHumiditySub" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="2dp" tools:text="44 – 93 %" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+            <com.tac.Weathercast.utils.SparklineView android:id="@+id/sparkHumidity" android:layout_width="match_parent" android:layout_height="84dp" android:layout_marginTop="12dp" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

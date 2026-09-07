@@ -517,6 +517,9 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
             todayWeather.setCountry(country);
 
+            if (reader.has("timezone"))
+                com.tac.Weathercast.utils.CityTime.setOffsetSeconds(reader.getInt("timezone"));
+
             JSONObject coordinates = reader.getJSONObject("coord");
             if (coordinates != null) {
                 todayWeather.setLat(coordinates.getDouble("lat"));
@@ -652,8 +655,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         todayPressure.setText( new DecimalFormat("0.0").format(pressure) + " " +
                 localize(sp, "pressureUnit", "hPa"));
         todayHumidity.setText(todayWeather.getHumidity() + " %");
-        todaySunrise.setText(timeFormat.format(todayWeather.getSunrise()));
-        todaySunset.setText(timeFormat.format(todayWeather.getSunset()));
+        todaySunrise.setText(com.tac.Weathercast.utils.CityTime.hm(todayWeather.getSunrise()));
+        todaySunset.setText(com.tac.Weathercast.utils.CityTime.hm(todayWeather.getSunset()));
         citytool=findViewById(R.id.citytool);
         citytool.setText(city);
         updateGlanceCard(sp);
@@ -1161,6 +1164,17 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     public Weather getTodayWeatherData() { return todayWeather; }
     public java.util.List<Weather> getLongTermWeatherData() { return longTermWeather; }
     public java.util.List<Weather> getLongTermTodayWeatherData() { return longTermTodayWeather; }
+    public java.util.List<Weather> getLongTermTomorrowWeatherData() { return longTermTomorrowWeather; }
+
+    /** today + tomorrow + the remaining days, in chronological order. */
+    public java.util.List<Weather> getForecastSeries() {
+        java.util.ArrayList<Weather> all = new java.util.ArrayList<>();
+        if (longTermTodayWeather != null) all.addAll(longTermTodayWeather);
+        if (longTermTomorrowWeather != null) all.addAll(longTermTomorrowWeather);
+        if (longTermWeather != null) all.addAll(longTermWeather);
+        com.tac.Weathercast.utils.ForecastCache.set(all);
+        return all;
+    }
 
     private void showTab(int itemId) {
         View scroll = findViewById(R.id.swipeRefresh);

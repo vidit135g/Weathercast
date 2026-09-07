@@ -40,8 +40,12 @@ public class HourlyFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
-        List<Weather> data = ((MainActivity) requireActivity()).getLongTermWeatherData();
-        if (data == null || data.isEmpty()) return;
+        List<Weather> all = ((MainActivity) requireActivity()).getForecastSeries();
+        List<Weather> data = new java.util.ArrayList<>();
+        long cutoff = System.currentTimeMillis() - 3 * 3600_000L;
+        for (Weather w : all) if (w.getDate() != null && w.getDate().getTime() >= cutoff) data.add(w);
+        if (data.isEmpty()) data = all;
+        if (data.isEmpty()) return;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
@@ -52,7 +56,7 @@ public class HourlyFragment extends Fragment {
         int n = Math.min(16, data.size());
         float[] temps = new float[n];
         String[] hours = new String[n];
-        SimpleDateFormat hf = new SimpleDateFormat("HH", Locale.getDefault());
+        SimpleDateFormat hf = com.tac.Weathercast.utils.CityTime.format("HH");
         for (int i = 0; i < n; i++) {
             Weather w = data.get(i);
             try { temps[i] = UnitConvertor.convertTemperature(Float.parseFloat(w.getTemperature()), sp); }
@@ -63,19 +67,18 @@ public class HourlyFragment extends Fragment {
         curve.setData(temps, hours, accent, textColor);
 
         LinearLayout rows = v.findViewById(R.id.hourlyRows);
-        SimpleDateFormat tf = new SimpleDateFormat("EEE HH:mm", Locale.getDefault());
+        SimpleDateFormat tf = com.tac.Weathercast.utils.CityTime.format("EEE HH:mm");
         String speedUnit = sp.getString("speedUnit", "m/s");
         int show = Math.min(20, data.size());
         for (int i = 0; i < show; i++) {
             Weather w = data.get(i);
             View row = LayoutInflater.from(getContext()).inflate(R.layout.hourly_detail_row, rows, false);
-            Calendar c = Calendar.getInstance(); c.setTime(w.getDate());
             boolean now = i == 0;
             ((TextView) row.findViewById(R.id.hTime)).setText(now ? "Now" : tf.format(w.getDate()));
 
             int owmId;
             try { owmId = Integer.parseInt(w.getId()); } catch (Exception e) { owmId = 800; }
-            int h24 = c.get(Calendar.HOUR_OF_DAY);
+            int h24 = com.tac.Weathercast.utils.CityTime.hourOfDay(w.getDate());
             ((ImageView) row.findViewById(R.id.hIcon)).setImageResource(
                     Formatting.somaIllustration(owmId, h24 < 6 || h24 >= 20));
 

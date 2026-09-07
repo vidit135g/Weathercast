@@ -43,7 +43,9 @@ public class BriefingFragment extends Fragment {
         MainActivity a = (MainActivity) requireActivity();
         Weather today = a.getTodayWeatherData();
         List<Weather> todayHrs = a.getLongTermTodayWeatherData();
-        List<Weather> future = a.getLongTermWeatherData();
+        List<Weather> future = new java.util.ArrayList<>();
+        if (a.getLongTermTomorrowWeatherData() != null) future.addAll(a.getLongTermTomorrowWeatherData());
+        if (a.getLongTermWeatherData() != null) future.addAll(a.getLongTermWeatherData());
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(requireContext());
         if (today == null) return;
 
@@ -114,7 +116,7 @@ public class BriefingFragment extends Fragment {
         lp.rightMargin = dp(8);
         col.setLayoutParams(lp);
 
-        Calendar cal = Calendar.getInstance(); cal.setTime(w.getDate());
+        Calendar cal = com.tac.Weathercast.utils.CityTime.calendar(w.getDate());
         TextView hour = new TextView(getContext());
         hour.setText(String.format("%02d:00", cal.get(Calendar.HOUR_OF_DAY)));
         hour.setTextColor(color(R.color.soma_text_muted));
@@ -209,8 +211,7 @@ public class BriefingFragment extends Fragment {
     }
     private static String fmt(double x) { return new DecimalFormat("0.#").format(x); }
     private String hm(long ms) {
-        Calendar c = Calendar.getInstance(); c.setTimeInMillis(ms);
-        return String.format("%02d:%02d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        return com.tac.Weathercast.utils.CityTime.hm(new java.util.Date(ms));
     }
     private int dp(int v) { return Math.round(getResources().getDisplayMetrics().density * v); }
     private int color(int res) { return ContextCompat.getColor(requireContext(), res); }

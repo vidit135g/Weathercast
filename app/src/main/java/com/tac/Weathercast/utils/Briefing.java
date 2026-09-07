@@ -95,7 +95,7 @@ public final class Briefing {
         for (Weather w : safe(todayHrs)) {
             int id; try { id = Integer.parseInt(w.getId()); } catch (Exception e) { continue; }
             if (id >= 200 && id < 700) {
-                Calendar cal = Calendar.getInstance(); cal.setTime(w.getDate());
+                Calendar cal = CityTime.calendar(w.getDate());
                 rainWhen = String.format("%02d:00", cal.get(Calendar.HOUR_OF_DAY));
                 break;
             }
@@ -115,7 +115,7 @@ public final class Briefing {
         double hi = nowC, lo = nowC; String hiAt = null, loAt = null;
         for (Weather w : safe(todayHrs)) {
             double t = c(w.getTemperature());
-            Calendar cal = Calendar.getInstance(); cal.setTime(w.getDate());
+            Calendar cal = CityTime.calendar(w.getDate());
             String at = String.format("%02d:00", cal.get(Calendar.HOUR_OF_DAY));
             if (t > hi) { hi = t; hiAt = at; }
             if (t < lo) { lo = t; loAt = at; }
@@ -146,8 +146,8 @@ public final class Briefing {
         double uv = today.getUvIndex();
         if (uv >= 3) {
             try {
-                Calendar rs = Calendar.getInstance(); rs.setTime(today.getSunrise());
-                Calendar st = Calendar.getInstance(); st.setTime(today.getSunset());
+                Calendar rs = CityTime.calendar(today.getSunrise());
+                Calendar st = CityTime.calendar(today.getSunset());
                 int h1 = Math.max(rs.get(Calendar.HOUR_OF_DAY) + 2, 9);
                 int h2 = Math.min(st.get(Calendar.HOUR_OF_DAY) - 2, 16);
                 r.insights.add(new Insight("uv",
@@ -179,7 +179,7 @@ public final class Briefing {
     /** {@code todayHrs} = today's 3-hourly slots, {@code future} = later days' 3-hourly slots. */
     private static Compare compare(List<Weather> todayHrs, List<Weather> future) {
         Compare cmp = new Compare();
-        int todayDoy = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        int todayDoy = CityTime.calendar(new java.util.Date()).get(Calendar.DAY_OF_YEAR);
 
         double tHi = -999, tLo = 999, tRain = 0; boolean today = false;
         for (Weather w : safe(todayHrs)) {
@@ -188,7 +188,7 @@ public final class Briefing {
         }
         double mHi = -999, mLo = 999, mRain = 0; boolean tmrw = false;
         for (Weather w : safe(future)) {
-            Calendar wc = Calendar.getInstance(); wc.setTime(w.getDate());
+            Calendar wc = CityTime.calendar(w.getDate());
             if (wc.get(Calendar.DAY_OF_YEAR) != (todayDoy % 365) + 1 && wc.get(Calendar.DAY_OF_YEAR) != todayDoy + 1) continue;
             double t = c(w.getTemperature());
             mHi = Math.max(mHi, t); mLo = Math.min(mLo, t); mRain += d(w.getRain(), 0); tmrw = true;

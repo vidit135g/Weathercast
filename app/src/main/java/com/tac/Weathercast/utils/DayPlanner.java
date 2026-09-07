@@ -39,7 +39,7 @@ public final class DayPlanner {
     }
 
     public static Plan build(List<Weather> hourly, Date sunrise, Date sunset) {
-        SimpleDateFormat hm = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat hm = CityTime.format("HH:mm");
         String ga = null, gp = null;
         if (sunrise != null) ga = hm.format(sunrise) + " – " + hm.format(new Date(sunrise.getTime() + 50 * 60000L));
         if (sunset != null)  gp = hm.format(new Date(sunset.getTime() - 50 * 60000L)) + " – " + hm.format(sunset);
@@ -52,9 +52,8 @@ public final class DayPlanner {
             for (int i = 0; i < hourly.size() && i < 6; i++) {
                 Weather w = hourly.get(i);
                 if (w.getDate().getTime() < now - 3600_000L) continue;
-                Calendar c = Calendar.getInstance(); c.setTime(w.getDate());
-                int h = c.get(Calendar.HOUR_OF_DAY);
-                if (h < 6 || h > 21) continue;                     // daytime only
+                int h = CityTime.hourOfDay(w.getDate());
+                if (h < 6 || h > 21) continue;                     // daytime only (city local)
                 double t = Double.parseDouble(w.getTemperature()) - 273.15;
                 double wind = num(w.getWind(), 0);
                 double rain = num(w.getRain(), 0);
