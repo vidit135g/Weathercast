@@ -84,6 +84,8 @@ public class BriefingFragment extends Fragment {
         }
         com.tac.Weathercast.utils.SkyTint.apply(v);
         v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
+        v.post(() -> { android.view.View cc = ((android.view.ViewGroup) v).getChildAt(0);
+            if (cc instanceof android.view.ViewGroup) com.tac.Weathercast.utils.Anim.enterChildren((android.view.ViewGroup) cc); });
 
         Briefing.Moon m = r.moon;
         if (m != null) {

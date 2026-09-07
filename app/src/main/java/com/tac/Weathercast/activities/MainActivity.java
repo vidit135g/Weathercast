@@ -1258,9 +1258,10 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         if (br != null && br.insights.size() > idx) {
             com.tac.Weathercast.utils.Briefing.Insight in = br.insights.get(idx);
             android.text.SpannableString ss = new android.text.SpannableString(in.headline + "  " + in.detail);
-            ss.setSpan(new android.text.style.ForegroundColorSpan(
-                    androidx.core.content.ContextCompat.getColor(this, R.color.soma_ink)),
-                    0, in.headline.length(), 0);
+            int end = in.headline.length();
+            ss.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, end, 0);
+            ss.setSpan(new android.text.style.ForegroundColorSpan(0xFFFFFFFF), 0, end, 0);
+            ss.setSpan(new android.text.style.ForegroundColorSpan(0xC2FFFFFF), end, ss.length(), 0);
             tv.setText(ss);
             row.setVisibility(View.VISIBLE);
         } else {
@@ -1332,19 +1333,29 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 scroll.smoothScrollTo(0, 0);
             }
             showTab(id);
+            View icon = nav.findViewById(id);
+            if (icon != null) com.tac.Weathercast.utils.Anim.pulse(icon);
             return true;
         });
 
-        // Hero parallax on scroll (replaces the old bottom-sheet parallax).
+        // Layered parallax — sky sits still, the temperature block drifts,
+        // the sun illustration drifts faster, the date fades out first.
         if (scroll != null) {
+            final View hero = findViewById(R.id.heroCard);
+            final View date = findViewById(R.id.todayDate);
+            final View city = findViewById(R.id.citytool);
             scroll.setOnScrollChangeListener((androidx.core.widget.NestedScrollView.OnScrollChangeListener)
                     (v, x, y, ox, oy) -> {
-                        View hero = findViewById(R.id.heroCard);
                         if (hero != null) {
-                            hero.setTranslationY(y * 0.28f);
-                            hero.setAlpha(Math.max(0.3f, 1f - y / 900f));
+                            hero.setTranslationY(y * 0.32f);
+                            hero.setAlpha(Math.max(0.25f, 1f - y / 780f));
                         }
-                        if (todayIcon != null) todayIcon.setTranslationY(y * 0.12f);
+                        if (todayIcon != null) {
+                            todayIcon.setTranslationY(y * 0.16f);
+                            todayIcon.setRotation(y * 0.02f);
+                        }
+                        if (date != null) date.setAlpha(Math.max(0f, 1f - y / 260f));
+                        if (city != null) city.setTranslationY(y * 0.10f);
                     });
         }
     }

@@ -25,6 +25,7 @@ public class TrendChartView extends View {
 
     private final Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Path path = new Path();
+    private float reveal = 0f;
 
     public TrendChartView(Context c) { super(c); }
     public TrendChartView(Context c, AttributeSet a) { super(c, a); }
@@ -35,7 +36,13 @@ public class TrendChartView extends View {
 
     public void setSeries(TrendSeries s) {
         this.v = s.values; this.t = s.times; this.bars = s.bars; this.unit = s.unit;
-        invalidate();
+        reveal = 0f;
+        android.animation.ValueAnimator va = android.animation.ValueAnimator.ofFloat(0f, 1f);
+        va.setDuration(1100);
+        va.setStartDelay(120);
+        va.setInterpolator(Anim.ease());
+        va.addUpdateListener(a -> { reveal = (float) a.getAnimatedValue(); invalidate(); });
+        va.start();
     }
 
     @Override
@@ -80,6 +87,9 @@ public class TrendChartView extends View {
             prevDay = day;
         }
 
+        int clip = cv.save();
+        cv.clipRect(0f, 0f, padL + cw * Math.max(0.001f, reveal) + dp(2), h);
+
         if (bars) {
             float bw = Math.max(dp(2), cw / n * 0.55f);
             p.setColor(withAlpha(accent, 0xD0));
@@ -89,6 +99,7 @@ public class TrendChartView extends View {
                 if (v[i] <= 0.001f) continue;
                 cv.drawRoundRect(x - bw / 2, y, x + bw / 2, padT + ch, dp(2), dp(2), p);
             }
+            cv.restoreToCount(clip);
             return;
         }
 
@@ -117,9 +128,13 @@ public class TrendChartView extends View {
         p.setColor(accent);
         cv.drawPath(path, p);
 
-        // min / max dots
-        drawDot(cv, padL, cw, ch, padT, n, mn, mx, indexOf(v, true), true);
-        drawDot(cv, padL, cw, ch, padT, n, mn, mx, indexOf(v, false), false);
+        cv.restoreToCount(clip);
+
+        // min / max dots (drawn after the reveal completes so they don't pop early)
+        if (reveal > 0.98f) {
+            drawDot(cv, padL, cw, ch, padT, n, mn, mx, indexOf(v, true), true);
+            drawDot(cv, padL, cw, ch, padT, n, mn, mx, indexOf(v, false), false);
+        }
     }
 
     private void drawDot(Canvas cv, float padL, float cw, float ch, float padT,

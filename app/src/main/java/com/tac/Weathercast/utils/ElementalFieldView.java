@@ -18,6 +18,9 @@ import android.view.View;
 public class ElementalFieldView extends View {
 
     private int[] stops = { 0xFF2E77C9, 0xFF5599DA, 0xFF89BEE8 };
+    private int[] prevStops = stops;
+    private float fade = 1f;
+    private ValueAnimator fadeAnim;
     private float phase = 0f;
     private ValueAnimator anim;
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -33,9 +36,32 @@ public class ElementalFieldView extends View {
         anim.addUpdateListener(a -> { phase = (float) a.getAnimatedValue(); invalidate(); });
     }
 
-    /** @param sky three colours, top → bottom. */
+    /** @param sky three colours, top → bottom — cross-faded from the current sky. */
     public void setSky(int[] sky) {
-        if (sky != null && sky.length == 3) { this.stops = sky; invalidate(); }
+        if (sky == null || sky.length != 3) return;
+        if (java.util.Arrays.equals(sky, stops)) return;
+        prevStops = current();
+        stops = sky;
+        if (fadeAnim != null) fadeAnim.cancel();
+        fade = 0f;
+        fadeAnim = ValueAnimator.ofFloat(0f, 1f);
+        fadeAnim.setDuration(900);
+        fadeAnim.addUpdateListener(a -> { fade = (float) a.getAnimatedValue(); invalidate(); });
+        fadeAnim.start();
+    }
+
+    private int[] current() {
+        if (fade >= 1f) return stops;
+        return new int[]{ lerp(prevStops[0], stops[0], fade),
+                          lerp(prevStops[1], stops[1], fade),
+                          lerp(prevStops[2], stops[2], fade) };
+    }
+
+    private static int lerp(int a, int b, float t) {
+        int ar = (a >> 16) & 0xFF, ag = (a >> 8) & 0xFF, ab = a & 0xFF;
+        int br = (b >> 16) & 0xFF, bg = (b >> 8) & 0xFF, bb = b & 0xFF;
+        return 0xFF000000 | (Math.round(ar + (br - ar) * t) << 16)
+                | (Math.round(ag + (bg - ag) * t) << 8) | Math.round(ab + (bb - ab) * t);
     }
 
     /** Back-compat shim — older callers passed element colours; ignore, sky wins. */
@@ -52,7 +78,7 @@ public class ElementalFieldView extends View {
     }
 
     private boolean lightSky() {
-        int mid = stops[1];
+        int mid = current()[1];
         return (0.299 * ((mid >> 16) & 0xFF) + 0.587 * ((mid >> 8) & 0xFF) + 0.114 * (mid & 0xFF)) > 150;
     }
 
@@ -60,9 +86,10 @@ public class ElementalFieldView extends View {
     protected void onDraw(Canvas cv) {
         float w = getWidth(), h = getHeight();
         if (w == 0 || h == 0) return;
+        int[] s = current();
 
         paint.setShader(new LinearGradient(0, 0, 0, h,
-                new int[]{ stops[0], stops[1], stops[2] },
+                new int[]{ s[0], s[1], s[2] },
                 new float[]{ 0f, 0.55f, 1f }, Shader.TileMode.CLAMP));
         cv.drawRect(0, 0, w, h, paint);
 

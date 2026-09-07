@@ -78,6 +78,8 @@ public class TrendsFragment extends Fragment {
 
         com.tac.Weathercast.utils.SkyTint.apply(v);
         v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
+        v.post(() -> { android.view.View cc = ((android.view.ViewGroup) v).getChildAt(0);
+            if (cc instanceof android.view.ViewGroup) com.tac.Weathercast.utils.Anim.enterChildren((android.view.ViewGroup) cc); });
     }
 
     private String headline(TrendSeries temp, TrendSeries rain, TrendSeries press) {

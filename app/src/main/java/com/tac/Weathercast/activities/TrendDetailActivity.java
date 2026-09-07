@@ -93,6 +93,9 @@ public class TrendDetailActivity extends AppCompatActivity {
         com.tac.Weathercast.utils.SkyTint.apply(root);
         root.post(() -> com.tac.Weathercast.utils.SkyTint.apply(root));
 
+        View col = ((ViewGroup) ((ViewGroup) findViewById(R.id.hourList).getParent()));
+        com.tac.Weathercast.utils.Anim.enterChildren((ViewGroup) col, 60, 60);
+
         androidx.core.view.WindowInsetsControllerCompat wc =
                 new androidx.core.view.WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
         wc.setAppearanceLightStatusBars(false);
