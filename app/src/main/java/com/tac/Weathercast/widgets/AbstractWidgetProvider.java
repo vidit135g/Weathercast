@@ -186,6 +186,33 @@ public abstract class AbstractWidgetProvider extends AppWidgetProvider {
         context.getApplicationContext().sendBroadcast(intent);
     }
 
+    /** Render one widget instance as a full-bleed Soma sky bitmap. */
+    protected void renderWidget(Context context, AppWidgetManager mgr, int widgetId,
+                                int layoutRes, int kind) {
+        RemoteViews rv = new RemoteViews(context.getPackageName(), layoutRes);
+
+        android.os.Bundle opt = mgr.getAppWidgetOptions(widgetId);
+        float density = context.getResources().getDisplayMetrics().density;
+        int wDp = opt != null ? opt.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 0) : 0;
+        int hDp = opt != null ? opt.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 0) : 0;
+        if (wDp <= 0) wDp = kind == WidgetRenderer.EXTENSIVE ? 270 : 150;
+        if (hDp <= 0) hDp = kind == WidgetRenderer.EXTENSIVE ? 150 : 84;
+        int wPx = Math.round(wDp * density), hPx = Math.round(hDp * density);
+
+        try {
+            rv.setImageViewBitmap(R.id.widgetImage, WidgetRenderer.render(context, kind, wPx, hPx));
+        } catch (Throwable t) {
+            Log.e("WidgetRenderer", "render failed", t);
+        }
+
+        Intent open = new Intent(context, MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(context, 0, open,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        rv.setOnClickPendingIntent(R.id.widgetRoot, pi);
+
+        mgr.updateAppWidget(widgetId, rv);
+    }
+
     protected void setTheme(Context context, RemoteViews remoteViews) {
         if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("transparentWidget", false)){
             remoteViews.setInt(R.id.widgetRoot, "setBackgroundResource", R.drawable.widget_card_transparent);
