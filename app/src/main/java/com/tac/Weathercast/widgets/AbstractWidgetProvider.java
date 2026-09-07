@@ -239,16 +239,23 @@ public abstract class AbstractWidgetProvider extends AppWidgetProvider {
 
     protected void scheduleNextUpdate(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager == null) return;
         long now = new Date().getTime();
-        long nextUpdate = now + DURATION_MINUTE - now % DURATION_MINUTE;
-        if (BuildConfig.DEBUG) {
-            Log.v(this.getClass().getSimpleName(), "Next widget update: " +
-                    android.text.format.DateFormat.getTimeFormat(context).format(new Date(nextUpdate)));
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            alarmManager.setExact(AlarmManager.RTC, nextUpdate, getTimeIntent(context));
-        } else {
-            alarmManager.set(AlarmManager.RTC, nextUpdate, getTimeIntent(context));
+        // A minute cadence keeps the clock widget current; other sizes are re-drawn on
+        // the system's own ~30-min APPWIDGET_UPDATE and on app refresh.
+        long nextUpdate = now + 60_000L - now % 60_000L;
+        try {
+            boolean canExact = Build.VERSION.SDK_INT < 31 || alarmManager.canScheduleExactAlarms();
+            if (canExact) {
+                alarmManager.setExact(AlarmManager.RTC, nextUpdate, getTimeIntent(context));
+            } else {
+                alarmManager.set(AlarmManager.RTC, nextUpdate, getTimeIntent(context));
+            }
+        } catch (RuntimeException e) {
+            Log.w("Widget", "scheduleNextUpdate fell back to inexact", e);
+            try {
+                alarmManager.set(AlarmManager.RTC, nextUpdate, getTimeIntent(context));
+            } catch (Exception ignored) { }
         }
     }
 
