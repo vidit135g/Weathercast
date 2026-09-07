@@ -87,7 +87,7 @@ public final class Briefing {
                         "Up " + Math.round(dp) + " hPa — skies should settle and clear."));
             else
                 r.insights.add(new Insight("pressure", "Pressure is steady",
-                        "Little change — expect more of the same for now."));
+                        "No real change in the next day — settled conditions."));
         }
 
         // ---- rain timing (today's 3-hourly) ----

@@ -116,10 +116,39 @@
             </LinearLayout>
 
             <!-- At a glance -->
-            <LinearLayout android:id="@+id/glanceCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="14dp" android:background="@drawable/soma_reading_card" android:padding="20dp">
-                <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="At a glance" />
+            <LinearLayout android:id="@+id/glanceCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="14dp" android:background="@drawable/soma_reading_card" android:padding="20dp" android:elevation="3dp">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="At a glance" android:layout_alignParentStart="true" />
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Details ›" android:layout_alignParentEnd="true" android:textColor="@color/soma_text_muted" />
+                </RelativeLayout>
                 <TextView android:id="@+id/todayReadingHeadline" style="@style/Soma.Display" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="18sp" android:lineSpacingExtra="2sp" tools:text="Haze and mild, with a steady breeze." />
                 <TextView android:id="@+id/todayReadingAdvice" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" tools:text="Comfortable conditions — a good window to be outside." />
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/soma_border" android:layout_marginTop="16dp" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:baselineAligned="false" android:layout_marginTop="14dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" />
+                        <TextView android:id="@+id/glFeels" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" android:layout_marginTop="3dp" tools:text="29°" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1.2" android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rain next" />
+                        <TextView android:id="@+id/glRain" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" android:layout_marginTop="3dp" tools:text="~15:00" />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Air" />
+                        <TextView android:id="@+id/glAir" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" android:layout_marginTop="3dp" tools:text="Good" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/glInsight1" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="14dp" android:visibility="gone">
+                    <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginTop="7dp" android:layout_marginEnd="10dp" android:background="@drawable/soma_chip_ember" />
+                    <TextView android:id="@+id/glInsight1Text" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="12sp" tools:text="Pressure is falling — wetter weather likely within a day." />
+                </LinearLayout>
+                <LinearLayout android:id="@+id/glInsight2" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginTop="8dp" android:visibility="gone">
+                    <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginTop="7dp" android:layout_marginEnd="10dp" android:background="@drawable/soma_chip_indigo" />
+                    <TextView android:id="@+id/glInsight2Text" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:textSize="12sp" tools:text="Warmest near 15:00 at 31°." />
+                </LinearLayout>
             </LinearLayout>
 
             <!-- Plan your day -->
@@ -145,14 +174,14 @@
             <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More info" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
 
             <LinearLayout style="@style/Soma.GridRow">
-                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_wind" android:layout_marginEnd="6dp">
+                <LinearLayout android:id="@+id/tileWind" style="@style/Soma.Tile" android:background="@drawable/soma_tile_wind" android:layout_marginEnd="6dp">
                     <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind &amp; compass" />
                     <com.tac.Weathercast.utils.CompassView android:id="@+id/windCompass" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginTop="14dp" />
                     <ImageView android:id="@+id/wind" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone" />
                     <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
                     <TextView android:id="@+id/todayWind" style="@style/Soma.TileValue" tools:text="3.4 m/s NE" />
                 </LinearLayout>
-                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_humid" android:layout_marginStart="6dp">
+                <LinearLayout android:id="@+id/tileHumidity" style="@style/Soma.Tile" android:background="@drawable/soma_tile_humid" android:layout_marginStart="6dp">
                     <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Humidity &amp; dew point" />
                     <ImageView android:id="@+id/humid" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_indigo" android:src="@drawable/ic_feather_droplet" android:tint="@color/soma_indigo" />
                     <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
@@ -161,13 +190,13 @@
             </LinearLayout>
 
             <LinearLayout style="@style/Soma.GridRow" android:layout_marginTop="12dp">
-                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_uv" android:layout_marginEnd="6dp">
+                <LinearLayout android:id="@+id/tileUv" style="@style/Soma.Tile" android:background="@drawable/soma_tile_uv" android:layout_marginEnd="6dp">
                     <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV index" />
                     <ImageView style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_ember" android:src="@drawable/ic_feather_sun" android:tint="@color/soma_ember" />
                     <TextView android:id="@+id/todayUvIndex" style="@style/Soma.TileValue" android:maxLines="1" android:textSize="16sp" android:layout_marginTop="10dp" tools:text="Moderate" />
                     <com.tac.Weathercast.utils.UvBarView android:id="@+id/uvBar" android:layout_width="match_parent" android:layout_height="14dp" android:layout_marginTop="10dp" />
                 </LinearLayout>
-                <LinearLayout style="@style/Soma.Tile" android:background="@drawable/soma_tile_pressure" android:layout_marginStart="6dp">
+                <LinearLayout android:id="@+id/tilePressure" style="@style/Soma.Tile" android:background="@drawable/soma_tile_pressure" android:layout_marginStart="6dp">
                     <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pressure &amp; air quality" />
                     <ImageView android:id="@+id/pressure" style="@style/Soma.TileIcon" android:background="@drawable/soma_chip_saffron" android:src="@drawable/ic_feather_activity" android:tint="@color/soma_saffron" />
                     <TextView android:id="@+id/todayPressure" style="@style/Soma.TileValue" android:layout_marginTop="10dp" tools:text="1012 hPa" />

@@ -290,7 +290,13 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                //Do some magic
+                try {
+                    int owmId = Integer.parseInt(todayWeather.getId());
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    themeSearchAndToolbar(SomaTheme.forNow(
+                            Calendar.getInstance().get(Calendar.HOUR_OF_DAY), owmId,
+                            sp.getString("appearance", "auto"), sp.getString("themeBase", "system")), false);
+                } catch (Exception ignored) {}
             }
 
             @Override
@@ -731,11 +737,14 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             setTextColorSafe(t.textSecondary, todayReadingAdvice);
 
             getWindow().setStatusBarColor(0x00000000);
-            getWindow().setNavigationBarColor(t.background);
+            getWindow().setNavigationBarColor(t.surface);
             View decor = getWindow().getDecorView();
             WindowInsetsControllerCompat c = new WindowInsetsControllerCompat(getWindow(), decor);
-            c.setAppearanceLightStatusBars(true);
-            c.setAppearanceLightNavigationBars(true);
+            c.setAppearanceLightStatusBars(!t.isDark);
+            c.setAppearanceLightNavigationBars(!t.isDark);
+
+            themeSearchAndToolbar(t, !firstThemeApply);
+            firstThemeApply = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -946,6 +955,40 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                     any = true;
                 }
                 if (planCard != null) planCard.setVisibility(any ? View.VISIBLE : View.GONE);
+            } catch (Exception ignored) {}
+
+            // --- Advanced "at a glance" widget ---
+            try {
+                java.util.List<Weather> fut = new java.util.ArrayList<>();
+                if (longTermTomorrowWeather != null) fut.addAll(longTermTomorrowWeather);
+                if (longTermWeather != null) fut.addAll(longTermWeather);
+                com.tac.Weathercast.utils.Briefing.Result br =
+                        com.tac.Weathercast.utils.Briefing.build(todayWeather, longTermTodayWeather, fut);
+
+                setTextSafe(R.id.glFeels, Math.round(UnitConvertor.convertTemperature(
+                        (float) (feelsLikeC + 273.15), sp)) + "°");
+
+                String rainNext = "—";
+                for (com.tac.Weathercast.models.Weather w : (longTermTodayWeather != null ? longTermTodayWeather
+                        : new java.util.ArrayList<Weather>())) {
+                    int wid; try { wid = Integer.parseInt(w.getId()); } catch (Exception e) { continue; }
+                    if (wid >= 200 && wid < 700 && w.getDate() != null
+                            && w.getDate().getTime() > System.currentTimeMillis()) {
+                        rainNext = "~" + com.tac.Weathercast.utils.CityTime.hm(w.getDate());
+                        break;
+                    }
+                }
+                if ("—".equals(rainNext) && owmId >= 200 && owmId < 700) rainNext = "now";
+                else if ("—".equals(rainNext)) rainNext = "none";
+                setTextSafe(R.id.glRain, rainNext);
+
+                TextView aqiV = findViewById(R.id.todayAqi);
+                String aqi = aqiV != null && aqiV.getText().length() > 0
+                        ? aqiV.getText().toString().replace("AQI · ", "") : "—";
+                setTextSafe(R.id.glAir, aqi);
+
+                bindGlanceInsight(R.id.glInsight1, R.id.glInsight1Text, br, 0);
+                bindGlanceInsight(R.id.glInsight2, R.id.glInsight2Text, br, 1);
             } catch (Exception ignored) {}
 
             // Wind compass
@@ -1200,6 +1243,46 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 .commitAllowingStateLoss();
     }
 
+    private void setTextSafe(int id, String s) {
+        TextView tv = findViewById(id);
+        if (tv != null) tv.setText(s);
+    }
+
+    private void bindGlanceInsight(int rowId, int textId, com.tac.Weathercast.utils.Briefing.Result br, int idx) {
+        View row = findViewById(rowId);
+        TextView tv = findViewById(textId);
+        if (row == null || tv == null) return;
+        if (br != null && br.insights.size() > idx) {
+            com.tac.Weathercast.utils.Briefing.Insight in = br.insights.get(idx);
+            android.text.SpannableString ss = new android.text.SpannableString(in.headline + "  " + in.detail);
+            ss.setSpan(new android.text.style.ForegroundColorSpan(
+                    androidx.core.content.ContextCompat.getColor(this, R.color.soma_ink)),
+                    0, in.headline.length(), 0);
+            tv.setText(ss);
+            row.setVisibility(View.VISIBLE);
+        } else {
+            row.setVisibility(View.GONE);
+        }
+    }
+
+    private void wireTrend(int viewId, String type) {
+        View v = findViewById(viewId);
+        if (v == null) return;
+        v.setClickable(true);
+        v.setOnClickListener(x -> {
+            getForecastSeries();   // warm the cache
+            android.content.Intent it = new android.content.Intent(this,
+                    com.tac.Weathercast.activities.TrendDetailActivity.class);
+            it.putExtra("type", type);
+            startActivity(it);
+        });
+    }
+
+    private void gotoBriefing() {
+        com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
+        if (nav != null) nav.setSelectedItemId(R.id.nav_briefing);
+    }
+
     private void setupBottomNav() {
         com.google.android.material.bottomnavigation.BottomNavigationView nav = findViewById(R.id.bottomNav);
         final androidx.core.widget.NestedScrollView scroll = findViewById(R.id.scrollHost);
@@ -1226,6 +1309,17 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             } catch (Exception ignored) {}
             startActivity(it);
         });
+
+        wireTrend(R.id.tileWind, "WIND");
+        wireTrend(R.id.tileHumidity, "HUMIDITY");
+        wireTrend(R.id.tilePressure, "PRESSURE");
+        wireTrend(R.id.heroCard, "TEMP");
+        View gl = findViewById(R.id.glanceCard);
+        if (gl != null) gl.setOnClickListener(x -> gotoBriefing());
+        View uv = findViewById(R.id.tileUv);
+        if (uv != null) uv.setOnClickListener(x -> gotoBriefing());
+        View dl = findViewById(R.id.stats);
+        if (dl != null) dl.setOnClickListener(x -> gotoBriefing());
 
         if (nav == null) return;
         nav.setSelectedItemId(R.id.nav_today);
@@ -1302,14 +1396,72 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     }
 
 
+    private Menu optionsMenu;
+    private int toolbarTint = 0xFF222222;
+    private boolean firstThemeApply = true;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        optionsMenu = menu;
 
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
+        try {
+            int owmId = Integer.parseInt(todayWeather.getId());
+            themeSearchAndToolbar(SomaTheme.forNow(
+                    Calendar.getInstance().get(Calendar.HOUR_OF_DAY), owmId,
+                    PreferenceManager.getDefaultSharedPreferences(this).getString("appearance", "auto"),
+                    PreferenceManager.getDefaultSharedPreferences(this).getString("themeBase", "system")), false);
+        } catch (Exception ignored) {}
         return true;
+    }
+
+    /** Tint the search field, its icons and the toolbar menu icons for the current
+     *  palette — with a soft colour cross-fade when the theme changes. */
+    private void themeSearchAndToolbar(SomaTheme t, boolean animate) {
+        final int ink = t.textPrimary, muted = t.textMuted, surface = t.surface;
+
+        // search field internals
+        try {
+            android.widget.EditText st = searchView.findViewById(R.id.searchTextView);
+            View topBar = searchView.findViewById(R.id.search_top_bar);
+            android.widget.ImageButton up = searchView.findViewById(R.id.action_up_btn);
+            android.widget.ImageButton voice = searchView.findViewById(R.id.action_voice_btn);
+            android.widget.ImageButton empty = searchView.findViewById(R.id.action_empty_btn);
+            android.widget.ListView sugg = searchView.findViewById(R.id.suggestion_list);
+            if (topBar != null) topBar.setBackgroundColor(surface);
+            if (sugg != null) sugg.setBackgroundColor(surface);
+            if (st != null) { st.setTextColor(ink); st.setHintTextColor(muted); }
+            for (android.widget.ImageButton b : new android.widget.ImageButton[]{ up, voice, empty })
+                if (b != null) b.setColorFilter(ink);
+        } catch (Exception ignored) {}
+
+        // toolbar menu icons
+        final int from = toolbarTint, to = ink;
+        toolbarTint = to;
+        if (animate && from != to) {
+            android.animation.ValueAnimator va = android.animation.ValueAnimator.ofArgb(from, to);
+            va.setDuration(420);
+            va.addUpdateListener(a -> tintMenu((int) a.getAnimatedValue()));
+            va.start();
+            View tb = findViewById(R.id.toolbar);
+            if (tb != null) {
+                tb.setAlpha(0.35f);
+                tb.animate().alpha(1f).setDuration(420).start();
+            }
+        } else {
+            tintMenu(to);
+        }
+    }
+
+    private void tintMenu(int color) {
+        if (optionsMenu == null) return;
+        for (int i = 0; i < optionsMenu.size(); i++) {
+            android.graphics.drawable.Drawable d = optionsMenu.getItem(i).getIcon();
+            if (d != null) { d = d.mutate(); d.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN); }
+        }
     }
 
     @Override

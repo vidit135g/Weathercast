@@ -38,12 +38,24 @@ public final class SomaTheme {
     public enum Period { DAWN, MORNING, DAY, AFTERNOON, DUSK, NIGHT }
 
     public static Period periodFor(int hour) {
-        if (hour >= 4 && hour < 7) return Period.DAWN;
-        if (hour >= 7 && hour < 11) return Period.MORNING;
+        if (hour >= 5 && hour < 8) return Period.DAWN;
+        if (hour >= 8 && hour < 11) return Period.MORNING;
         if (hour >= 11 && hour < 16) return Period.DAY;
         if (hour >= 16 && hour < 18) return Period.AFTERNOON;
         if (hour >= 18 && hour < 20) return Period.DUSK;
         return Period.NIGHT;
+    }
+
+    /** Hero gradient + accent for the time of day (before any weather nudge). */
+    private static int[] periodHero(Period p) {
+        switch (p) {
+            case DAWN:      return new int[]{ 0xFFF3C7C0, 0xFF8E7FB2, 0xFFC98BA8 };
+            case MORNING:   return new int[]{ 0xFFF4DA8E, 0xFF5F9E77, 0xFF6E9E78 };
+            case DAY:       return new int[]{ 0xFF7FB6DC, 0xFFE49F5C, 0xFFD8663D };
+            case AFTERNOON: return new int[]{ 0xFFF0B36B, 0xFFCE6A44, 0xFFCC6A46 };
+            case DUSK:      return new int[]{ 0xFFF4A253, 0xFFB0477E, 0xFFDD6A4A };
+            case NIGHT: default: return new int[]{ 0xFF33406E, 0xFF12172E, 0xFFE7B15C };
+        }
     }
 
     private static int[] elementFor(int owmId, boolean isNight) {
@@ -93,40 +105,48 @@ public final class SomaTheme {
         else if ("light".equals(base)) dark = false;
         else dark = (hour >= 20 || hour < 6);
 
+        // Hero = time of day, nudged toward the current weather element.
+        int[] ph = periodHero(p);
+        int heroFrom = locked != null ? el[0] : blend(ph[0], el[0], 0.30f);
+        int heroTo   = locked != null ? el[1] : blend(ph[1], el[1], 0.30f);
+        int heroAcc  = locked != null ? el[2] : ph[2];
+
         if (dark) {
-            int[] de = locked != null ? locked : elementFor(owmId, true);
-            // AMOLED-ish black, with a hint of the element so tints read as "black + indigo" etc.
-            int bg = blend(0xFF000000, de[1], 0.06f);
-            int surface = blend(0xFF14141A, de[1], 0.10f);
-            int surfM = blend(0xFF1E1E26, de[1], 0.12f);
-            int border = blend(0xFF33333E, de[2], 0.28f);
+            int tintDeep = locked != null ? el[1] : heroTo;
+            int tintEdge = locked != null ? el[2] : heroAcc;
+            // true-black OLED ground, warmed toward the night / element hue
+            int bg = blend(0xFF000000, tintDeep, 0.05f);
+            int surface = blend(0xFF141419, tintDeep, 0.10f);
+            int surfM = blend(0xFF1E1E25, tintDeep, 0.12f);
+            int border = blend(0xFF2B2B36, tintEdge, 0.22f);
             return new SomaTheme(bg, surface, surfM,
-                    0xFFF6F8FA, 0xFFCDD5DD, 0xFFA7B0BB, border, de[2],
-                    de[0], de[1], de[2], true);
+                    0xFFF4F5F7, 0xFFC4CBD4, 0xFF8B94A0, border, tintEdge,
+                    heroFrom, heroTo, heroAcc, true);
         }
 
         if (locked != null) {
             // Locked accent + light base: clean near-white + element tint.
             int bg = blend(0xFFFFFFFF, el[0], 0.05f);
             int surfM = blend(0xFFF2F2F5, el[0], 0.08f);
-            int border = blend(0xFFE3E3EA, el[2], 0.22f);
+            int border = blend(0xFFE4DED1, el[2], 0.18f);
             return new SomaTheme(bg, 0xFFFFFFFF, surfM,
-                    0xFF1B1B22, 0xFF54545E, 0xFF83838E, border, el[2],
+                    0xFF1F1D1B, 0xFF524C46, 0xFF8F877D, border, el[2],
                     el[0], el[1], el[2], false);
         }
 
-        int bg, surfMuted, acc;
+        // Auto + light base: warm paper tuned to the hour.
+        int bg, surfMuted;
         switch (p) {
-            case DAWN:      bg = 0xFFF3EFF4; surfMuted = 0xFFE9E3F0; acc = 0xFF6E6AB8; break;
-            case MORNING:   bg = 0xFFF7F5E9; surfMuted = 0xFFECEAD6; acc = 0xFF3F6349; break;
-            case DAY:       bg = 0xFFFDF4E3; surfMuted = 0xFFF6E6CC; acc = 0xFFD8663D; break;
-            case AFTERNOON: bg = 0xFFF6F1EE; surfMuted = 0xFFEDE2D6; acc = 0xFFCC6A46; break;
-            case DUSK:      bg = 0xFFF8EBDA; surfMuted = 0xFFF1DCC0; acc = 0xFFD8663D; break;
-            case NIGHT: default: bg = 0xFFF1EEE5; surfMuted = 0xFFE4E1D2; acc = 0xFFC98A3C; break;
+            case DAWN:      bg = 0xFFF4EFF3; surfMuted = 0xFFEAE3EF; break;
+            case MORNING:   bg = 0xFFF6F4E8; surfMuted = 0xFFEBE9D5; break;
+            case DAY:       bg = 0xFFFBF4E7; surfMuted = 0xFFF3E7CF; break;
+            case AFTERNOON: bg = 0xFFF7F1EC; surfMuted = 0xFFEEE2D4; break;
+            case DUSK:      bg = 0xFFF9ECDC; surfMuted = 0xFFF1DDC1; break;
+            case NIGHT: default: bg = 0xFFF2EFE6; surfMuted = 0xFFE5E2D3; break;
         }
-        return new SomaTheme(bg, 0xFFFFFDF6, surfMuted,
-                0xFF241E17, 0xFF6B5E4E, 0xFF938573, 0xFFE9DCC4, acc,
-                el[0], el[1], el[2], false);
+        return new SomaTheme(bg, 0xFFFFFFFF, surfMuted,
+                0xFF221E19, 0xFF615A50, 0xFF938979, blend(0xFFE4DED1, heroAcc, 0.12f), heroAcc,
+                heroFrom, heroTo, heroAcc, false);
     }
 
     public int borderTranslucent() {
