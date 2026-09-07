@@ -24,9 +24,17 @@ public class MoreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle s) {
         MainActivity a = (MainActivity) requireActivity();
+        int[] rows = { R.id.moreUpdate, R.id.moreSettings, R.id.moreShare, R.id.moreAbout };
+        for (int id : rows) {
+            android.widget.TextView row = v.findViewById(id);
+            for (android.graphics.drawable.Drawable d : row.getCompoundDrawablesRelative())
+                if (d != null) d.setTint(0xF2FFFFFF);
+        }
         v.findViewById(R.id.moreUpdate).setOnClickListener(x -> a.onUpdateClick());
         v.findViewById(R.id.moreSettings).setOnClickListener(x -> a.onSettingsClick());
         v.findViewById(R.id.moreShare).setOnClickListener(x -> a.onShareClick());
         v.findViewById(R.id.moreAbout).setOnClickListener(x -> a.onAboutClick());
+        com.tac.Weathercast.utils.SkyTint.apply(v);
+        v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
     }
 }
