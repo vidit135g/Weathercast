@@ -129,8 +129,12 @@
     <color name="soma_bg_warm">#F9F5EC</color>
     <color name="soma_surface">#FFFFFF</color>
     <color name="soma_surface_muted">#EFEBE1</color>
-    <color name="soma_border">#E4DED1</color>
+    <color name="soma_border">#30FFFFFF</color>
+    <color name="soma_border_solid">#E4DED1</color>
     <color name="soma_hairline">#1F1D1B14</color>
+    <color name="soma_frost">#24FFFFFF</color>
+    <color name="soma_frost_strong">#33FFFFFF</color>
+    <color name="soma_frost_line">#33FFFFFF</color>
     <color name="soma_ink">#1F1D1B</color>
     <color name="soma_text_secondary">#524C46</color>
     <color name="soma_text_muted">#8F877D</color>

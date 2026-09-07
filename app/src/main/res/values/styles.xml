@@ -15,8 +15,8 @@
         <item name="android:textColorPrimary">@color/soma_ink</item>
         <item name="android:textColorSecondary">@color/soma_text_muted</item>
         <item name="android:textColorHint">@color/soma_text_muted</item>
-        <item name="android:fontFamily">@font/poppins</item>
-        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="fontFamily">@font/poppins_medium</item>
         <item name="colorControlActivated">@color/soma_ember</item>
         <item name="colorControlHighlight">#22000000</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -76,14 +76,14 @@
     </style>
 
     <style name="Soma.Body" parent="">
-        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/soma_text_secondary</item>
         <item name="android:textSize">13sp</item>
         <item name="android:lineSpacingMultiplier">1.4</item>
     </style>
 
     <style name="Soma.Label" parent="">
-        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/soma_text_muted</item>
         <item name="android:textSize">10sp</item>
         <item name="android:letterSpacing">0.17</item>
@@ -106,7 +106,7 @@
         <item name="android:drawablePadding">18dp</item>
         <item name="android:drawableTint">@color/soma_text_secondary</item>
         <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/soma_ink</item>
         <item name="android:textSize">15sp</item>
         <item name="android:clickable">true</item>
@@ -194,7 +194,7 @@
         <item name="android:drawablePadding">20dp</item>
         <item name="android:drawableTint">@color/soma_text_secondary</item>
         <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textColor">@color/soma_ink</item>
         <item name="android:textSize">14sp</item>
         <item name="android:clickable">true</item>

@@ -43,7 +43,7 @@ public class TrendsFragment extends Fragment {
 
         int ember = c(R.color.soma_ember), indigo = c(R.color.soma_indigo),
                 saffron = c(R.color.soma_saffron), forest = c(R.color.soma_forest),
-                mint = c(R.color.soma_mint), muted = c(R.color.soma_text_muted);
+                mint = c(R.color.soma_mint), muted = 0x9EFFFFFF;
 
         TrendSeries temp = TrendSeries.of(TrendSeries.Type.TEMP, data, sp);
         TrendSeries rain = TrendSeries.of(TrendSeries.Type.RAIN, data, sp);
@@ -75,6 +75,9 @@ public class TrendsFragment extends Fragment {
         open(v, R.id.cardPressure, TrendSeries.Type.PRESSURE);
         open(v, R.id.cardWind, TrendSeries.Type.WIND);
         open(v, R.id.cardHumidity, TrendSeries.Type.HUMIDITY);
+
+        com.tac.Weathercast.utils.SkyTint.apply(v);
+        v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
     }
 
     private String headline(TrendSeries temp, TrendSeries rain, TrendSeries press) {

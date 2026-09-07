@@ -403,17 +403,12 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     }
 
     private void preloadUVIndex() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-
-        String lastUVIToday = sp.getString("lastToday", "");
-        if (!lastUVIToday.isEmpty()) {
-            double latitude = todayWeather.getLat();
-            double longitude = todayWeather.getLon();
-            if (latitude == 0 && longitude == 0) {
-                return;
-            }
-            new TodayUVITask(this, this, progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "coords", Double.toString(latitude), Double.toString(longitude));
-        }
+        try {
+            if (todayWeather.getLat() == 0 && todayWeather.getLon() == 0) return;
+            int owmId; try { owmId = Integer.parseInt(todayWeather.getId()); } catch (Exception e) { owmId = 800; }
+            todayWeather.setUvIndex(com.tac.Weathercast.utils.UvEstimate.now(
+                    todayWeather.getLat(), todayWeather.getLon(), owmId));
+        } catch (Exception ignored) {}
     }
 
     private void preloadWeather() {
@@ -430,10 +425,16 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
     }
 
+    /** The standalone OWM UV endpoint was retired — estimate it from the sun's
+     *  elevation and the current cloud cover instead (0 at night, real curve by day). */
     private void getTodayUVIndex() {
-        double latitude = todayWeather.getLat();
-        double longitude = todayWeather.getLon();
-        new TodayUVITask(this, this, progressDialog).execute("coords", Double.toString(latitude), Double.toString(longitude));
+        try {
+            int owmId; try { owmId = Integer.parseInt(todayWeather.getId()); } catch (Exception e) { owmId = 800; }
+            double uv = com.tac.Weathercast.utils.UvEstimate.now(
+                    todayWeather.getLat(), todayWeather.getLon(), owmId);
+            todayWeather.setUvIndex(uv);
+            updateUVIndexUI();
+        } catch (Exception ignored) {}
     }
 
     private void getTodayWeather() {
@@ -688,56 +689,53 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             SomaTheme t = SomaTheme.forNow(hour, owmId, appearance, base);
 
             com.tac.Weathercast.utils.ElementalFieldView field = findViewById(R.id.fieldBg);
-            if (field != null) field.setColors(t.background, t.heroFrom, t.heroTo, t.isDark);
-            getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(t.background));
+            if (field != null) field.setSky(t.sky);
+            getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(t.sky[1]));
 
             if (peekLayout != null) {
                 GradientDrawable sheet = new GradientDrawable();
-                sheet.setColor(t.background);
+                sheet.setColor(0x33000000);
                 sheet.setCornerRadii(new float[]{ dp(28), dp(28), dp(28), dp(28), 0, 0, 0, 0 });
                 peekLayout.setBackground(sheet);
             }
 
-            // Hero: elemental gradient block, darkened just enough for white text,
-            // with a soft diagonal highlight for depth.
+            // Apple-style: the hero has no box — the temperature floats on the sky.
             if (heroCard != null) {
-                int from = SomaTheme.blend(t.heroFrom, 0xFF0E1412, 0.16f);
-                int to = SomaTheme.blend(t.heroTo, 0xFF0E1412, 0.44f);
-                GradientDrawable hero = new GradientDrawable(
-                        GradientDrawable.Orientation.TL_BR, new int[]{ from, to });
-                hero.setCornerRadius(dp(26));
-                heroCard.setBackground(hero);
-                heroCard.setElevation(dp(6));
-                if (android.os.Build.VERSION.SDK_INT >= 28) {
-                    heroCard.setOutlineSpotShadowColor(0x33000000);
-                    heroCard.setOutlineAmbientShadowColor(0x22000000);
+                heroCard.setBackground(null);
+                heroCard.setElevation(0);
+            }
+            View glance = findViewById(R.id.glanceCard);
+            if (glance != null) {
+                glance.setBackgroundResource(R.drawable.soma_reading_card);
+                glance.setElevation(0);
+            }
+
+            // Bottom nav: translucent glass over the sky.
+            View nav = findViewById(R.id.bottomNav);
+            if (nav != null) {
+                nav.setBackgroundColor((SomaTheme.blend(0xFF0E1526, t.sky[2], 0.28f) & 0x00FFFFFF) | 0xE0000000);
+                if (nav instanceof com.google.android.material.bottomnavigation.BottomNavigationView) {
+                    android.content.res.ColorStateList csl = new android.content.res.ColorStateList(
+                            new int[][]{ new int[]{ android.R.attr.state_checked }, new int[]{} },
+                            new int[]{ 0xFFFFFFFF, 0x8FFFFFFF });
+                    ((com.google.android.material.bottomnavigation.BottomNavigationView) nav).setItemIconTintList(csl);
+                    ((com.google.android.material.bottomnavigation.BottomNavigationView) nav).setItemTextColor(csl);
                 }
             }
 
-            // Glance card: a whisper of the hero accent — not a coloured box.
-            View glance = findViewById(R.id.glanceCard);
-            if (glance != null) {
-                GradientDrawable g = new GradientDrawable();
-                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, t.isDark ? 0.90f : 0.93f));
-                g.setCornerRadius(dp(22));
-                g.setStroke((int) dp(1), t.border);
-                glance.setBackground(g);
-                glance.setElevation(dp(3));
+            // Whole Today surface → white frosted text.
+            final View scrollContent = findViewById(R.id.main);
+            if (scrollContent != null) {
+                com.tac.Weathercast.utils.SkyTint.apply(scrollContent);
+                scrollContent.post(() -> com.tac.Weathercast.utils.SkyTint.apply(scrollContent));
             }
-
-            // Bottom nav: clean surface, no tint.
-            View nav = findViewById(R.id.bottomNav);
-            if (nav != null) nav.setBackgroundColor(t.surface);
-
-            int on = SomaTheme.ON_ELEMENT, onDim = SomaTheme.ON_ELEMENT_DIM;
-            setTextColorSafe(on, todayTemperature, todayDescription, todayFeelsLike, todayWindPill, todayUvPill);
-            setTextColorSafe(onDim, todaydes);
-            setTextColorSafe(t.textPrimary, citytool, todayReadingHeadline);
-            setTextColorSafe(t.textMuted, currdate);
-            setTextColorSafe(t.textSecondary, todayReadingAdvice);
+            setTextColorSafe(0xFFFFFFFF, todayTemperature, todayDescription, citytool,
+                    todayReadingHeadline, todayFeelsLike, todayWindPill, todayUvPill);
+            setTextColorSafe(0xCCFFFFFF, todaydes, todayReadingAdvice);
+            setTextColorSafe(0x9EFFFFFF, currdate);
 
             getWindow().setStatusBarColor(0x00000000);
-            getWindow().setNavigationBarColor(t.surface);
+            getWindow().setNavigationBarColor(0x33000000);
             View decor = getWindow().getDecorView();
             WindowInsetsControllerCompat c = new WindowInsetsControllerCompat(getWindow(), decor);
             c.setAppearanceLightStatusBars(!t.isDark);
@@ -885,9 +883,14 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             try { humidity = Double.parseDouble(todayWeather.getHumidity()); } catch (Exception e) { humidity = 50; }
             double windMs;
             try { windMs = Double.parseDouble(todayWeather.getWind()); } catch (Exception e) { windMs = 0; }
-            double uv = todayWeather.getUvIndex();
             int owmId;
             try { owmId = Integer.parseInt(todayWeather.getId()); } catch (Exception e) { owmId = 800; }
+            double uv;
+            try {
+                uv = com.tac.Weathercast.utils.UvEstimate.now(
+                        todayWeather.getLat(), todayWeather.getLon(), owmId);
+                todayWeather.setUvIndex(uv);
+            } catch (Exception e) { uv = todayWeather.getUvIndex(); }
 
             long daylight = 0;
             try {
@@ -916,13 +919,13 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 todayFeelsLike.setText(Math.round(UnitConvertor.convertTemperature((float) (feelsLikeC + 273.15), sp)) + "°");
             if (todayWindPill != null)
                 todayWindPill.setText(new DecimalFormat("0.#").format(UnitConvertor.convertWind(windMs, sp)) + " " + localize(sp, "speedUnit", "m/s"));
-            double uvNow = isNight ? 0 : uv;   // the sun is down — UV is 0 at night
+            double uvNow = Math.max(0, uv);
             if (todayUvPill != null)
-                todayUvPill.setText(uv < 0 ? "–" : new DecimalFormat("0.#").format(uvNow));
+                todayUvPill.setText(new DecimalFormat("0.#").format(uvNow));
 
             com.tac.Weathercast.utils.UvBarView uvBar = findViewById(R.id.uvBar);
-            if (uvBar != null && uv >= 0) uvBar.setLevel(uvNow);
-            if (todayUvIndex != null && uv >= 0)
+            if (uvBar != null) uvBar.setLevel(uvNow);
+            if (todayUvIndex != null)
                 todayUvIndex.setText(UnitConvertor.convertUvIndexToRiskLevel(uvNow));
 
             // Plan your day — best outdoor window + golden hour
@@ -1421,7 +1424,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     /** Tint the search field, its icons and the toolbar menu icons for the current
      *  palette — with a soft colour cross-fade when the theme changes. */
     private void themeSearchAndToolbar(SomaTheme t, boolean animate) {
-        final int ink = t.textPrimary, muted = t.textMuted, surface = t.surface;
+        final int ink = 0xFFFFFFFF, muted = 0x9EFFFFFF;
+        final int sheet = SomaTheme.blend(0xFF0E1526, t.sky[0], 0.35f) | 0xFF000000;
 
         // search field internals
         try {
@@ -1431,8 +1435,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             android.widget.ImageButton voice = searchView.findViewById(R.id.action_voice_btn);
             android.widget.ImageButton empty = searchView.findViewById(R.id.action_empty_btn);
             android.widget.ListView sugg = searchView.findViewById(R.id.suggestion_list);
-            if (topBar != null) topBar.setBackgroundColor(surface);
-            if (sugg != null) sugg.setBackgroundColor(surface);
+            if (topBar != null) topBar.setBackgroundColor(sheet);
+            if (sugg != null) sugg.setBackgroundColor(sheet);
             if (st != null) { st.setTextColor(ink); st.setHintTextColor(muted); }
             for (android.widget.ImageButton b : new android.widget.ImageButton[]{ up, voice, empty })
                 if (b != null) b.setColorFilter(ink);

@@ -36,6 +36,7 @@ public class TrendDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle s) {
         super.onCreate(s);
+        getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(0xFF15224A));
         setContentView(R.layout.activity_trend_detail);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -45,12 +46,19 @@ public class TrendDetailActivity extends AppCompatActivity {
         catch (Exception e) { type = TrendSeries.Type.TEMP; }
 
         List<Weather> data = ForecastCache.get();
-        findViewById(R.id.back).setOnClickListener(x -> finish());
+        android.widget.ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(x -> finish());
+        back.setColorFilter(0xFFFFFFFF);
 
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        accent = SomaTheme.forNow(hr, 800, sp.getString("appearance", "auto")).heroAccent;
-        int grid = isDark() ? 0x24FFFFFF : 0x16000000;
-        int label = col(R.color.soma_text_muted);
+        int owmNow = 800;
+        try { if (!data.isEmpty()) owmNow = Integer.parseInt(data.get(0).getId()); } catch (Exception ignored) {}
+        int[] sky = SomaTheme.skyStops(owmNow, hr, sp.getString("themeBase", "system"));
+        com.tac.Weathercast.utils.ElementalFieldView field = findViewById(R.id.fieldBg);
+        if (field != null) field.setSky(sky);
+        accent = 0xFFFFFFFF;
+        int grid = 0x2EFFFFFF;
+        int label = 0x9EFFFFFF;
 
         TrendSeries series = TrendSeries.of(type, data, sp);
         ((TextView) findViewById(R.id.title)).setText(series.title);
@@ -80,6 +88,16 @@ public class TrendDetailActivity extends AppCompatActivity {
         chart.setSeries(series);
 
         buildHourList(series);
+
+        final View root = findViewById(android.R.id.content);
+        com.tac.Weathercast.utils.SkyTint.apply(root);
+        root.post(() -> com.tac.Weathercast.utils.SkyTint.apply(root));
+
+        androidx.core.view.WindowInsetsControllerCompat wc =
+                new androidx.core.view.WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
+        wc.setAppearanceLightStatusBars(false);
+        getWindow().setStatusBarColor(0x00000000);
+        getWindow().setNavigationBarColor(0x22000000);
     }
 
     private void buildHourList(TrendSeries s) {

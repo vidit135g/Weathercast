@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/soma_bg"
-    android:fitsSystemWindows="true">
+    android:background="#FF15224A">
+
+    <com.tac.Weathercast.utils.ElementalFieldView
+        android:id="@+id/fieldBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:clipToPadding="false"
         android:clipChildren="false"
         android:scrollbars="none">

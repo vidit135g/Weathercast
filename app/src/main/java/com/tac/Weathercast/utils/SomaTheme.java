@@ -17,6 +17,7 @@ public final class SomaTheme {
     public final int border, accent;
     public final int heroFrom, heroTo, heroAccent;
     public final boolean isDark;
+    public int[] sky = { 0xFF2E77C9, 0xFF5599DA, 0xFF89BEE8 };   // top → bottom gradient
 
     private SomaTheme(int bg, int surface, int surfaceMuted, int tp, int ts, int tm,
                       int border, int accent, int heroFrom, int heroTo, int heroAccent,
@@ -81,6 +82,37 @@ public final class SomaTheme {
         }
     }
 
+    /** Apple-style full-screen sky gradient (top → bottom), by weather + hour. */
+    public static int[] skyStops(int owmId, int hour, String base) {
+        boolean night;
+        if ("dark".equals(base)) night = true;
+        else if ("light".equals(base)) night = false;
+        else night = hour >= 20 || hour < 6;
+        Period p = periodFor(hour);
+        int g = owmId / 100;
+
+        if (g == 2) return night ? new int[]{ 0xFF1C1F36, 0xFF31344E, 0xFF454864 }
+                                 : new int[]{ 0xFF3A3F57, 0xFF565B76, 0xFF70748C };
+        if (g == 3 || g == 5) return night ? new int[]{ 0xFF16202B, 0xFF27333F, 0xFF3A4653 }
+                                           : new int[]{ 0xFF3B4956, 0xFF54626D, 0xFF6E7B85 };
+        if (g == 6) return night ? new int[]{ 0xFF283140, 0xFF3B4655, 0xFF4E5A6A }
+                                 : new int[]{ 0xFF6E82A0, 0xFF98AAC0, 0xFFB7C6D6 };
+        if (g == 7) return night ? new int[]{ 0xFF2A2D34, 0xFF3E424B, 0xFF52565F }
+                                 : new int[]{ 0xFF6F7680, 0xFF8B9199, 0xFFA4A9B0 };
+        if (g == 8 && owmId >= 803) return night ? new int[]{ 0xFF1A2230, 0xFF2A3440, 0xFF3B4552 }
+                                                 : new int[]{ 0xFF52667C, 0xFF74879C, 0xFF97A8BA };
+
+        if (night) return new int[]{ 0xFF0B1330, 0xFF15224A, 0xFF223059 };
+        switch (p) {
+            case DAWN:      return new int[]{ 0xFF46578C, 0xFF9C6E92, 0xFFE7A76C };
+            case MORNING:   return new int[]{ 0xFF3577C0, 0xFF5F9AD7, 0xFF9CC3E7 };
+            case DAY:       return new int[]{ 0xFF2E77C9, 0xFF5599DA, 0xFF89BEE8 };
+            case AFTERNOON: return new int[]{ 0xFF357FC3, 0xFF6FA0CE, 0xFFDCB07C };
+            case DUSK:      return new int[]{ 0xFF213763, 0xFF7A4A80, 0xFFE28B4F };
+            default:        return new int[]{ 0xFF0B1330, 0xFF15224A, 0xFF223059 };
+        }
+    }
+
     public static SomaTheme forNow(int hour, int owmId) {
         return forNow(hour, owmId, "auto", "system");
     }
@@ -105,48 +137,24 @@ public final class SomaTheme {
         else if ("light".equals(base)) dark = false;
         else dark = (hour >= 20 || hour < 6);
 
-        // Hero = time of day, nudged toward the current weather element.
+        // Apple-style: a full-screen sky gradient with frosted glass cards on top.
+        int[] stops = skyStops(owmId, hour, base);
         int[] ph = periodHero(p);
-        int heroFrom = locked != null ? el[0] : blend(ph[0], el[0], 0.30f);
-        int heroTo   = locked != null ? el[1] : blend(ph[1], el[1], 0.30f);
-        int heroAcc  = locked != null ? el[2] : ph[2];
+        int heroAcc = locked != null ? el[2] : ph[2];
 
-        if (dark) {
-            int tintDeep = locked != null ? el[1] : heroTo;
-            int tintEdge = locked != null ? el[2] : heroAcc;
-            // true-black OLED ground, warmed toward the night / element hue
-            int bg = blend(0xFF000000, tintDeep, 0.05f);
-            int surface = blend(0xFF141419, tintDeep, 0.10f);
-            int surfM = blend(0xFF1E1E25, tintDeep, 0.12f);
-            int border = blend(0xFF2B2B36, tintEdge, 0.22f);
-            return new SomaTheme(bg, surface, surfM,
-                    0xFFF4F5F7, 0xFFC4CBD4, 0xFF8B94A0, border, tintEdge,
-                    heroFrom, heroTo, heroAcc, true);
-        }
-
-        if (locked != null) {
-            // Locked accent + light base: clean near-white + element tint.
-            int bg = blend(0xFFFFFFFF, el[0], 0.05f);
-            int surfM = blend(0xFFF2F2F5, el[0], 0.08f);
-            int border = blend(0xFFE4DED1, el[2], 0.18f);
-            return new SomaTheme(bg, 0xFFFFFFFF, surfM,
-                    0xFF1F1D1B, 0xFF524C46, 0xFF8F877D, border, el[2],
-                    el[0], el[1], el[2], false);
-        }
-
-        // Auto + light base: warm paper tuned to the hour.
-        int bg, surfMuted;
-        switch (p) {
-            case DAWN:      bg = 0xFFF4EFF3; surfMuted = 0xFFEAE3EF; break;
-            case MORNING:   bg = 0xFFF6F4E8; surfMuted = 0xFFEBE9D5; break;
-            case DAY:       bg = 0xFFFBF4E7; surfMuted = 0xFFF3E7CF; break;
-            case AFTERNOON: bg = 0xFFF7F1EC; surfMuted = 0xFFEEE2D4; break;
-            case DUSK:      bg = 0xFFF9ECDC; surfMuted = 0xFFF1DDC1; break;
-            case NIGHT: default: bg = 0xFFF2EFE6; surfMuted = 0xFFE5E2D3; break;
-        }
-        return new SomaTheme(bg, 0xFFFFFFFF, surfMuted,
-                0xFF221E19, 0xFF615A50, 0xFF938979, blend(0xFFE4DED1, heroAcc, 0.12f), heroAcc,
-                heroFrom, heroTo, heroAcc, false);
+        SomaTheme t = new SomaTheme(
+                stops[1],            // background — mid sky stop
+                0x24FFFFFF,          // surface — frosted glass
+                0x18FFFFFF,          // surfaceMuted
+                0xFFFFFFFF,          // textPrimary
+                0xE6FFFFFF,          // textSecondary
+                0x9EFFFFFF,          // textMuted
+                0x33FFFFFF,          // border — hairline
+                0xFFFFFFFF,          // accent — white reads cleanest on the glass
+                stops[0], stops[2], heroAcc,
+                true);
+        t.sky = stops;
+        return t;
     }
 
     public int borderTranslucent() {

@@ -51,7 +51,7 @@ public class HourlyFragment extends Fragment {
         int hr = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int accent = SomaTheme.forNow(hr, 800,
                 sp.getString("appearance", "auto")).heroAccent;
-        int textColor = resolveColor(R.color.soma_text_muted);
+        int textColor = 0x9EFFFFFF;
 
         int n = Math.min(16, data.size());
         float[] temps = new float[n];
@@ -121,6 +121,8 @@ public class HourlyFragment extends Fragment {
             row.animate().alpha(1f).setStartDelay(i * 22L).setDuration(260).start();
             rows.addView(row);
         }
+        com.tac.Weathercast.utils.SkyTint.apply(v);
+        v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
     }
 
     private int resolveColor(int res) {

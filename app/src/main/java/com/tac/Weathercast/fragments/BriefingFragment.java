@@ -82,6 +82,9 @@ public class BriefingFragment extends Fragment {
         } catch (Exception e) {
             v.findViewById(R.id.sunHours).setVisibility(View.GONE);
         }
+        com.tac.Weathercast.utils.SkyTint.apply(v);
+        v.post(() -> com.tac.Weathercast.utils.SkyTint.apply(v));
+
         Briefing.Moon m = r.moon;
         if (m != null) {
             ((MoonView) v.findViewById(R.id.moonView)).setPhase(m.illumination, m.waxing);
