@@ -53,6 +53,13 @@
             android:theme="@style/AppTheme"
             android:exported="false" />
 
+        <activity
+            android:name="com.tac.Weathercast.activities.RadarActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.tac.Weathercast.activities.MainActivity"
+            android:exported="false" />
+
         <receiver
             android:name="com.tac.Weathercast.widgets.ExtensiveWidgetProvider"
             android:exported="true">

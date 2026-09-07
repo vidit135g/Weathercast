@@ -70,12 +70,24 @@ public class RadarFragment extends Fragment {
                 android.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
         double lat = sp.getFloat("latitude", 0f);
         double lon = sp.getFloat("longitude", 0f);
+        android.content.Intent extras = requireActivity().getIntent();
+        String xTemp = null, xOwm = null;
         try {
             Weather w = ((MainActivity) requireActivity()).getTodayWeatherData();
             if (lat == 0 && lon == 0 && (w.getLat() != 0 || w.getLon() != 0)) {
                 lat = w.getLat(); lon = w.getLon();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            // launched standalone (RadarActivity) — take what MainActivity passed
+            if (extras != null) {
+                if (lat == 0 && lon == 0) {
+                    lat = extras.getDoubleExtra("lat", lat);
+                    lon = extras.getDoubleExtra("lon", lon);
+                }
+                xTemp = extras.getStringExtra("temp");
+                xOwm = extras.getStringExtra("owm");
+            }
+        }
 
         String key = sp.getString("apiKey", getString(R.string.apiKey)).replace("\"", "").trim();
         int hr = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY);
@@ -84,14 +96,19 @@ public class RadarFragment extends Fragment {
 
         String temp = "", glyph = "☁";
         try {
-            Weather w = ((MainActivity) requireActivity()).getTodayWeatherData();
-            temp = String.valueOf(Math.round(
-                    com.tac.Weathercast.utils.UnitConvertor.convertTemperature(
-                            Float.parseFloat(w.getTemperature()), sp)));
-            int id = Integer.parseInt(w.getId()); int gp = id / 100;
-            glyph = gp == 2 ? "⛈" : gp == 3 ? "🌀" : gp == 5 ? "🌧"
-                    : gp == 6 ? "❄" : gp == 7 ? "🌫" : id == 800 ? "☀"
-                    : "☁";
+            String rawTemp; String rawId;
+            try {
+                Weather w = ((MainActivity) requireActivity()).getTodayWeatherData();
+                rawTemp = w.getTemperature(); rawId = w.getId();
+            } catch (Exception e) { rawTemp = xTemp; rawId = xOwm; }
+            if (rawTemp != null)
+                temp = String.valueOf(Math.round(
+                        com.tac.Weathercast.utils.UnitConvertor.convertTemperature(Float.parseFloat(rawTemp), sp)));
+            if (rawId != null) {
+                int id = Integer.parseInt(rawId); int gp = id / 100;
+                glyph = gp == 2 ? "⛈" : gp == 3 ? "🌀" : gp == 5 ? "🌧"
+                        : gp == 6 ? "❄" : gp == 7 ? "🌫" : id == 800 ? "☀" : "☁";
+            }
         } catch (Exception ignored) {}
 
         web.loadUrl("https://appassets.androidplatform.net/assets/radar.html?lat=" + lat + "&lon=" + lon

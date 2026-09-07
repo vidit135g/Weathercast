@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/transparent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="44dp"
+        android:paddingBottom="120dp">
+
+        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your briefing" />
+        <TextView android:id="@+id/briefCity" style="@style/Soma.Title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:maxLines="1" android:ellipsize="end" tools:text="Lucknow" />
+
+        <TextView android:id="@+id/briefNarrative" style="@style/Soma.Display" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:textSize="19sp" android:lineSpacingExtra="3sp" tools:text="Dry morning, rain moving in around 15:00. High 31°." />
+
+        <!-- Today vs tomorrow -->
+        <LinearLayout android:id="@+id/compareCard" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="20dp" android:background="@drawable/soma_reading_card" android:padding="18dp">
+            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today vs tomorrow" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:baselineAligned="false" android:layout_marginTop="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today" />
+                    <TextView android:id="@+id/cmpTodayTemp" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp" android:layout_marginTop="4dp" tools:text="31° / 25°" />
+                    <TextView android:id="@+id/cmpTodayRain" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="2 mm rain" />
+                </LinearLayout>
+                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/soma_border" android:layout_marginHorizontal="14dp" />
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tomorrow" />
+                    <TextView android:id="@+id/cmpTmrwTemp" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp" android:layout_marginTop="4dp" tools:text="34° / 25°" />
+                    <TextView android:id="@+id/cmpTmrwRain" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" tools:text="dry" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView android:id="@+id/cmpDelta" style="@style/Soma.Body" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textSize="13sp" tools:text="Tomorrow looks 3° warmer, drier." />
+        </LinearLayout>
+
+        <!-- Day ahead -->
+        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Day ahead" android:layout_marginTop="26dp" android:layout_marginBottom="10dp" />
+        <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none" android:overScrollMode="never">
+            <LinearLayout android:id="@+id/timelineStrip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Insights -->
+        <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="What stands out" android:layout_marginTop="26dp" android:layout_marginBottom="10dp" />
+        <LinearLayout android:id="@+id/insightList" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
+
+        <!-- Sun & moon -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="26dp" android:background="@drawable/soma_tile_daylight" android:padding="18dp">
+            <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sun &amp; moon" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:baselineAligned="false" android:layout_marginTop="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView android:id="@+id/sunHours" style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" tools:text="12h 44m" />
+                    <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="of daylight" />
+                    <TextView android:id="@+id/sunTimes" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="8dp" tools:text="↑ 05:48   ↓ 18:20" />
+                </LinearLayout>
+                <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/soma_border" android:layout_marginHorizontal="14dp" />
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center_horizontal">
+                    <com.tac.Weathercast.utils.MoonView android:id="@+id/moonView" android:layout_width="56dp" android:layout_height="56dp" />
+                    <TextView android:id="@+id/moonPhase" style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="13sp" android:layout_marginTop="8dp" tools:text="Waning crescent" />
+                    <TextView android:id="@+id/moonSub" style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" tools:text="23% · full in 20 days" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -187,6 +187,26 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/radarCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bento_tile"
+                android:padding="18dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+                <ImageView android:layout_width="34dp" android:layout_height="34dp" android:padding="7dp" android:background="@drawable/soma_chip_indigo" android:src="@drawable/ic_feather_radar" android:tint="@color/soma_indigo" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                    <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="15sp" android:text="Radar" />
+                    <TextView style="@style/Soma.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="1dp" android:textSize="12sp" android:text="Live precipitation map" />
+                </LinearLayout>
+                <TextView style="@style/Soma.Display" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" android:textColor="@color/soma_text_muted" android:text="›" />
+            </LinearLayout>
+
             <TextView android:id="@+id/hourlyLabel" style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hourly" android:layout_marginTop="26dp" android:layout_marginBottom="12dp" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hourlyStrip"

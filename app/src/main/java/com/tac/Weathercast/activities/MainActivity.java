@@ -1154,6 +1154,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
 
     public Weather getTodayWeatherData() { return todayWeather; }
     public java.util.List<Weather> getLongTermWeatherData() { return longTermWeather; }
+    public java.util.List<Weather> getLongTermTodayWeatherData() { return longTermTodayWeather; }
 
     private void showTab(int itemId) {
         View scroll = findViewById(R.id.swipeRefresh);
@@ -1170,7 +1171,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         }
         androidx.fragment.app.Fragment frag;
         if (itemId == R.id.nav_hourly) frag = new com.tac.Weathercast.fragments.HourlyFragment();
-        else if (itemId == R.id.nav_radar) frag = new com.tac.Weathercast.fragments.RadarFragment();
+        else if (itemId == R.id.nav_briefing) frag = new com.tac.Weathercast.fragments.BriefingFragment();
         else if (itemId == R.id.nav_trends) frag = new com.tac.Weathercast.fragments.TrendsFragment();
         else frag = new com.tac.Weathercast.fragments.MoreFragment();
         getSupportFragmentManager().beginTransaction()
@@ -1193,6 +1194,18 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 srl.postDelayed(() -> srl.setRefreshing(false), 1400);
             });
         }
+
+        View radarCard = findViewById(R.id.radarCard);
+        if (radarCard != null) radarCard.setOnClickListener(x -> {
+            android.content.Intent it = new android.content.Intent(this, com.tac.Weathercast.activities.RadarActivity.class);
+            try {
+                it.putExtra("lat", todayWeather.getLat());
+                it.putExtra("lon", todayWeather.getLon());
+                it.putExtra("temp", todayWeather.getTemperature());
+                it.putExtra("owm", todayWeather.getId());
+            } catch (Exception ignored) {}
+            startActivity(it);
+        });
 
         if (nav == null) return;
         nav.setSelectedItemId(R.id.nav_today);
