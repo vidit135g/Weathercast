@@ -149,6 +149,11 @@ public class BriefingFragment extends Fragment {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.bottomMargin = dp(10);
         row.setLayoutParams(lp);
+        row.setElevation(dp(2));
+        if (android.os.Build.VERSION.SDK_INT >= 28) {
+            row.setOutlineSpotShadowColor(color(R.color.soma_shadow));
+            row.setOutlineAmbientShadowColor(color(R.color.soma_shadow));
+        }
 
         int[] style = styleFor(in.key);
         ImageView icon = new ImageView(getContext());

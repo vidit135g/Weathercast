@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Soma midnight palette — brighter surfaces + text so cards and copy
-         stay legible over the strong animated elemental field. -->
-    <color name="soma_bg">#060608</color>
-    <color name="soma_bg_warm">#0C0C10</color>
-    <color name="soma_surface">#17171E</color>
-    <color name="soma_surface_muted">#23232C</color>
-    <color name="soma_border">#3A3A46</color>
-    <color name="soma_ink">#F6F8FA</color>
-    <color name="soma_text_secondary">#CDD5DD</color>
-    <color name="soma_text_muted">#A6B0BC</color>
-    <color name="soma_forest">#78BE93</color>
-    <color name="soma_forest_soft">#95CFA9</color>
+    <!-- Soma midnight palette — premium OLED: true-black ground, cards that
+         lift off it with a faint cool surface and a whisper-thin hairline. -->
+    <color name="soma_bg">#08080A</color>
+    <color name="soma_bg_warm">#0D0D11</color>
+    <color name="soma_surface">#16161E</color>
+    <color name="soma_surface_muted">#20202B</color>
+    <color name="soma_border">#2B2B37</color>
+    <color name="soma_hairline">#FFFFFF12</color>
+    <color name="soma_ink">#F4F5F7</color>
+    <color name="soma_text_secondary">#C4CBD4</color>
+    <color name="soma_text_muted">#8B94A0</color>
+    <color name="soma_forest">#7BC095</color>
+    <color name="soma_forest_soft">#97D0AB</color>
     <color name="soma_ember">#F0906A</color>
     <color name="soma_ember_soft">#F4AF90</color>
     <color name="soma_saffron">#EDC479</color>
@@ -20,4 +21,5 @@
     <color name="soma_indigo">#9E96EC</color>
     <color name="soma_on_fill">#F8F3E9</color>
     <color name="soma_on_fill_dim">#D6F8F3E9</color>
+    <color name="soma_shadow">#00000000</color>
 </resources>

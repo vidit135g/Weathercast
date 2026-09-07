@@ -689,30 +689,36 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 peekLayout.setBackground(sheet);
             }
 
-            // Hero: full elemental gradient block, darkened just enough for white text.
+            // Hero: elemental gradient block, darkened just enough for white text,
+            // with a soft diagonal highlight for depth.
             if (heroCard != null) {
-                int from = SomaTheme.blend(t.heroFrom, 0xFF101613, 0.20f);
-                int to = SomaTheme.blend(t.heroTo, 0xFF101613, 0.42f);
+                int from = SomaTheme.blend(t.heroFrom, 0xFF0E1412, 0.16f);
+                int to = SomaTheme.blend(t.heroTo, 0xFF0E1412, 0.44f);
                 GradientDrawable hero = new GradientDrawable(
                         GradientDrawable.Orientation.TL_BR, new int[]{ from, to });
-                hero.setCornerRadius(dp(28));
+                hero.setCornerRadius(dp(26));
                 heroCard.setBackground(hero);
+                heroCard.setElevation(dp(6));
+                if (android.os.Build.VERSION.SDK_INT >= 28) {
+                    heroCard.setOutlineSpotShadowColor(0x33000000);
+                    heroCard.setOutlineAmbientShadowColor(0x22000000);
+                }
             }
 
-            // Glance card: a soft wash of the hero accent so it isn't a plain white box.
+            // Glance card: a whisper of the hero accent — not a coloured box.
             View glance = findViewById(R.id.glanceCard);
             if (glance != null) {
                 GradientDrawable g = new GradientDrawable();
-                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, 0.80f));
-                g.setCornerRadius(dp(24));
-                g.setStroke((int) dp(1), SomaTheme.blend(t.heroAccent, t.border, 0.5f));
+                g.setColor(SomaTheme.blend(t.heroAccent, t.surface, t.isDark ? 0.90f : 0.93f));
+                g.setCornerRadius(dp(22));
+                g.setStroke((int) dp(1), t.border);
                 glance.setBackground(g);
+                glance.setElevation(dp(3));
             }
 
-            // Bottom nav picks up a faint element tint.
+            // Bottom nav: clean surface, no tint.
             View nav = findViewById(R.id.bottomNav);
-            if (nav != null) nav.setBackgroundColor(
-                    SomaTheme.blend(t.surface, t.heroAccent, t.isDark ? 0.12f : 0.07f));
+            if (nav != null) nav.setBackgroundColor(t.surface);
 
             int on = SomaTheme.ON_ELEMENT, onDim = SomaTheme.ON_ELEMENT_DIM;
             setTextColorSafe(on, todayTemperature, todayDescription, todayFeelsLike, todayWindPill, todayUvPill);

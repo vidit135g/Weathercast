@@ -63,11 +63,12 @@
         <item name="android:fontFamily">@font/fraunces</item>
         <item name="android:textColor">@color/soma_ink</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">-0.02</item>
     </style>
 
     <style name="Soma.Title" parent="Soma.Display">
-        <item name="android:textSize">30sp</item>
-        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textSize">31sp</item>
+        <item name="android:letterSpacing">-0.03</item>
     </style>
 
     <style name="Soma.Heading" parent="Soma.Display">
@@ -78,14 +79,14 @@
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/soma_text_secondary</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
     </style>
 
     <style name="Soma.Label" parent="">
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/soma_text_muted</item>
         <item name="android:textSize">10sp</item>
-        <item name="android:letterSpacing">0.14</item>
+        <item name="android:letterSpacing">0.17</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -124,7 +125,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@drawable/bento_tile</item>
-        <item name="android:padding">18dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:elevation">3dp</item>
+        <item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/soma_shadow</item>
+        <item name="android:outlineAmbientShadowColor" tools:targetApi="p">@color/soma_shadow</item>
     </style>
 
     <style name="Soma.GridRow" parent="">
@@ -137,7 +141,7 @@
 
     <style name="Soma.Tile" parent="">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">182dp</item>
+        <item name="android:layout_height">184dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">@drawable/bento_tile</item>
@@ -145,6 +149,9 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:padding">18dp</item>
+        <item name="android:elevation">3dp</item>
+        <item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/soma_shadow</item>
+        <item name="android:outlineAmbientShadowColor" tools:targetApi="p">@color/soma_shadow</item>
     </style>
 
     <style name="Soma.TileSmall" parent="Soma.Tile">
@@ -170,11 +177,10 @@
     <style name="Soma.TileValue" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/poppins</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/fraunces</item>
         <item name="android:textColor">@color/soma_ink</item>
-        <item name="android:textSize">19sp</item>
-        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">-0.02</item>
         <item name="android:layout_marginTop">12dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>

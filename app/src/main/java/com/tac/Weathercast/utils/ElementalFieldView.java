@@ -42,12 +42,12 @@ public class ElementalFieldView extends View {
     /** @param element two element stops (light→deep); a stronger wash is derived. */
     public void setColors(int background, int elementFrom, int elementTo, boolean isDark) {
         this.dark = isDark;
-        // tint the base itself toward the element so the whole field reads coloured
-        this.bg = SomaTheme.blend(background, elementFrom, isDark ? 0.14f : 0.10f);
-        this.deep = SomaTheme.blend(background, elementTo, isDark ? 0.22f : 0.16f);
-        int alphaA = isDark ? 0x6E : 0x52;
-        int alphaB = isDark ? 0x60 : 0x44;
-        int alphaC = isDark ? 0x52 : 0x34;
+        // a restrained ambient tint — present, but never a colour bath
+        this.bg = SomaTheme.blend(background, elementFrom, isDark ? 0.10f : 0.055f);
+        this.deep = SomaTheme.blend(background, elementTo, isDark ? 0.15f : 0.09f);
+        int alphaA = isDark ? 0x3E : 0x2E;
+        int alphaB = isDark ? 0x34 : 0x24;
+        int alphaC = isDark ? 0x28 : 0x1A;
         this.c1 = (elementFrom & 0x00FFFFFF) | (alphaA << 24);
         this.c2 = (elementTo & 0x00FFFFFF) | (alphaB << 24);
         this.c3 = (SomaTheme.blend(elementFrom, elementTo, 0.5f) & 0x00FFFFFF) | (alphaC << 24);
