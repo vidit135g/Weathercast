@@ -300,9 +300,12 @@
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="12dp"
-        android:paddingHorizontal="4dp"
+        android:paddingHorizontal="6dp"
         app:elevation="16dp"
         app:labelVisibilityMode="labeled"
+        app:itemPaddingTop="10dp"
+        app:itemPaddingBottom="8dp"
+        app:itemActiveIndicatorStyle="@style/Soma.NavIndicator"
         app:itemIconTint="@color/soma_nav_item"
         app:itemTextColor="@color/soma_nav_item"
         app:menu="@menu/bottom_nav" />

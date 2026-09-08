@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             }
             View nav = findViewById(R.id.bottomNav);
             if (nav != null) {
-                nav.setPadding(nav.getPaddingLeft(), nav.getPaddingTop(), nav.getPaddingRight(), 0);
+                nav.setPadding((int) dp(6), 0, (int) dp(6), 0);
                 android.view.ViewGroup.MarginLayoutParams mlp =
                         (android.view.ViewGroup.MarginLayoutParams) nav.getLayoutParams();
                 mlp.bottomMargin = (int) dp(8) + Math.round(bars.bottom * 0.5f);
@@ -715,17 +715,29 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 glance.setElevation(0);
             }
 
-            // Bottom nav: translucent glass over the sky.
+            // Bottom nav: a floating glass pill — sky-tinted fill + a top sheen.
             View nav = findViewById(R.id.bottomNav);
             if (nav != null) {
                 int glass = (SomaTheme.blend(0xFF0B1220, t.sky[2], 0.24f) & 0x00FFFFFF) | 0xF2000000;
-                GradientDrawable pill = new GradientDrawable();
-                pill.setColor(glass);
-                pill.setCornerRadius(dp(28));
-                pill.setStroke(Math.round(dp(1.5f)), 0x52FFFFFF);
+                float r = dp(28);
+                GradientDrawable body = new GradientDrawable();
+                body.setColor(glass);
+                body.setCornerRadius(r);
+                body.setStroke(Math.round(dp(1.5f)), 0x52FFFFFF);
+                GradientDrawable sheen = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{ 0x33FFFFFF, 0x0DFFFFFF, 0x00FFFFFF });
+                sheen.setCornerRadius(r);
+                android.graphics.drawable.LayerDrawable pill =
+                        new android.graphics.drawable.LayerDrawable(
+                                new android.graphics.drawable.Drawable[]{ body, sheen });
                 nav.setBackground(pill);
                 nav.setClipToOutline(true);
                 nav.setElevation(dp(16));
+                if (android.os.Build.VERSION.SDK_INT >= 28) {
+                    nav.setOutlineSpotShadowColor(0xB3000B1F);
+                    nav.setOutlineAmbientShadowColor(0x66000B1F);
+                }
                 if (nav instanceof com.google.android.material.bottomnavigation.BottomNavigationView) {
                     android.content.res.ColorStateList csl = new android.content.res.ColorStateList(
                             new int[][]{ new int[]{ android.R.attr.state_checked }, new int[]{} },
@@ -1345,8 +1357,7 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 scroll.smoothScrollTo(0, 0);
             }
             showTab(id);
-            View icon = nav.findViewById(id);
-            if (icon != null) com.tac.Weathercast.utils.Anim.pulse(icon);
+            com.tac.Weathercast.utils.Anim.navPop(nav.findViewById(id));
             return true;
         });
 

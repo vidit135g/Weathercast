@@ -50,6 +50,19 @@ public final class Anim {
                 .setStartDelay(delay).setDuration(520).setInterpolator(ease()).start();
     }
 
+    /** Nav-tab tap: a quick squash → springy overshoot → settle, with a tiny lift. */
+    public static void navPop(View v) {
+        if (v == null) return;
+        float d = v.getResources().getDisplayMetrics().density;
+        v.animate().cancel();
+        v.setScaleX(0.82f); v.setScaleY(0.82f); v.setTranslationY(3f * d);
+        v.animate().scaleX(1.18f).scaleY(1.18f).translationY(-3f * d)
+                .setDuration(190).setInterpolator(ease())
+                .withEndAction(() -> v.animate().scaleX(1f).scaleY(1f).translationY(0f)
+                        .setDuration(340).setInterpolator(ease()).start())
+                .start();
+    }
+
     /** Gentle scale pulse — good for a tapped icon or a value that just changed. */
     public static void pulse(View v) {
         if (v == null) return;

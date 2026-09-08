@@ -256,4 +256,19 @@
         <item name="android:windowBackground">@drawable/background_dialog</item>
     </style>
 
+    <!-- floating glass nav pill — a soft frosted capsule behind the active tab;
+         Material slides + scales it between tabs for free -->
+    <style name="Soma.NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#2EFFFFFF</item>
+        <item name="android:width">52dp</item>
+        <item name="android:height">32dp</item>
+        <item name="marginHorizontal">6dp</item>
+        <item name="shapeAppearance">@style/Soma.NavIndicator.Shape</item>
+    </style>
+
+    <style name="Soma.NavIndicator.Shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
 </resources>
