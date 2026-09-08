@@ -93,24 +93,37 @@ public class ElementalFieldView extends View {
                 new float[]{ 0f, 0.55f, 1f }, Shader.TileMode.CLAMP));
         cv.drawRect(0, 0, w, h, paint);
 
+        boolean light = lightSky();
+
         // atmospheric bloom
         float bx = w * (0.7f + 0.16f * (float) Math.sin(phase));
         float by = h * (0.16f + 0.06f * (float) Math.cos(phase * 0.8f));
         float br = Math.max(w, h) * 0.75f;
-        int bloom = lightSky() ? 0x1EFFFFFF : 0x22FFFFFF;
+        int bloom = light ? 0x1EFFFFFF : 0x22FFFFFF;
         paint.setShader(new RadialGradient(bx, by, br,
                 new int[]{ bloom, bloom & 0x00FFFFFF }, new float[]{ 0f, 1f }, Shader.TileMode.CLAMP));
         cv.drawRect(0, 0, w, h, paint);
 
+        // full-height legibility scrim — white copy sits on this at every scroll
+        // position; darker toward the bottom where the densest content lives, and
+        // stronger still on a bright daytime sky.
+        int topA    = light ? 0x1F : 0x0F;
+        int midA    = light ? 0x40 : 0x28;
+        int bottomA = light ? 0x66 : 0x40;
+        paint.setShader(new LinearGradient(0, 0, 0, h,
+                new int[]{ topA << 24, midA << 24, bottomA << 24 },
+                new float[]{ 0f, 0.5f, 1f }, Shader.TileMode.CLAMP));
+        cv.drawRect(0, 0, w, h, paint);
+
         // top scrim — keeps the big temperature readable under the status bar
-        paint.setShader(new LinearGradient(0, 0, 0, h * 0.24f,
-                new int[]{ 0x38000000, 0x00000000 }, null, Shader.TileMode.CLAMP));
-        cv.drawRect(0, 0, w, h * 0.24f, paint);
+        paint.setShader(new LinearGradient(0, 0, 0, h * 0.26f,
+                new int[]{ light ? 0x4D000000 : 0x38000000, 0x00000000 }, null, Shader.TileMode.CLAMP));
+        cv.drawRect(0, 0, w, h * 0.26f, paint);
 
         // bottom scrim — under the tab bar
-        paint.setShader(new LinearGradient(0, h * 0.8f, 0, h,
-                new int[]{ 0x00000000, 0x3A000000 }, null, Shader.TileMode.CLAMP));
-        cv.drawRect(0, h * 0.8f, w, h, paint);
+        paint.setShader(new LinearGradient(0, h * 0.74f, 0, h,
+                new int[]{ 0x00000000, light ? 0x5C000000 : 0x45000000 }, null, Shader.TileMode.CLAMP));
+        cv.drawRect(0, h * 0.74f, w, h, paint);
         paint.setShader(null);
     }
 }

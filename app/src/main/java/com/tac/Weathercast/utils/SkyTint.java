@@ -11,9 +11,11 @@ import android.widget.TextView;
  */
 public final class SkyTint {
 
+    // High-contrast whites — the sky behind can be a bright daytime blue, so even
+    // "muted" copy has to clear WCAG AA. The paired soft shadow does the rest.
     public static final int PRIMARY = 0xFFFFFFFF;
-    public static final int SECONDARY = 0xE6FFFFFF;
-    public static final int MUTED = 0x9EFFFFFF;
+    public static final int SECONDARY = 0xF7FFFFFF;
+    public static final int MUTED = 0xD6FFFFFF;
 
     private SkyTint() {}
 
@@ -25,8 +27,8 @@ public final class SkyTint {
             int c = sp <= 11.5f ? MUTED : (sp <= 13.5f ? SECONDARY : PRIMARY);
             tv.setTextColor(c);
             tv.setHintTextColor(MUTED);
-            tv.setShadowLayer(tv.getResources().getDisplayMetrics().density * 6f, 0f,
-                    tv.getResources().getDisplayMetrics().density * 1f, 0x30000000);
+            float d = tv.getResources().getDisplayMetrics().density;
+            tv.setShadowLayer(d * 7f, 0f, d * 1.5f, 0x73000000);
         }
         if (root instanceof ViewGroup) {
             ViewGroup g = (ViewGroup) root;

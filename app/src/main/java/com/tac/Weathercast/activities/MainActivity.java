@@ -713,11 +713,11 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             // Bottom nav: translucent glass over the sky.
             View nav = findViewById(R.id.bottomNav);
             if (nav != null) {
-                nav.setBackgroundColor((SomaTheme.blend(0xFF0E1526, t.sky[2], 0.28f) & 0x00FFFFFF) | 0xE0000000);
+                nav.setBackgroundColor((SomaTheme.blend(0xFF0E1526, t.sky[2], 0.22f) & 0x00FFFFFF) | 0xF2000000);
                 if (nav instanceof com.google.android.material.bottomnavigation.BottomNavigationView) {
                     android.content.res.ColorStateList csl = new android.content.res.ColorStateList(
                             new int[][]{ new int[]{ android.R.attr.state_checked }, new int[]{} },
-                            new int[]{ 0xFFFFFFFF, 0x8FFFFFFF });
+                            new int[]{ 0xFFFFFFFF, 0xB8FFFFFF });
                     ((com.google.android.material.bottomnavigation.BottomNavigationView) nav).setItemIconTintList(csl);
                     ((com.google.android.material.bottomnavigation.BottomNavigationView) nav).setItemTextColor(csl);
                 }
@@ -731,8 +731,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             }
             setTextColorSafe(0xFFFFFFFF, todayTemperature, todayDescription, citytool,
                     todayReadingHeadline, todayFeelsLike, todayWindPill, todayUvPill);
-            setTextColorSafe(0xCCFFFFFF, todaydes, todayReadingAdvice);
-            setTextColorSafe(0x9EFFFFFF, currdate);
+            setTextColorSafe(0xF2FFFFFF, todaydes, todayReadingAdvice);
+            setTextColorSafe(0xE0FFFFFF, currdate);
 
             getWindow().setStatusBarColor(0x00000000);
             getWindow().setNavigationBarColor(0x33000000);
@@ -1347,15 +1347,14 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             scroll.setOnScrollChangeListener((androidx.core.widget.NestedScrollView.OnScrollChangeListener)
                     (v, x, y, ox, oy) -> {
                         if (hero != null) {
-                            hero.setTranslationY(y * 0.32f);
-                            hero.setAlpha(Math.max(0.25f, 1f - y / 780f));
+                            hero.setTranslationY(y * 0.12f);
+                            hero.setAlpha(Math.max(0f, 1f - y / 380f));
                         }
                         if (todayIcon != null) {
-                            todayIcon.setTranslationY(y * 0.16f);
-                            todayIcon.setRotation(y * 0.02f);
+                            todayIcon.setTranslationY(y * 0.06f);
                         }
-                        if (date != null) date.setAlpha(Math.max(0f, 1f - y / 260f));
-                        if (city != null) city.setTranslationY(y * 0.10f);
+                        if (date != null) date.setAlpha(Math.max(0f, 1f - y / 220f));
+                        if (city != null) city.setTranslationY(y * 0.06f);
                     });
         }
     }

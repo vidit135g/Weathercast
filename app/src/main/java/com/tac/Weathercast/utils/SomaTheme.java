@@ -96,19 +96,19 @@ public final class SomaTheme {
         if (g == 3 || g == 5) return night ? new int[]{ 0xFF16202B, 0xFF27333F, 0xFF3A4653 }
                                            : new int[]{ 0xFF3B4956, 0xFF54626D, 0xFF6E7B85 };
         if (g == 6) return night ? new int[]{ 0xFF283140, 0xFF3B4655, 0xFF4E5A6A }
-                                 : new int[]{ 0xFF6E82A0, 0xFF98AAC0, 0xFFB7C6D6 };
+                                 : new int[]{ 0xFF52627C, 0xFF63748D, 0xFF77879B };
         if (g == 7) return night ? new int[]{ 0xFF2A2D34, 0xFF3E424B, 0xFF52565F }
-                                 : new int[]{ 0xFF6F7680, 0xFF8B9199, 0xFFA4A9B0 };
+                                 : new int[]{ 0xFF585F69, 0xFF6B7079, 0xFF7C8189 };
         if (g == 8 && owmId >= 803) return night ? new int[]{ 0xFF1A2230, 0xFF2A3440, 0xFF3B4552 }
-                                                 : new int[]{ 0xFF52667C, 0xFF74879C, 0xFF97A8BA };
+                                                 : new int[]{ 0xFF47576B, 0xFF5B6B7F, 0xFF6F8195 };
 
         if (night) return new int[]{ 0xFF0B1330, 0xFF15224A, 0xFF223059 };
         switch (p) {
-            case DAWN:      return new int[]{ 0xFF46578C, 0xFF9C6E92, 0xFFE7A76C };
-            case MORNING:   return new int[]{ 0xFF3577C0, 0xFF5F9AD7, 0xFF9CC3E7 };
-            case DAY:       return new int[]{ 0xFF2E77C9, 0xFF5599DA, 0xFF89BEE8 };
-            case AFTERNOON: return new int[]{ 0xFF357FC3, 0xFF6FA0CE, 0xFFDCB07C };
-            case DUSK:      return new int[]{ 0xFF213763, 0xFF7A4A80, 0xFFE28B4F };
+            case DAWN:      return new int[]{ 0xFF3D4C7E, 0xFF7A5B82, 0xFFB2775A };
+            case MORNING:   return new int[]{ 0xFF3272BB, 0xFF4A85C4, 0xFF5A8AB6 };
+            case DAY:       return new int[]{ 0xFF2C6FBE, 0xFF3D80C6, 0xFF4E86BC };
+            case AFTERNOON: return new int[]{ 0xFF347ABC, 0xFF6383A6, 0xFFA9855F };
+            case DUSK:      return new int[]{ 0xFF213763, 0xFF684072, 0xFFB16744 };
             default:        return new int[]{ 0xFF0B1330, 0xFF15224A, 0xFF223059 };
         }
     }
@@ -144,12 +144,12 @@ public final class SomaTheme {
 
         SomaTheme t = new SomaTheme(
                 stops[1],            // background — mid sky stop
-                0x24FFFFFF,          // surface — frosted glass
-                0x18FFFFFF,          // surfaceMuted
+                0x30FFFFFF,          // surface — frosted glass
+                0x20FFFFFF,          // surfaceMuted
                 0xFFFFFFFF,          // textPrimary
-                0xE6FFFFFF,          // textSecondary
-                0x9EFFFFFF,          // textMuted
-                0x33FFFFFF,          // border — hairline
+                0xF7FFFFFF,          // textSecondary
+                0xD6FFFFFF,          // textMuted
+                0x40FFFFFF,          // border — hairline
                 0xFFFFFFFF,          // accent — white reads cleanest on the glass
                 stops[0], stops[2], heroAcc,
                 true);
