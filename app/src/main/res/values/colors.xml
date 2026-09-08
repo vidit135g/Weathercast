@@ -136,8 +136,8 @@
     <color name="soma_frost_strong">#40FFFFFF</color>
     <color name="soma_frost_line">#42FFFFFF</color>
     <color name="soma_ink">#1F1D1B</color>
-    <color name="soma_text_secondary">#524C46</color>
-    <color name="soma_text_muted">#8F877D</color>
+    <color name="soma_text_secondary">#4A443E</color>
+    <color name="soma_text_muted">#6A635A</color>
     <color name="soma_forest">#3F6349</color>
     <color name="soma_forest_soft">#5E8C6A</color>
     <color name="soma_ember">#D8663D</color>

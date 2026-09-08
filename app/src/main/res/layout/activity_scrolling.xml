@@ -98,17 +98,17 @@
                     android:weightSum="3"
                     android:layout_marginTop="18dp">
 
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp" android:layout_marginEnd="8dp">
-                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelFeels" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
-                        <TextView android:id="@+id/todayFeelsLike" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="29°" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="13dp" android:layout_marginEnd="8dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelFeels" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Feels" android:textSize="10sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayFeelsLike" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="18sp" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="29°" />
                     </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp" android:layout_marginEnd="8dp">
-                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelWind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
-                        <TextView android:id="@+id/todayWindPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="3" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="13dp" android:layout_marginEnd="8dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelWind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wind" android:textSize="10sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayWindPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="18sp" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="3" />
                     </LinearLayout>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="10dp">
-                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelUv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV" android:textSize="9sp" android:textColor="@color/soma_on_fill" />
-                        <TextView android:id="@+id/todayUvPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="16sp" android:layout_marginTop="3dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="5" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="@drawable/soma_pill_hero" android:paddingVertical="13dp">
+                        <TextView style="@style/Soma.Label" android:id="@+id/pillLabelUv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UV" android:textSize="10sp" android:textColor="@color/soma_on_fill" />
+                        <TextView android:id="@+id/todayUvPill" android:fontFamily="@font/fraunces" android:textColor="@color/soma_on_fill" android:textSize="18sp" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="5" />
                     </LinearLayout>
                 </LinearLayout>
 
