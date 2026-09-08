@@ -1457,8 +1457,8 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
     /** Tint the search field, its icons and the toolbar menu icons for the current
      *  palette — with a soft colour cross-fade when the theme changes. */
     private void themeSearchAndToolbar(SomaTheme t, boolean animate) {
-        final int ink = 0xFFFFFFFF, muted = 0x9EFFFFFF;
-        final int sheet = SomaTheme.blend(0xFF0E1526, t.sky[0], 0.35f) | 0xFF000000;
+        final int ink = 0xFFFFFFFF, muted = 0xC7FFFFFF;
+        final int sheet = SomaTheme.blend(0xFF0B1220, t.sky[0], 0.30f) | 0xFF000000;
 
         // search field internals
         try {
@@ -1467,12 +1467,26 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             android.widget.ImageButton up = searchView.findViewById(R.id.action_up_btn);
             android.widget.ImageButton voice = searchView.findViewById(R.id.action_voice_btn);
             android.widget.ImageButton empty = searchView.findViewById(R.id.action_empty_btn);
-            android.widget.ListView sugg = searchView.findViewById(R.id.suggestion_list);
+            final android.widget.ListView sugg = searchView.findViewById(R.id.suggestion_list);
             if (topBar != null) topBar.setBackgroundColor(sheet);
-            if (sugg != null) sugg.setBackgroundColor(sheet);
             if (st != null) { st.setTextColor(ink); st.setHintTextColor(muted); }
             for (android.widget.ImageButton b : new android.widget.ImageButton[]{ up, voice, empty })
                 if (b != null) b.setColorFilter(ink);
+            if (sugg != null) {
+                sugg.setBackgroundColor(sheet);
+                sugg.setDivider(new android.graphics.drawable.ColorDrawable(0x1FFFFFFF));
+                sugg.setDividerHeight(1);
+                // suggest_item.xml hard-codes #727272 text — invisible on the dark
+                // sheet. Re-tint every row as the list lays out / recycles.
+                if (!searchSuggestTintHooked) {
+                    searchSuggestTintHooked = true;
+                    sugg.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                        for (int i = 0; i < sugg.getChildCount(); i++)
+                            tintSuggestionRow(sugg.getChildAt(i));
+                    });
+                }
+                for (int i = 0; i < sugg.getChildCount(); i++) tintSuggestionRow(sugg.getChildAt(i));
+            }
         } catch (Exception ignored) {}
 
         // toolbar menu icons
@@ -1491,6 +1505,21 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
         } else {
             tintMenu(to);
         }
+    }
+
+    private boolean searchSuggestTintHooked = false;
+
+    private void tintSuggestionRow(View row) {
+        if (row == null) return;
+        try {
+            android.widget.TextView tv = row.findViewById(R.id.suggestion_text);
+            if (tv != null) {
+                tv.setTextColor(0xFFFFFFFF);
+                tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 15f);
+            }
+            android.widget.ImageView ic = row.findViewById(R.id.suggestion_icon);
+            if (ic != null) ic.setColorFilter(0xB8FFFFFF);
+        } catch (Exception ignored) {}
     }
 
     private void tintMenu(int color) {
