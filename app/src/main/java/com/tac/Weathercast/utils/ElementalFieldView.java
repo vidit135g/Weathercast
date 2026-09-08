@@ -120,10 +120,11 @@ public class ElementalFieldView extends View {
                 new int[]{ light ? 0x4D000000 : 0x38000000, 0x00000000 }, null, Shader.TileMode.CLAMP));
         cv.drawRect(0, 0, w, h * 0.26f, paint);
 
-        // bottom scrim — under the tab bar
-        paint.setShader(new LinearGradient(0, h * 0.74f, 0, h,
-                new int[]{ 0x00000000, light ? 0x5C000000 : 0x45000000 }, null, Shader.TileMode.CLAMP));
-        cv.drawRect(0, h * 0.74f, w, h, paint);
+        // bottom scrim — grounds the floating tab pill on any sky
+        paint.setShader(new LinearGradient(0, h * 0.66f, 0, h,
+                new int[]{ 0x00000000, light ? 0x59000000 : 0x40000000, light ? 0x82000000 : 0x66000000 },
+                new float[]{ 0f, 0.6f, 1f }, Shader.TileMode.CLAMP));
+        cv.drawRect(0, h * 0.66f, w, h, paint);
         paint.setShader(null);
     }
 }

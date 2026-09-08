@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="44dp"
-        android:paddingBottom="120dp" android:clipChildren="false" android:clipToPadding="false">
+        android:paddingBottom="128dp" android:clipChildren="false" android:clipToPadding="false">
 
         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your briefing" />
         <TextView android:id="@+id/briefCity" style="@style/Soma.Title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:maxLines="1" android:ellipsize="end" tools:text="Lucknow" />

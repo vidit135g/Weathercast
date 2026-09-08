@@ -190,8 +190,13 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
                 topInset.setLayoutParams(lp);
             }
             View nav = findViewById(R.id.bottomNav);
-            if (nav != null) nav.setPadding(nav.getPaddingLeft(), nav.getPaddingTop(),
-                    nav.getPaddingRight(), bars.bottom);
+            if (nav != null) {
+                nav.setPadding(nav.getPaddingLeft(), nav.getPaddingTop(), nav.getPaddingRight(), 0);
+                android.view.ViewGroup.MarginLayoutParams mlp =
+                        (android.view.ViewGroup.MarginLayoutParams) nav.getLayoutParams();
+                mlp.bottomMargin = (int) dp(8) + Math.round(bars.bottom * 0.5f);
+                nav.setLayoutParams(mlp);
+            }
             return insets;
         });
 
@@ -713,7 +718,14 @@ public class MainActivity extends BaseActivity implements LocationListener,Check
             // Bottom nav: translucent glass over the sky.
             View nav = findViewById(R.id.bottomNav);
             if (nav != null) {
-                nav.setBackgroundColor((SomaTheme.blend(0xFF0E1526, t.sky[2], 0.22f) & 0x00FFFFFF) | 0xF2000000);
+                int glass = (SomaTheme.blend(0xFF0B1220, t.sky[2], 0.24f) & 0x00FFFFFF) | 0xF2000000;
+                GradientDrawable pill = new GradientDrawable();
+                pill.setColor(glass);
+                pill.setCornerRadius(dp(28));
+                pill.setStroke(Math.round(dp(1.5f)), 0x52FFFFFF);
+                nav.setBackground(pill);
+                nav.setClipToOutline(true);
+                nav.setElevation(dp(16));
                 if (nav instanceof com.google.android.material.bottomnavigation.BottomNavigationView) {
                     android.content.res.ColorStateList csl = new android.content.res.ColorStateList(
                             new int[][]{ new int[]{ android.R.attr.state_checked }, new int[]{} },

@@ -15,7 +15,7 @@
         android:clipToPadding="false"
         android:paddingHorizontal="20dp"
         android:paddingTop="44dp"
-        android:paddingBottom="120dp">
+        android:paddingBottom="128dp">
 
         <TextView style="@style/Soma.Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Next 5 days" />
         <TextView style="@style/Soma.Title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Trends" android:layout_marginTop="4dp" />
