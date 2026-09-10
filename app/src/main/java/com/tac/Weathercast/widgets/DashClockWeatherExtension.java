@@ -18,7 +18,8 @@ import com.tac.Weathercast.activities.MainActivity;
 import com.tac.Weathercast.utils.UnitConvertor;
 
 public class DashClockWeatherExtension extends DashClockExtension {
-    private static final Uri URI_BASE = Uri.parse("content://com.tac.Weathercast.authority");
+    private static final Uri URI_BASE = Uri.parse(
+            "content://" + com.tac.Weathercast.BuildConfig.APPLICATION_ID + ".authority");
     private static final String UPDATE_URI_PATH_SEGMENT = "dashclock/update";
 
     @Override

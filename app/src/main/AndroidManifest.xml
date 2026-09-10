@@ -138,7 +138,7 @@
 
         <provider
             android:name="com.tac.Weathercast.utils.StubContentProvider"
-            android:authorities="com.tac.Weathercast.authority"
+            android:authorities="${applicationId}.authority"
             android:exported="true" />
 
     </application>
